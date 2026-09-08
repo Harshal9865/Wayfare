@@ -19,16 +19,39 @@ export default function PlaceDetailModal({
 }: PlaceDetailModalProps) {
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const [livePhotos, setLivePhotos] = useState<string[]>([]);
+  const [photosLoading, setPhotosLoading] = useState(false);
 
   // Reset active photo index when place changes
   useEffect(() => {
     setActivePhotoIndex(0);
   }, [place]);
 
+  // Fetch live Google Places photos when modal opens
+  useEffect(() => {
+    if (isOpen && place) {
+      setPhotosLoading(true);
+      setLivePhotos([]);
+      fetch(`/api/places/photos?query=${encodeURIComponent(place.name)}&count=5`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.photos && data.photos.length > 0) {
+            setLivePhotos(data.photos);
+          } else {
+            setLivePhotos([]);
+          }
+        })
+        .catch(() => setLivePhotos([]))
+        .finally(() => setPhotosLoading(false));
+    } else {
+      setLivePhotos([]);
+    }
+  }, [isOpen, place]);
+
   if (!isOpen || !place) return null;
 
-  // Build a list of 4-6 multi-angle perspective photos if place.photos is not provided
-  const photoGallery =
+  // Prefer live Google photos; fall back to place.photos or a single photo_url + editorial fillers
+  const fallbackPhotos =
     place.photos && place.photos.length > 0
       ? place.photos
       : [
@@ -38,6 +61,8 @@ export default function PlaceDetailModal({
           "https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=1000",
           "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1000",
         ];
+
+  const photoGallery = livePhotos.length > 0 ? livePhotos : fallbackPhotos;
 
   const photoAngleLabels = [
     "Perspective #1 • Main Architectural Facade",
@@ -85,13 +110,20 @@ export default function PlaceDetailModal({
 
           {/* Multi-Angle Photo Gallery Carousel */}
           <div className="relative h-64 sm:h-80 md:h-88 w-full rounded-[24px] overflow-hidden border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] mb-4 bg-black group">
-            <img
-              src={photoGallery[activePhotoIndex]}
-              alt={`${place.name} - ${photoAngleLabels[activePhotoIndex % photoAngleLabels.length]}`}
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover transition-all duration-500"
-            />
+            {photosLoading ? (
+              /* Shimmer skeleton while Google photos are loading */
+              <div className="w-full h-full bg-surface-container dark:bg-[#2A2A2A] animate-pulse">
+                <div className="w-full h-full bg-gradient-to-r from-surface-container via-surface-container-high to-surface-container dark:from-[#2A2A2A] dark:via-[#333] dark:to-[#2A2A2A] animate-pulse" />
+              </div>
+            ) : (
+              <img
+                src={photoGallery[activePhotoIndex]}
+                alt={`${place.name} - ${photoAngleLabels[activePhotoIndex % photoAngleLabels.length]}`}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover transition-all duration-500"
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none"></div>
 
             {/* Badges on Top */}

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ItineraryDay, Place } from "@/lib/types";
 
 interface MapViewModalProps {
@@ -9,6 +9,8 @@ interface MapViewModalProps {
   locationName: string;
   days: ItineraryDay[];
   onSelectPlace: (place: Place) => void;
+  lat?: number;
+  lng?: number;
 }
 
 export default function MapViewModal({
@@ -17,7 +19,37 @@ export default function MapViewModal({
   locationName,
   days,
   onSelectPlace,
+  lat,
+  lng,
 }: MapViewModalProps) {
+  const [mapLat, setMapLat] = useState(lat || 0);
+  const [mapLng, setMapLng] = useState(lng || 0);
+  const [isGeoLoading, setIsGeoLoading] = useState(!lat || !lng);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    if (lat && lng) {
+      setMapLat(lat);
+      setMapLng(lng);
+      setIsGeoLoading(false);
+    } else {
+      setIsGeoLoading(true);
+      fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(locationName)}&format=json&limit=1`
+      )
+        .then((res) => res.json())
+        .then((results) => {
+          if (results && results[0]) {
+            setMapLat(parseFloat(results[0].lat));
+            setMapLng(parseFloat(results[0].lon));
+          }
+        })
+        .catch((err) => console.error("Nominatim geocode error:", err))
+        .finally(() => setIsGeoLoading(false));
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const allItems = days.flatMap((d) => d.items);
@@ -49,7 +81,7 @@ export default function MapViewModal({
 
         {/* Map Body & Stops Sidebar */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden">
-          {/* Stops List (4 cols) */}
+          {/* Stops List (5 cols) */}
           <div className="md:col-span-5 border-r-2 border-surface-container dark:border-[#2A2A2A] overflow-y-auto p-6 space-y-4 bg-surface-container-lowest dark:bg-[#1A1A1A]">
             <span className="font-sans text-xs uppercase tracking-widest text-outline dark:text-[rgba(250,247,242,0.5)] block mb-2">
               Sequenced Waypoints ({allItems.length})
@@ -94,29 +126,34 @@ export default function MapViewModal({
             ))}
           </div>
 
-          {/* Interactive Map Visual (7 cols) */}
-          <div className="md:col-span-7 relative bg-[#EBE8E3] dark:bg-[#2A2A2A] flex items-center justify-center p-8">
-            <div className="text-center p-8 bg-surface-container-lowest/90 dark:bg-[#131313]/90 backdrop-blur-md rounded-[32px] border-2 border-on-surface dark:border-[#FAF7F2] max-w-md">
-              <span className="material-symbols-outlined text-4xl text-primary dark:text-[#1E8C80] mb-3 block">
-                map
-              </span>
-              <h4 className="font-serif text-2xl text-on-surface dark:text-[#FAF7F2] font-normal mb-2">
-                OpenStreetMap Route Layer
-              </h4>
-              <p className="font-sans text-xs text-on-surface-variant dark:text-[rgba(250,247,242,0.7)] leading-relaxed mb-4">
-                All {allItems.length} waypoints mapped within a 12km walking &amp; transit radius. Zero API limits via Leaflet tiles.
-              </p>
-              <div className="flex flex-wrap justify-center gap-2">
-                {allItems.slice(0, 4).map((i, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-1 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container text-[11px] font-sans text-on-surface dark:text-[#FAF7F2]"
-                  >
-                    📍 {i.place.name.split(" ")[0]}
-                  </span>
-                ))}
+          {/* Real OpenStreetMap Embed (7 cols) */}
+          <div className="md:col-span-7 relative bg-[#EBE8E3] dark:bg-[#2A2A2A] flex items-center justify-center overflow-hidden">
+            {isGeoLoading ? (
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-10 h-10 rounded-full border-4 border-[#1E8C80]/30 border-t-[#1E8C80] animate-spin" />
+                <span className="font-sans text-xs text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] uppercase tracking-wider">
+                  Locating {locationName}…
+                </span>
               </div>
-            </div>
+            ) : (
+              <>
+                <iframe
+                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${mapLng - 0.08},${mapLat - 0.08},${mapLng + 0.08},${mapLat + 0.08}&layer=mapnik&marker=${mapLat},${mapLng}`}
+                  className="w-full h-full border-none"
+                  title="Map"
+                  allowFullScreen
+                  loading="lazy"
+                />
+                <a
+                  href={`https://www.openstreetmap.org/?mlat=${mapLat}&mlon=${mapLng}#map=13/${mapLat}/${mapLng}`}
+                  target="_blank"
+                  rel="noopener"
+                  className="absolute bottom-3 right-3 text-[10px] font-sans bg-white/80 dark:bg-[#131313]/80 text-primary dark:text-[#1E8C80] px-2 py-1 rounded-full border font-medium hover:bg-white transition-colors z-10"
+                >
+                  View Full Map ↗
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>

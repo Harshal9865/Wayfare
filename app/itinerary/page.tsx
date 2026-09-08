@@ -435,6 +435,8 @@ function ItineraryContent() {
         locationName={tripPlan.location_name}
         days={tripPlan.days}
         onSelectPlace={handleSelectPlace}
+        lat={tripPlan.lat}
+        lng={tripPlan.lng}
       />
 
       {/* Add Custom Spot Modal */}

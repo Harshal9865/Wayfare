@@ -4,9 +4,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { PlaceSearchSuggestion } from "@/lib/types";
 import { useRegion } from "@/lib/region";
+import { supabase } from "@/lib/supabase";
 
 interface HeroSearchProps {
   onSearch?: (location: string, days: number, style: string, diet: string) => void;
+  /** Called instead of navigating when user is not authenticated */
+  onRequireLogin?: (destination: string, redirectUrl: string) => void;
 }
 
 const GLOBAL_PROMPTS = [
@@ -27,7 +30,7 @@ const INDIA_PROMPTS = [
   "Try 'Haveli courtyard & amber fort in Jaipur'...",
 ];
 
-export default function HeroSearch({ onSearch }: HeroSearchProps) {
+export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps) {
   const router = useRouter();
   const { region } = useRegion();
 
@@ -171,15 +174,25 @@ export default function HeroSearch({ onSearch }: HeroSearchProps) {
           { label: "Swiss Alps Chalet", query: "Zermatt, Switzerland" },
         ];
 
-  const triggerSearch = (destination: string) => {
+  const triggerSearch = async (destination: string) => {
     setShowDropdown(false);
+
+    const redirectUrl = `/itinerary?location=${encodeURIComponent(destination)}&days=${days}&style=${tripStyle}&diet=${dietaryPref}`;
+
+    // Check auth state — gate itinerary behind login if handler is provided
+    if (onRequireLogin) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        onRequireLogin(destination, redirectUrl);
+        return;
+      }
+    }
+
     setIsSubmitting(true);
     if (onSearch) {
       onSearch(destination, days, tripStyle, dietaryPref);
     } else {
-      router.push(
-        `/itinerary?location=${encodeURIComponent(destination)}&days=${days}&style=${tripStyle}&diet=${dietaryPref}`
-      );
+      router.push(redirectUrl);
     }
   };
 

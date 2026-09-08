@@ -21,11 +21,10 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
   const [user, setUser] = useState<any>(null);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
 
   const currencyRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   // Click outside listener: Automatically close dropdowns/menus when clicking anywhere outside
   useEffect(() => {
@@ -37,16 +36,13 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
       if (userMenuRef.current && !userMenuRef.current.contains(target)) {
         setShowUserMenu(false);
       }
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(target)) {
-        setIsMobileMenuOpen(false);
-      }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setShowCurrencyDropdown(false);
         setShowUserMenu(false);
-        setIsMobileMenuOpen(false);
+        setIsMobileSheetOpen(false);
       }
     };
 
@@ -65,7 +61,7 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
   useEffect(() => {
     setShowCurrencyDropdown(false);
     setShowUserMenu(false);
-    setIsMobileMenuOpen(false);
+    setIsMobileSheetOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -131,6 +127,14 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     { label: "Itinerary", href: "/itinerary" },
     { label: "Stays", href: "/stays" },
     { label: "My Trips", href: "/my-trips" },
+  ];
+
+  // Bottom nav items (4 direct links + More button)
+  const bottomNavItems = [
+    { label: "Home", icon: "home", href: "/" },
+    { label: "Itinerary", icon: "map", href: "/itinerary" },
+    { label: "Stays", icon: "hotel", href: "/stays" },
+    { label: "My Trips", icon: "folder_open", href: "/my-trips" },
   ];
 
   return (
@@ -206,22 +210,23 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
               title={`Switch travel region (Current: ${region === "india" ? "India" : "Abroad"})`}
             >
               <span>{region === "india" ? "🇮🇳" : "🌐"}</span>
-              <span className="hidden xs:inline uppercase">{region === "india" ? "India" : "Abroad"}</span>
+              {/* Text label: desktop only */}
+              <span className="hidden lg:inline uppercase">{region === "india" ? "India" : "Abroad"}</span>
             </button>
 
-            {/* Beginner Guide (?) Button */}
+            {/* Beginner Guide (?) Button — desktop only */}
             <button
               type="button"
               onClick={() => setIsHowItWorksOpen(true)}
-              className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full border-2 border-on-surface/30 dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#1C1B1B] text-xs font-sans font-semibold text-primary dark:text-[#1E8C80] hover:bg-surface-container transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              className="hidden lg:inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full border-2 border-on-surface/30 dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#1C1B1B] text-xs font-sans font-semibold text-primary dark:text-[#1E8C80] hover:bg-surface-container transition-all hover:scale-105 active:scale-95 cursor-pointer"
               title="How Wayfare works guide"
             >
               <span className="material-symbols-outlined text-[15px]">help_outline</span>
               <span className="hidden sm:inline">Guide</span>
             </button>
 
-            {/* Currency Selector */}
-            <div className="relative" ref={currencyRef}>
+            {/* Currency Selector — desktop only */}
+            <div className="relative hidden lg:block" ref={currencyRef}>
               <button
                 type="button"
                 onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
@@ -256,8 +261,8 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
               )}
             </div>
 
-            {/* Day / Night Switcher */}
-            <div className="hidden sm:flex items-center p-1 bg-surface-container-low dark:bg-[#1C1B1B] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-full">
+            {/* Day / Night Switcher — desktop only */}
+            <div className="hidden lg:flex items-center p-1 bg-surface-container-low dark:bg-[#1C1B1B] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-full">
               <button
                 onClick={() => {
                   if (isDarkMode) toggleTheme();
@@ -335,71 +340,150 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
               )}
             </div>
 
-            {/* Mobile Menu Toggle Button */}
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle navigation menu"
-              className="lg:hidden w-8 h-8 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#1C1B1B] flex items-center justify-center text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container transition-colors cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-[18px]">
-                {isMobileMenuOpen ? "close" : "menu"}
-              </span>
-            </button>
+            {/* NOTE: Mobile hamburger button intentionally removed — navigation is now via bottom nav */}
           </div>
         </div>
       </header>
 
-      {/* Mobile Navigation Drawer with Click Outside */}
-      {isMobileMenuOpen && (
-        <div
-          ref={mobileMenuRef}
-          className="lg:hidden fixed top-16 sm:top-20 left-0 w-full bg-surface/95 dark:bg-[#131313]/95 backdrop-blur-md border-b-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] shadow-2xl z-40 p-5 space-y-3 animate-in slide-in-from-top-2 duration-200"
+      {/* ─────────────────────────────────────────────────────────────
+          STICKY BOTTOM NAV BAR — mobile only (< lg)
+      ───────────────────────────────────────────────────────────── */}
+      <nav
+        aria-label="Mobile bottom navigation"
+        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-surface/95 dark:bg-[#131313]/95 backdrop-blur-md border-t-2 border-on-surface dark:border-[rgba(250,247,242,0.25)] h-16 flex items-center justify-around"
+      >
+        {bottomNavItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex flex-col items-center gap-0.5 py-1 px-3 transition-colors ${
+                isActive
+                  ? "text-primary dark:text-[#1E8C80]"
+                  : "text-on-surface-variant dark:text-[rgba(250,247,242,0.5)]"
+              }`}
+            >
+              <span className="material-symbols-outlined text-[22px]">{item.icon}</span>
+              <span className="text-[9px] uppercase tracking-wide font-sans font-semibold">{item.label}</span>
+            </Link>
+          );
+        })}
+
+        {/* More button */}
+        <button
+          type="button"
+          onClick={() => setIsMobileSheetOpen(true)}
+          className="flex flex-col items-center gap-0.5 py-1 px-3 transition-colors text-on-surface-variant dark:text-[rgba(250,247,242,0.5)] cursor-pointer"
+          aria-label="Open more options"
         >
-          <div className="flex flex-col space-y-2">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`font-sans text-sm font-medium px-4 py-2.5 rounded-full border-2 transition-all ${
-                    isActive
+          <span className="material-symbols-outlined text-[22px]">more_horiz</span>
+          <span className="text-[9px] uppercase tracking-wide font-sans font-semibold">More</span>
+        </button>
+      </nav>
+
+      {/* ─────────────────────────────────────────────────────────────
+          MORE SHEET — slide up from bottom, mobile only
+      ───────────────────────────────────────────────────────────── */}
+      {isMobileSheetOpen && (
+        <>
+          {/* Backdrop overlay */}
+          <div
+            className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+            onClick={() => setIsMobileSheetOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Sheet panel */}
+          <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden animate-in slide-in-from-bottom duration-300">
+            <div className="bg-surface dark:bg-[#1A1A1A] rounded-t-[32px] border-t-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] p-6">
+              {/* Drag handle pill */}
+              <div className="flex justify-center mb-5">
+                <div className="w-10 h-1 rounded-full bg-on-surface/20 dark:bg-[rgba(250,247,242,0.2)]" />
+              </div>
+
+              {/* Section 1: Theme */}
+              <p className="font-sans text-[10px] uppercase tracking-widest text-on-surface-variant dark:text-[rgba(250,247,242,0.5)] font-semibold mb-2">
+                Theme
+              </p>
+              <div className="flex gap-2 mb-5">
+                <button
+                  onClick={() => { if (isDarkMode) toggleTheme(); }}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-2xl border-2 font-sans text-sm font-semibold transition-all cursor-pointer ${
+                    !isDarkMode
                       ? "bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] border-on-surface dark:border-[#1E8C80]"
-                      : "text-on-surface dark:text-[#FAF7F2] border-transparent hover:bg-surface-container-low dark:hover:bg-[#1C1B1B]"
+                      : "border-on-surface/20 dark:border-[rgba(250,247,242,0.2)] text-on-surface-variant dark:text-[rgba(250,247,242,0.5)]"
                   }`}
                 >
-                  {item.label}
-                </Link>
-              );
-            })}
+                  <span>☀️</span>
+                  <span>Light</span>
+                </button>
+                <button
+                  onClick={() => { if (!isDarkMode) toggleTheme(); }}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-2xl border-2 font-sans text-sm font-semibold transition-all cursor-pointer ${
+                    isDarkMode
+                      ? "bg-[#1E8C80] text-[#131313] border-[#1E8C80]"
+                      : "border-on-surface/20 dark:border-[rgba(250,247,242,0.2)] text-on-surface-variant dark:text-[rgba(250,247,242,0.5)]"
+                  }`}
+                >
+                  <span>🌙</span>
+                  <span>Dark</span>
+                </button>
+              </div>
 
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                setIsHowItWorksOpen(true);
-              }}
-              className="w-full text-left font-sans text-xs uppercase tracking-wider px-4 py-3 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#201F1F] text-primary dark:text-[#1E8C80] font-semibold flex items-center justify-between cursor-pointer"
-            >
-              <span>How Wayfare Works (Guide)</span>
-              <span className="material-symbols-outlined text-[16px]">help_outline</span>
-            </button>
+              {/* Section 2: Currency */}
+              <p className="font-sans text-[10px] uppercase tracking-widest text-on-surface-variant dark:text-[rgba(250,247,242,0.5)] font-semibold mb-2">
+                Currency
+              </p>
+              <div className="flex gap-2 mb-5 flex-wrap">
+                {(Object.keys(CURRENCIES) as CurrencyCode[]).map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCurrency(c)}
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-2xl border-2 font-sans text-sm font-semibold transition-all cursor-pointer ${
+                      currency === c
+                        ? "bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] border-on-surface dark:border-[#1E8C80]"
+                        : "border-on-surface/20 dark:border-[rgba(250,247,242,0.2)] text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container dark:hover:bg-[#2A2A2A]"
+                    }`}
+                  >
+                    <span>{CURRENCIES[c].symbol}</span>
+                    <span className="uppercase">{c}</span>
+                  </button>
+                ))}
+              </div>
 
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                setIsPersonalizeOpen(true);
-              }}
-              className="w-full text-left font-sans text-xs uppercase tracking-wider px-4 py-3 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#201F1F] text-primary dark:text-[#1E8C80] font-semibold flex items-center justify-between cursor-pointer"
-            >
-              <span>Personalize Itinerary</span>
-              <span className="material-symbols-outlined text-[16px]">auto_awesome</span>
-            </button>
+              {/* Section 3: Quick Actions */}
+              <p className="font-sans text-[10px] uppercase tracking-widest text-on-surface-variant dark:text-[rgba(250,247,242,0.5)] font-semibold mb-2">
+                Quick Actions
+              </p>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => {
+                    setIsMobileSheetOpen(false);
+                    setIsPersonalizeOpen(true);
+                  }}
+                  className="w-full flex items-center gap-2 px-5 py-3 rounded-2xl border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#201F1F] text-primary dark:text-[#1E8C80] font-sans text-sm font-semibold cursor-pointer hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
+                  <span>Personalize</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setIsMobileSheetOpen(false);
+                    setIsHowItWorksOpen(true);
+                  }}
+                  className="w-full flex items-center gap-2 px-5 py-3 rounded-2xl border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#201F1F] text-primary dark:text-[#1E8C80] font-sans text-sm font-semibold cursor-pointer hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[18px]">help_outline</span>
+                  <span>Guide</span>
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
+      {/* Modals */}
       <PersonalizedPlanModal
         isOpen={isPersonalizeOpen}
         onClose={() => setIsPersonalizeOpen(false)}
@@ -409,6 +493,9 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
         isOpen={isHowItWorksOpen}
         onClose={() => setIsHowItWorksOpen(false)}
       />
+
+      {/* Spacer: pushes page content above the fixed bottom nav on mobile */}
+      <div className="h-16 lg:hidden" />
     </>
   );
 }

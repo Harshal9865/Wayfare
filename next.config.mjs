@@ -20,6 +20,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'cf.bstatic.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'streetviewpixels-pa.googleapis.com',
+      },
     ],
   },
 };
