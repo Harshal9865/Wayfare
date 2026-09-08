@@ -258,7 +258,7 @@ export default function PlaceDetailModal({
       <FoodDietaryTaggingModal
         isOpen={isTagModalOpen}
         onClose={() => setIsTagModalOpen(false)}
-        placeName={place.name}
+        place={place}
       />
     </>
   );
