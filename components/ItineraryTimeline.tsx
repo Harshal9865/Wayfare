@@ -73,6 +73,10 @@ export default function ItineraryTimeline({
                     <span className="absolute top-4 left-4 inline-flex items-center px-3 py-1 rounded-full bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] border-2 border-on-surface dark:border-[#1E8C80] font-sans text-xs font-semibold shadow-sm">
                       {item.place.business_status === "OPERATIONAL" ? "Open now" : "Verified Spot"}
                     </span>
+                    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/30 text-white font-sans text-[10px] uppercase tracking-wider font-semibold shadow-md">
+                      <span className="material-symbols-outlined text-[13px] text-amber-300">collections</span>
+                      {item.place.photos?.length || 4} Angles
+                    </span>
                   </div>
 
                   {/* Card Content */}

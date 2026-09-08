@@ -2,14 +2,31 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRegion } from "@/lib/region";
 
 export default function CuratorsNote() {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [showCriteriaModal, setShowCriteriaModal] = useState(false);
+  const { region } = useRegion();
 
   const toggleSoundscape = () => {
     setIsPlayingAudio(!isPlayingAudio);
   };
+
+  const featureImage =
+    region === "india"
+      ? "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=1000&auto=format&fit=crop&q=80"
+      : "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1000&auto=format&fit=crop&q=80";
+
+  const featureLocation =
+    region === "india"
+      ? "Varanasi, India • Sacred Dawn Bajra Boat Sanctuary"
+      : "Kyoto, Japan • Arashiyama Bamboo & Zen Garden";
+
+  const exploreHref =
+    region === "india"
+      ? "/itinerary?location=Varanasi%2C%20India"
+      : "/itinerary?location=Kyoto%2C%20Japan";
 
   return (
     <>
@@ -19,7 +36,7 @@ export default function CuratorsNote() {
           <div className="lg:w-1/2 flex flex-col">
             <div className="flex items-center gap-3 mb-3">
               <span className="font-sans text-xs uppercase tracking-widest text-secondary dark:text-[#1E8C80] font-semibold">
-                Curator&apos;s Note • Autumn &amp; Winter Edition
+                Curator&apos;s Note • {region === "india" ? "India Heritage Corridor" : "Global Dispatch Edition"}
               </span>
 
               {/* Ambient Soundscape Toggle Pill */}
@@ -34,7 +51,7 @@ export default function CuratorsNote() {
                 <span className="material-symbols-outlined text-[15px]">
                   {isPlayingAudio ? "volume_up" : "graphic_eq"}
                 </span>
-                <span>{isPlayingAudio ? "Ambient: Rain & Bells" : "Soundscape"}</span>
+                <span>{isPlayingAudio ? "Ambient: Chants & Rain" : "Soundscape"}</span>
                 {isPlayingAudio && (
                   <span className="flex items-end gap-[2px] h-3 ml-0.5">
                     <span className="w-0.5 h-3 bg-white dark:bg-[#131313] animate-pulse"></span>
@@ -59,8 +76,8 @@ export default function CuratorsNote() {
 
             <div className="flex flex-wrap items-center gap-4 mt-8">
               <Link
-                href="/itinerary"
-                className="inline-flex items-center gap-2 bg-primary dark:bg-[#1E8C80] text-on-primary dark:text-[#131313] px-7 py-3.5 rounded-full border-2 border-on-surface dark:border-[#1E8C80] font-sans text-sm font-medium hover:bg-surface-tint dark:hover:bg-[#1A7A70] transition-all hover:scale-105 active:scale-95"
+                href={exploreHref}
+                className="inline-flex items-center gap-2 bg-primary dark:bg-[#1E8C80] text-white dark:text-[#131313] px-7 py-3.5 rounded-full border-2 border-on-surface dark:border-[#1E8C80] font-sans text-sm font-semibold hover:bg-surface-tint dark:hover:bg-[#1A7A70] transition-all hover:scale-105 active:scale-95 shadow-md"
               >
                 <span>Explore The Itinerary</span>
                 <span className="material-symbols-outlined text-[18px]">menu_book</span>
@@ -79,16 +96,16 @@ export default function CuratorsNote() {
           <div className="lg:w-1/2 w-full">
             <div className="relative w-full h-[360px] md:h-[440px] rounded-[32px] md:rounded-[44px] overflow-hidden border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] group">
               <img
-                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1000&auto=format&fit=crop&q=80"
-                alt="Traveler journaling at stone villa"
+                src={featureImage}
+                alt="Traveler journaling at sanctuary"
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
               <div className="absolute bottom-4 left-4 bg-surface-container-lowest/95 dark:bg-[#131313]/95 backdrop-blur-sm border-2 border-on-surface dark:border-[#FAF7F2] px-4 py-2 rounded-full">
-                <span className="font-sans text-xs uppercase tracking-wider text-on-surface dark:text-[#FAF7F2]">
-                  Peloponnese, Greece • Villa Kerasia
+                <span className="font-sans text-xs uppercase tracking-wider text-on-surface dark:text-[#FAF7F2] font-semibold">
+                  {featureLocation}
                 </span>
               </div>
             </div>

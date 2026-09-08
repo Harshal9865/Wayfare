@@ -185,7 +185,7 @@ export default function HeroSearch({ onSearch }: HeroSearchProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const destination = query.trim() || "Kyoto, Japan";
+    const destination = query.trim() || (region === "india" ? "Varanasi, India" : "Kyoto, Japan");
     triggerSearch(destination);
   };
 
@@ -200,12 +200,12 @@ export default function HeroSearch({ onSearch }: HeroSearchProps) {
       <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#1C1B1B] transition-transform hover:scale-105">
         <span className="w-2 h-2 rounded-full bg-secondary dark:bg-[#1E8C80] animate-pulse"></span>
         <span className="font-sans text-xs uppercase tracking-widest text-on-surface dark:text-[#FAF7F2] font-medium">
-          Autumn &amp; Winter Compendium • Vol. XIV
+          {region === "india" ? "India Sacred & Royal Compendium" : "Autumn & Winter Compendium • Vol. XIV"}
         </span>
       </div>
 
       {/* Oversized Regular Serif Headline */}
-      <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-on-surface dark:text-[#FAF7F2] max-w-4xl tracking-tight mb-8 font-normal leading-[1.05]">
+      <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-on-surface dark:text-[#FAF7F2] max-w-4xl tracking-tight mb-8 font-normal leading-[1.05]">
         Where would you wander?
       </h1>
 
@@ -219,8 +219,8 @@ export default function HeroSearch({ onSearch }: HeroSearchProps) {
           onSubmit={handleSubmit}
           className="relative flex items-center w-full bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.35)] rounded-[60px] p-2 md:p-3 transition-all duration-300 group-focus-within:border-primary dark:group-focus-within:border-[#1E8C80]"
         >
-          <div className="pl-4 md:pl-6 pr-2 text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] flex items-center">
-            <span className="material-symbols-outlined text-[26px]">travel_explore</span>
+          <div className="pl-3 md:pl-6 pr-1 sm:pr-2 text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] flex items-center">
+            <span className="material-symbols-outlined text-[22px] sm:text-[26px]">travel_explore</span>
           </div>
 
           <input
@@ -230,7 +230,7 @@ export default function HeroSearch({ onSearch }: HeroSearchProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={currentPlaceholder}
-            className="w-full bg-transparent font-sans text-base md:text-lg text-on-surface dark:text-[#FAF7F2] placeholder:text-outline dark:placeholder:text-[rgba(250,247,242,0.4)] focus:outline-none px-2 tracking-normal transition-all"
+            className="w-full bg-transparent font-sans text-sm sm:text-base md:text-lg text-on-surface dark:text-[#FAF7F2] placeholder:text-outline dark:placeholder:text-[rgba(250,247,242,0.4)] focus:outline-none px-2 tracking-normal transition-all"
             autoComplete="off"
           />
 
@@ -242,7 +242,7 @@ export default function HeroSearch({ onSearch }: HeroSearchProps) {
                 setQuery("");
                 inputRef.current?.focus();
               }}
-              className="p-1.5 mr-2 rounded-full text-on-surface-variant hover:text-on-surface dark:text-[rgba(250,247,242,0.6)] hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors cursor-pointer"
+              className="p-1.5 mr-1 sm:mr-2 rounded-full text-on-surface-variant hover:text-on-surface dark:text-[rgba(250,247,242,0.6)] hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors cursor-pointer"
               aria-label="Clear search input"
             >
               <span className="material-symbols-outlined text-[18px]">close</span>
@@ -258,14 +258,15 @@ export default function HeroSearch({ onSearch }: HeroSearchProps) {
           <button
             type="button"
             onClick={() => setShowFilters(!showFilters)}
-            className={`hidden sm:flex items-center gap-1.5 py-2.5 px-4 mr-2 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] transition-all text-on-surface dark:text-[#FAF7F2] cursor-pointer hover:scale-105 active:scale-95 ${
+            className={`flex items-center gap-1 py-2 px-3 sm:px-4 mr-1 sm:mr-2 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] transition-all text-on-surface dark:text-[#FAF7F2] cursor-pointer hover:scale-105 active:scale-95 ${
               showFilters
                 ? "bg-surface-container-highest dark:bg-[#353534]"
                 : "bg-surface-container dark:bg-[#2A2A2A] hover:bg-surface-variant"
             }`}
+            title="Adjust trip preferences"
           >
             <span className="material-symbols-outlined text-[18px]">tune</span>
-            <span className="font-sans text-xs uppercase tracking-wider font-medium">
+            <span className="font-sans text-xs uppercase tracking-wider font-medium hidden sm:inline">
               {showFilters ? "Close" : "Preferences"}
             </span>
           </button>

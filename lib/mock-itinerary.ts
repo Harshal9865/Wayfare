@@ -69,6 +69,12 @@ export function generateDynamicFallbackPlan(
                 rating: 4.8,
                 user_ratings_total: 45000,
                 photo_url: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800",
+                photos: [
+                  "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1000",
+                  "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1000",
+                  "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1000",
+                  "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1000"
+                ],
                 lat: 26.9855,
                 lng: 75.8513,
                 editorial_summary: "16th-century yellow and pink sandstone fortress commanding panoramic views over Maota Lake.",
@@ -91,6 +97,11 @@ export function generateDynamicFallbackPlan(
                 rating: 4.6,
                 user_ratings_total: 28000,
                 photo_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800",
+                photos: [
+                  "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1000",
+                  "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1000",
+                  "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1000"
+                ],
                 lat: 26.9534,
                 lng: 75.8462,
                 editorial_summary: "A Rajput-style architectural marvel appearing to float in the middle of Man Sagar Lake.",
@@ -114,6 +125,10 @@ export function generateDynamicFallbackPlan(
                 user_ratings_total: 12500,
                 veg_status: "pure_veg",
                 photo_url: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800",
+                photos: [
+                  "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1000",
+                  "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=1000"
+                ],
                 lat: 26.9205,
                 lng: 75.8236,
                 editorial_summary: "18th-century legendary culinary establishment in Johari Bazaar famous for pure ghee sweets and royal thalis.",
@@ -143,6 +158,11 @@ export function generateDynamicFallbackPlan(
                 rating: 4.7,
                 user_ratings_total: 62000,
                 photo_url: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800",
+                photos: [
+                  "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1000",
+                  "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1000",
+                  "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1000"
+                ],
                 lat: 26.9239,
                 lng: 75.8267,
                 editorial_summary: "Iconic five-story pink sandstone structure built in 1799 in the shape of Lord Krishna's crown.",
@@ -165,6 +185,11 @@ export function generateDynamicFallbackPlan(
                 rating: 4.8,
                 user_ratings_total: 39000,
                 photo_url: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800",
+                photos: [
+                  "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1000",
+                  "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=1000",
+                  "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1000"
+                ],
                 lat: 26.9258,
                 lng: 75.8237,
                 editorial_summary: "Resplendent palace complex blending Rajasthani and Mughal architectural heritage, still housing the royal family.",

@@ -199,11 +199,11 @@ export async function GET(request: NextRequest) {
 
   let result = [...REELS_DATABASE];
 
-  // Filter by region if specified
+  // Strict filter by region if specified
   if (region === "india") {
-    result.sort((a, b) => (a.regionType === "india" ? -1 : 1));
+    result = result.filter((r) => r.regionType === "india");
   } else if (region === "abroad") {
-    result.sort((a, b) => (a.regionType === "abroad" ? -1 : 1));
+    result = result.filter((r) => r.regionType === "abroad");
   }
 
   // Filter by category/destination tab
