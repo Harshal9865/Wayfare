@@ -1,10 +1,10 @@
-import { TripPlan, Place } from "./types";
+import { TripPlan, Place, TripStyle, VegDietaryStatus } from "./types";
 
 export function generateDynamicFallbackPlan(
   locationName: string,
   durationDays: number = 3,
-  tripStyle: string = "balanced",
-  dietaryPref: string = "any"
+  tripStyle: TripStyle = "balanced",
+  dietaryPref: VegDietaryStatus = "any"
 ): TripPlan {
   const cleanName = locationName.trim();
   const isIndia =
@@ -30,7 +30,7 @@ export function generateDynamicFallbackPlan(
       lng: 75.7873,
       duration_days: durationDays,
       trip_style: tripStyle,
-      dietary_pref: dietaryPref === "any" ? "satvik" : dietaryPref,
+      dietary_pref: (dietaryPref === "any" ? "satvik" : dietaryPref) as VegDietaryStatus,
       travelers_count: 2,
       budget: {
         hotel_cost_min: 4200,
@@ -477,8 +477,8 @@ export const SAMPLE_TRIP_PLANS: Record<string, TripPlan> = {
 export function getOrCreateTripPlan(
   locationName: string,
   days: number = 3,
-  style: string = "balanced",
-  diet: string = "any"
+  style: TripStyle = "balanced",
+  diet: VegDietaryStatus = "any"
 ): TripPlan {
   if (SAMPLE_TRIP_PLANS[locationName]) {
     return SAMPLE_TRIP_PLANS[locationName];

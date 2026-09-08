@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getOrCreateTripPlan } from "@/lib/mock-itinerary";
-import { TripPlan } from "@/lib/types";
+import { TripPlan, TripStyle, VegDietaryStatus } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
   try {
@@ -110,8 +110,8 @@ Return strictly valid JSON matching:
               lat: operationalSpots[0]?.lat || 26.9124,
               lng: operationalSpots[0]?.lng || 75.7873,
               duration_days,
-              trip_style,
-              dietary_pref,
+              trip_style: trip_style as TripStyle,
+              dietary_pref: dietary_pref as VegDietaryStatus,
               travelers_count,
               days: parsed.days,
               budget: {
@@ -132,8 +132,8 @@ Return strictly valid JSON matching:
     const matchedPlan: TripPlan = getOrCreateTripPlan(
       location_name,
       duration_days,
-      trip_style,
-      dietary_pref
+      trip_style as TripStyle,
+      dietary_pref as VegDietaryStatus
     );
 
     return NextResponse.json({ success: true, plan: matchedPlan });

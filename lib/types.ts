@@ -2,9 +2,9 @@ export type PlaceCategory = 'attraction' | 'food' | 'stay';
 
 export type BusinessStatus = 'OPERATIONAL' | 'CLOSED_TEMPORARILY' | 'CLOSED_PERMANENTLY' | 'UNKNOWN';
 
-export type VegDietaryStatus = 'pure_veg' | 'jain_friendly' | 'veg_options' | 'non_veg' | 'unverified';
+export type VegDietaryStatus = 'pure_veg' | 'jain_friendly' | 'veg_options' | 'non_veg' | 'unverified' | 'satvik' | 'any';
 
-export type TripStyle = 'backpacker' | 'pilgrimage' | 'family' | 'leisure' | 'balanced';
+export type TripStyle = 'backpacker' | 'pilgrimage' | 'family' | 'leisure' | 'balanced' | string;
 
 export interface Place {
   id: string;
@@ -66,7 +66,7 @@ export interface BudgetBreakdown {
   activities_cost_max: number;
   total_estimate_min: number;
   total_estimate_max: number;
-  currency: 'INR';
+  currency: string;
   is_estimate: true;
 }
 

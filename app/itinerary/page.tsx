@@ -15,7 +15,7 @@ import AddCustomSpotModal from "@/components/AddCustomSpotModal";
 import ShareTripModal from "@/components/ShareTripModal";
 import EditorialLoader from "@/components/EditorialLoader";
 import { SAMPLE_TRIP_PLANS, getOrCreateTripPlan } from "@/lib/mock-itinerary";
-import { Place, TripPlan, ItineraryItem } from "@/lib/types";
+import { Place, TripPlan, ItineraryItem, TripStyle, VegDietaryStatus } from "@/lib/types";
 import { useCurrency } from "@/lib/currency";
 import { supabase } from "@/lib/supabase";
 
@@ -23,8 +23,8 @@ function ItineraryContent() {
   const searchParams = useSearchParams();
   const locationParam = searchParams.get("location") || "Jaipur, India";
   const daysParam = parseInt(searchParams.get("days") || "3", 10);
-  const styleParam = searchParams.get("style") || "balanced";
-  const dietParam = searchParams.get("diet") || "any";
+  const styleParam = (searchParams.get("style") || "balanced") as TripStyle;
+  const dietParam = (searchParams.get("diet") || "any") as VegDietaryStatus;
 
   const { formatPrice } = useCurrency();
 
