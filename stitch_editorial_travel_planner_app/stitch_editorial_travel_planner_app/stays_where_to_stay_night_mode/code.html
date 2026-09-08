@@ -1,0 +1,417 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "error-container": "#93000a",
+          "surface-variant": "#353534",
+          "primary-fixed-dim": "#76d7c9",
+          "primary-container": "#1A7A70",
+          "on-secondary-container": "#b7b5b0",
+          "on-secondary": "#31302d",
+          "on-background": "#FAF7F2",
+          "on-tertiary-container": "#00302b",
+          "error": "#ffb4ab",
+          "tertiary": "#81d5c9",
+          "on-tertiary-fixed-variant": "#005049",
+          "tertiary-fixed": "#9df2e5",
+          "on-surface": "#FAF7F2",
+          "inverse-primary": "#006a61",
+          "surface-container-high": "#2a2a2a",
+          "outline": "#879390",
+          "secondary-fixed": "#e5e2dd",
+          "on-error": "#690005",
+          "tertiary-fixed-dim": "#81d5c9",
+          "background": "#131313",
+          "on-primary-fixed": "#00201c",
+          "on-tertiary": "#003732",
+          "surface-tint": "#76d7c9",
+          "on-tertiary-fixed": "#00201d",
+          "surface-container-lowest": "#0e0e0e",
+          "tertiary-container": "#489e94",
+          "surface-bright": "#393939",
+          "secondary-container": "#474743",
+          "surface": "#131313",
+          "on-primary-container": "#FAF7F2",
+          "on-primary": "#FAF7F2",
+          "on-secondary-fixed": "#1c1c19",
+          "surface-container": "#201f1f",
+          "outline-variant": "#3A3835",
+          "on-error-container": "#ffdad6",
+          "on-secondary-fixed-variant": "#474743",
+          "on-surface-variant": "#A8A59E",
+          "inverse-on-surface": "#313030",
+          "primary": "#76d7c9",
+          "surface-container-low": "#1c1b1b",
+          "inverse-surface": "#e5e2e1",
+          "surface-container-highest": "#353534",
+          "secondary": "#c8c6c2",
+          "secondary-fixed-dim": "#c8c6c2",
+          "primary-fixed": "#93f4e5",
+          "surface-dim": "#131313",
+          "on-primary-fixed-variant": "#005048"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-tablet": "2.5rem",
+          "gutter-md": "1.5rem",
+          "margin-mobile": "1.25rem",
+          "gutter-xl": "4rem",
+          "margin-desktop": "5rem",
+          "gutter-lg": "2.5rem",
+          "gutter-xs": "0.5rem",
+          "gutter-sm": "1rem",
+          "content-max-width": "84rem"
+        },
+        "fontFamily": {
+          "headline-lg": [
+            "EB Garamond"
+          ],
+          "display-xl": [
+            "EB Garamond"
+          ],
+          "label-lg": [
+            "Inter"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "headline-md-mobile": [
+            "EB Garamond"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "headline-sm": [
+            "EB Garamond"
+          ],
+          "display-xl-mobile": [
+            "EB Garamond"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "headline-lg-mobile": [
+            "EB Garamond"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "headline-md": [
+            "EB Garamond"
+          ]
+        },
+        "fontSize": {
+          "headline-lg": [
+            "56px",
+            {
+              "lineHeight": "64px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-xl": [
+            "80px",
+            {
+              "lineHeight": "88px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-lg": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-sm": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.05em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md-mobile": [
+            "28px",
+            {
+              "lineHeight": "34px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-md": [
+            "15px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-xl-mobile": [
+            "48px",
+            {
+              "lineHeight": "54px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-sm": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg-mobile": [
+            "36px",
+            {
+              "lineHeight": "42px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-lg": [
+            "18px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-md": [
+            "36px",
+            {
+              "lineHeight": "44px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-[#131313] text-[#FAF7F2] antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-[#131313] border-b-2 border-[#3A3835]"><div class="h-20 w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between"><div class="flex items-center gap-4"><img alt="Editorial Travel Emblem" class="h-8 w-auto object-contain brightness-95 contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0N1-p99GULXEEEn9Y525YSboUICd8Besr74O_ECrItNOBzRhrKyxp-ywjDmVixQId7iGaXC6Ov4mL5ScdeEFSr973FpkA9QNnGnJGl-SsWCKnvFroIU0VpSc4NgdQHOehrzY43ybs2tnDJQ-nssBaTzndKrhp9cvr4VrM_iIiIENMxoWMZbN5j-8tOQ99UP4DzzPZ8VZd9Sn41ydEJ6IJOBg5CIhDHi6v8mmtpiVbXHYf8S-7D4aV"><span class="font-headline-sm text-headline-sm tracking-tight text-[#FAF7F2] uppercase">WAYFARE</span></div><nav class="hidden md:flex items-center gap-8" data-active-classes="bg-[#1A7A70] text-[#FAF7F2] rounded-full px-4 py-1.5"><a class="font-label-lg text-label-lg text-[#A8A59E] hover:text-[#FAF7F2] transition-colors" data-path="home" href="{{DATA:SCREEN:SCREEN_8}}">Explore</a><a class="font-label-lg text-label-lg text-[#A8A59E] hover:text-[#FAF7F2] transition-colors" data-path="itinerary" href="{{DATA:SCREEN:SCREEN_6}}">Itinerary</a><a aria-current="page" class="font-label-lg transition-colors bg-[#1A7A70] text-[#FAF7F2] rounded-full px-4 py-1.5" data-path="stays" href="{{DATA:SCREEN:SCREEN_7}}">Stays</a><a class="font-label-lg text-label-lg text-[#A8A59E] hover:text-[#FAF7F2] transition-colors" data-path="journal" href="#">Journal</a><a class="font-label-lg text-label-lg text-[#A8A59E] hover:text-[#FAF7F2] transition-colors" data-path="my-trips" href="{{DATA:SCREEN:SCREEN_3}}">My Trips</a></nav><div class="flex items-center gap-5"><div class="flex items-center p-1 bg-[#1c1b1b] border-2 border-[#3A3835] rounded-full"><a href="{{DATA:SCREEN:SCREEN_17}}" title="Switch to Day Mode" class="flex items-center justify-center w-7 h-7 rounded-full text-[#A8A59E] hover:text-[#FAF7F2] transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px]">light_mode</span></a><span class="flex items-center justify-center w-7 h-7 rounded-full bg-[#2A2A2A] text-[#FAF7F2]"><span class="material-symbols-outlined text-[16px]">dark_mode</span></span></div><div class="border-2 border-[#3A3835] rounded-full p-[2px] flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn6ptYpm-nXWS4NtnTAXxftdenQKgihaKIh-2-rXfObJkYscNzUcYr-9z3Xc7qvIazIIn-iJclmWCgkBK27jGgKB4_hP0KtIB5qQO7MZUoxiBr8mdRq-tslZlHkqEH_w4hSlD-RuYa35B0-he6jkW0ednIRxHhWTkk7rVOfTuN6tezpiHJWemwOslAo0jEiDAKbfkkJmdhwFDtqSLn6ciV38XbyPdqTFlFmvJFBE-82swArMJJhN7I"></div></div></div></header><main class="w-full pt-20 bg-[#131313]"><div class="flex flex-col w-full">
+<!-- Top Curatorial Masthead -->
+<section class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop pt-8 md:pt-14 pb-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10">
+<div class="max-w-3xl space-y-4">
+<div class="flex items-center gap-3">
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-[#76d7c9] font-semibold">Volume IV — Curated Shelter</span>
+<span class="inline-block w-8 h-[2px] bg-[#FAF7F2]/40"></span>
+<span class="font-label-sm text-label-sm text-[#A8A59E] uppercase tracking-wider">Autumn 2024</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-[#FAF7F2] tracking-tight leading-[1.08]">
+          Sanctuaries of Stillness
+        </h1>
+<p class="font-body-lg text-body-lg text-[#A8A59E] max-w-2xl pt-1">
+          Where to Stay — Handpicked riads, ryokans, and coastal villas with quiet character.
+        </p>
+</div>
+<!-- Quick Curatorial Metadata Index -->
+<div class="flex items-center gap-6 py-3 px-6 bg-[#1C1B1B] border-2 border-[#3A3835] rounded-full shrink-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#76d7c9] text-[20px]">verified</span>
+<span class="font-label-lg text-label-lg text-[#FAF7F2] font-medium">32 Verified Residencies</span>
+</div>
+<span class="text-[#3A3835]">/</span>
+<div class="font-label-sm text-label-sm text-[#A8A59E] uppercase tracking-wider">Zero Service Inflation</div>
+</div>
+</div>
+<!-- Filter Control Bar with Micro-interactions -->
+<div class="pt-4 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar pb-2" id="filter-container">
+<div class="flex items-center gap-3 shrink-0">
+<button class="filter-pill px-6 py-3 rounded-full font-label-lg text-label-lg transition-colors duration-200 bg-[#1A7A70] text-[#FAF7F2] font-medium border-2 border-[#1A7A70]" data-filter="all" type="button">
+          All Stays
+        </button>
+<button class="filter-pill px-6 py-3 rounded-full font-label-lg text-label-lg transition-colors duration-200 bg-[#1C1B1B] text-[#FAF7F2] border-2 border-[#3A3835] hover:bg-[#2A2A2A] font-medium" data-filter="ryokan" type="button">
+          Ryokans
+        </button>
+<button class="filter-pill px-6 py-3 rounded-full font-label-lg text-label-lg transition-colors duration-200 bg-[#1C1B1B] text-[#FAF7F2] border-2 border-[#3A3835] hover:bg-[#2A2A2A] font-medium" data-filter="villa" type="button">
+          Historic Villas
+        </button>
+<button class="filter-pill px-6 py-3 rounded-full font-label-lg text-label-lg transition-colors duration-200 bg-[#1C1B1B] text-[#FAF7F2] border-2 border-[#3A3835] hover:bg-[#2A2A2A] font-medium" data-filter="mountain" type="button">
+          Mountain Lodges
+        </button>
+<button class="filter-pill px-6 py-3 rounded-full font-label-lg text-label-lg transition-colors duration-200 bg-[#1C1B1B] text-[#FAF7F2] border-2 border-[#3A3835] hover:bg-[#2A2A2A] font-medium" data-filter="riad" type="button">
+          Design Riads
+        </button>
+</div>
+<div class="hidden lg:flex items-center gap-3 shrink-0">
+<span class="font-label-sm text-label-sm text-[#A8A59E] uppercase tracking-wider">Sort by:</span>
+<div class="px-4 py-2 bg-[#1C1B1B] border-2 border-[#3A3835] rounded-full flex items-center gap-2 cursor-pointer text-[#FAF7F2]">
+<span class="font-label-sm text-label-sm font-medium">Architectural Rarity</span>
+<span class="material-symbols-outlined text-[16px] text-[#A8A59E]">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Highlight Section: Curated Cards Showcase (3 Prominent Cards) -->
+<section class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop pb-20">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+<!-- CARD 1: Sowaka Ryokan (Kyoto) -->
+<article class="group flex flex-col bg-[#1C1B1B] border-2 border-[#3A3835] rounded-[32px] overflow-hidden p-6 transition-all duration-300">
+<!-- Visual Presentation -->
+<div class="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden bg-[#2A2A2A]">
+<img class="w-full h-full object-cover brightness-[0.88] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Intimate traditional Japanese ryokan tea pavilion with authentic natural woven tatami mat flooring, low polished cedar wood table, sunbeam streaming through translucent washi paper shoji screens, soft natural linen cushions, warm cream and warm amber organic daylight tones, architectural photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtVL11GNeuCAJIDiQZ4b2QUk8d1LVzm0T4LCKN9MbNr5z0xoUljbdxMhan6gGYNYswNl8zKOXnob2d7iOMgTCk1Xo4IJ_-20n70bUf3xCK5j7VjsTk49nDQUbHOk2euCIkVgY1ElxrQAHvW77KucSrpZ9SzdMfuzRz6ncLvb2nkZ-Zh4ASL3EujghGnx7XdgSOiuY5OzKLOkoKQ1hJaORl0bhAihRT34hZ9-xwXJt7oWh72cNFiYWo">
+<div class="absolute top-4 left-4 bg-[#131313]/90 border border-[#3A3835] px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#76d7c9]"></span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-[#FAF7F2] font-semibold">Preservation Grade</span>
+</div>
+<button aria-label="Save Sowaka Ryokan" class="absolute top-4 right-4 w-10 h-10 bg-[#131313]/90 border border-[#3A3835] rounded-full flex items-center justify-center text-[#FAF7F2] hover:bg-[#2A2A2A] transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Meta / Neighborhood / Rating -->
+<div class="flex items-center justify-between pt-6 pb-2">
+<span class="font-label-sm text-label-sm text-[#A8A59E] font-medium tracking-wide">
+            Gion, Kyoto · <span class="text-[#FAF7F2] font-semibold">★ 4.9</span> (128 reviews)
+          </span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-[#2A2A2A] border border-[#3A3835] text-[#FAF7F2] font-medium">Tatami &amp; Onsen</span>
+</div>
+<!-- Property Title -->
+<h2 class="font-headline-sm text-headline-sm text-[#FAF7F2] group-hover:text-[#76d7c9] transition-colors line-clamp-1 pb-2">
+          Sowaka Ryokan &amp; Tea Pavilion
+        </h2>
+<!-- Narrative Description snippet -->
+<p class="font-body-sm text-body-sm text-[#A8A59E] line-clamp-2 mb-6">
+          A tranquil 100-year-old former temple compound nestled against Higashiyama mountain, featuring restored cedar corridors and garden tearooms.
+        </p>
+<!-- Spacer to pin footer elements -->
+<div class="mt-auto pt-4 bg-[#181717] border-t-2 border-[#3A3835] -mx-6 -mb-6 p-6 rounded-b-[30px] flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-[#FAF7F2]">$380 <span class="font-body-sm text-body-sm font-normal text-[#A8A59E]">/ night</span></span>
+<span class="font-label-sm text-label-sm text-[#76d7c9] font-medium">Breakfast included</span>
+</div>
+<a href="{{DATA:SCREEN:SCREEN_5}}" class="px-6 py-3 bg-[#1A7A70] hover:bg-[#14645c] text-[#FAF7F2] font-label-lg text-label-lg font-medium rounded-full transition-colors shrink-0 inline-flex items-center justify-center cursor-pointer">View &amp; Book</a>
+</div>
+</article>
+<!-- CARD 2: Riad Jardin Secret (Marrakech) -->
+<article class="group flex flex-col bg-[#1C1B1B] border-2 border-[#3A3835] rounded-[32px] overflow-hidden p-6 transition-all duration-300">
+<!-- Visual Presentation -->
+<div class="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden bg-[#2A2A2A]">
+<img class="w-full h-full object-cover brightness-[0.88] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Sun-drenched peaceful Moroccan riad inner courtyard, whitewashed plaster walls with delicate carved archways, central marble fountain basin with floating orange blossom petals, potted olive trees and terracotta planters, dusty ochre and cream textiles, warm mid-morning architectural photo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgt7eqJ9IAmvM0XmdB7eU9ErSrYysbAm6P2t4VuTKP4jzQ4I243-OjB4HP_caJe5vGj3ODvwfMZ6xfDv1rPU6Vt-9xbAOuhdtFsXg3XHT9JEU0_oMUg6HGXF2-ZBQhV-JSsdqU-sEMkjPfWVTjotq97CUBxj-gfl0b7cA2PKWfhKxxn7coMQqEI9wnzFhFOzVvwaDuiwSKRnXeuEJU_eh4al77whWpl_9oaVriEI_l6O851RNLfnuW">
+<div class="absolute top-4 left-4 bg-[#131313]/90 border border-[#3A3835] px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#81d5c9]"></span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-[#FAF7F2] font-semibold">Restored 19th C.</span>
+</div>
+<button aria-label="Save Riad Jardin Secret" class="absolute top-4 right-4 w-10 h-10 bg-[#131313]/90 border border-[#3A3835] rounded-full flex items-center justify-center text-[#FAF7F2] hover:bg-[#2A2A2A] transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Meta / Neighborhood / Rating -->
+<div class="flex items-center justify-between pt-6 pb-2">
+<span class="font-label-sm text-label-sm text-[#A8A59E] font-medium tracking-wide">
+            Medina, Marrakech · <span class="text-[#FAF7F2] font-semibold">★ 4.95</span> (214 reviews)
+          </span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-[#2A2A2A] border border-[#3A3835] text-[#FAF7F2] font-medium">Courtyard Pool</span>
+</div>
+<!-- Property Title -->
+<h2 class="font-headline-sm text-headline-sm text-[#FAF7F2] group-hover:text-[#76d7c9] transition-colors line-clamp-1 pb-2">
+          Riad Jardin Secret &amp; Orangerie
+        </h2>
+<!-- Narrative Description snippet -->
+<p class="font-body-sm text-body-sm text-[#A8A59E] line-clamp-2 mb-6">
+          A secluded botanical sanctuary shielded from the souks by two-century-old clay walls, artisan hand-hewn cedar woodwork, and bird-filled fig canopies.
+        </p>
+<!-- Spacer to pin footer elements -->
+<div class="mt-auto pt-4 bg-[#181717] border-t-2 border-[#3A3835] -mx-6 -mb-6 p-6 rounded-b-[30px] flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-[#FAF7F2]">$290 <span class="font-body-sm text-body-sm font-normal text-[#A8A59E]">/ night</span></span>
+<span class="font-label-sm text-label-sm text-[#76d7c9] font-medium">Breakfast &amp; Hammam</span>
+</div>
+<a href="{{DATA:SCREEN:SCREEN_5}}" class="px-6 py-3 bg-[#1A7A70] hover:bg-[#14645c] text-[#FAF7F2] font-label-lg text-label-lg font-medium rounded-full transition-colors shrink-0 inline-flex items-center justify-center cursor-pointer">View &amp; Book</a>
+</div>
+</article>
+<!-- CARD 3: Villa Alentejana (Comporta) -->
+<article class="group flex flex-col bg-[#1C1B1B] border-2 border-[#3A3835] rounded-[32px] overflow-hidden p-6 transition-all duration-300">
+<!-- Visual Presentation -->
+<div class="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden bg-[#2A2A2A]">
+<img class="w-full h-full object-cover brightness-[0.88] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Sunlit minimalist coastal Portuguese stone villa bedroom with textured raw chalk lime walls, crinkled neutral unbleached linen bedspread, handcrafted rough pine nightstand, panoramic view of wild maritime pine trees and sandy coastal dunes, serene editorial interior." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA-bKoXFlOdFfFDcnKpA6SVlZeOl-FuaHx8eZ6Hwqf0bO0_uU10fe2Styj4W1ILBSYibicpv9N1-4E66QGW2fCeXLFtwokP1RTlGUDn3Gz4kXI4BhOqCmAnXrITD6tAufnXGbx_XVMN0hwTWBLyooKu-SUJJvCDDvszljXuGWVDifrzUQHZ7rW_rT7olady8cQC8KqtoxXvfHTF9B9BL7oS8hMC2nlVbkF5EJH9AUKMkixlyWesiYV">
+<div class="absolute top-4 left-4 bg-[#131313]/90 border border-[#3A3835] px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#c8c6c2]"></span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-[#FAF7F2] font-semibold">Private Dune Access</span>
+</div>
+<button aria-label="Save Villa Alentejana" class="absolute top-4 right-4 w-10 h-10 bg-[#131313]/90 border border-[#3A3835] rounded-full flex items-center justify-center text-[#FAF7F2] hover:bg-[#2A2A2A] transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Meta / Neighborhood / Rating -->
+<div class="flex items-center justify-between pt-6 pb-2">
+<span class="font-label-sm text-label-sm text-[#A8A59E] font-medium tracking-wide">
+            Melides, Comporta · <span class="text-[#FAF7F2] font-semibold">★ 4.88</span> (96 reviews)
+          </span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-[#2A2A2A] border border-[#3A3835] text-[#FAF7F2] font-medium">Pool &amp; Dune</span>
+</div>
+<!-- Property Title -->
+<h2 class="font-headline-sm text-headline-sm text-[#FAF7F2] group-hover:text-[#76d7c9] transition-colors line-clamp-1 pb-2">
+          Villa Alentejana &amp; Wild Orchard
+        </h2>
+<!-- Narrative Description snippet -->
+<p class="font-body-sm text-body-sm text-[#A8A59E] line-clamp-2 mb-6">
+          Architectural minimalism sculpted into the pine scrubland, complete with heated sea-salt water basin and evening Atlantic breeze orientation.
+        </p>
+<!-- Spacer to pin footer elements -->
+<div class="mt-auto pt-4 bg-[#181717] border-t-2 border-[#3A3835] -mx-6 -mb-6 p-6 rounded-b-[30px] flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-[#FAF7F2]">$520 <span class="font-body-sm text-body-sm font-normal text-[#A8A59E]">/ night</span></span>
+<span class="font-label-sm text-label-sm text-[#76d7c9] font-medium">Estate Breakfast &amp; Bikes</span>
+</div>
+<a href="{{DATA:SCREEN:SCREEN_5}}" class="px-6 py-3 bg-[#1A7A70] hover:bg-[#14645c] text-[#FAF7F2] font-label-lg text-label-lg font-medium rounded-full transition-colors shrink-0 inline-flex items-center justify-center cursor-pointer">View &amp; Book</a>
+</div>
+</article>
+</div>
+</section>
+<!-- Editorial Dispatch Note Section (Quiet Authority Pause) -->
+<section class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop pb-16">
+<div class="bg-[#181717] border-2 border-[#3A3835] rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="space-y-2 max-w-xl">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-[#76d7c9] font-semibold">The Wayfare Guarantee</span>
+<h3 class="font-headline-sm text-headline-sm text-[#FAF7F2]">Every room evaluated in person for tactile silence.</h3>
+<p class="font-body-md text-body-md text-[#A8A59E]">
+          We deliberately avoid commercial hotel aggregators. Each property hosts under thirty guests, respects vernacular building traditions, and offers uncompromised acoustic privacy.
+        </p>
+</div>
+<div class="flex items-center gap-4 shrink-0">
+<div class="text-right hidden sm:block">
+<div class="font-headline-sm text-headline-sm text-[#FAF7F2]">100%</div>
+<div class="font-label-sm text-label-sm text-[#A8A59E] uppercase">Inspected in 2024</div>
+</div>
+<div class="w-12 h-12 rounded-full bg-[#2A2A2A] border-2 border-[#3A3835] flex items-center justify-center text-[#76d7c9]">
+<span class="material-symbols-outlined text-[24px]">architecture</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive JavaScript for Filter Pills -->
+<script>
+    document.querySelectorAll('.filter-pill').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(btn => {
+          btn.classList.remove('bg-[#1A7A70]', 'text-[#FAF7F2]', 'border-[#1A7A70]');
+          btn.classList.add('bg-[#1C1B1B]', 'text-[#FAF7F2]', 'border-[#3A3835]');
+        });
+        button.classList.remove('bg-[#1C1B1B]', 'border-[#3A3835]');
+        button.classList.add('bg-[#1A7A70]', 'text-[#FAF7F2]', 'border-[#1A7A70]');
+      });
+    });
+  </script>
+</div></main><footer class="w-full bg-[#181717] border-t-2 border-[#3A3835] mt-16 py-12"><div class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col md:flex-row items-center justify-between gap-6"><div class="flex items-center gap-3"><img alt="Editorial Travel Emblem" class="h-6 w-auto object-contain brightness-95 contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0N1-p99GULXEEEn9Y525YSboUICd8Besr74O_ECrItNOBzRhrKyxp-ywjDmVixQId7iGaXC6Ov4mL5ScdeEFSr973FpkA9QNnGnJGl-SsWCKnvFroIU0VpSc4NgdQHOehrzY43ybs2tnDJQ-nssBaTzndKrhp9cvr4VrM_iIiIENMxoWMZbN5j-8tOQ99UP4DzzPZ8VZd9Sn41ydEJ6IJOBg5CIhDHi6v8mmtpiVbXHYf8S-7D4aV"><span class="font-headline-sm text-headline-sm tracking-tight text-[#FAF7F2] uppercase">WAYFARE</span></div><p class="font-body-sm text-body-sm text-[#A8A59E] text-center">© 2024 WAYFARE Atelier Travel. All journal rights reserved.</p><div class="flex items-center gap-6"><a class="font-label-sm text-label-sm uppercase tracking-wider text-[#A8A59E] hover:text-[#FAF7F2]" href="#">Archive</a><a class="font-label-sm text-label-sm uppercase tracking-wider text-[#A8A59E] hover:text-[#FAF7F2]" href="#">Colophon</a><a class="font-label-sm text-label-sm uppercase tracking-wider text-[#A8A59E] hover:text-[#FAF7F2]" href="#">Dispatch</a></div></div></footer>
+
+</body></html>

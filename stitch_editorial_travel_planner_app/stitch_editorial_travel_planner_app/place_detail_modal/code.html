@@ -1,0 +1,392 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "error-container": "#ffdad6",
+          "surface-variant": "#e5e2dd",
+          "primary-fixed-dim": "#9ad0d0",
+          "primary-container": "#0f4c4c",
+          "on-secondary-container": "#2f6e6e",
+          "on-secondary": "#ffffff",
+          "on-background": "#1c1c19",
+          "on-tertiary-container": "#e2a487",
+          "error": "#ba1a1a",
+          "tertiary": "#4a230f",
+          "on-tertiary-fixed-variant": "#683b25",
+          "tertiary-fixed": "#ffdbcc",
+          "on-surface": "#1c1c19",
+          "inverse-primary": "#9ad0d0",
+          "surface-container-high": "#ebe8e3",
+          "outline": "#707978",
+          "secondary-fixed": "#afeeed",
+          "on-error": "#ffffff",
+          "tertiary-fixed-dim": "#f9b89a",
+          "background": "#fcf9f4",
+          "on-primary-fixed": "#002020",
+          "on-tertiary": "#ffffff",
+          "surface-tint": "#306767",
+          "on-tertiary-fixed": "#331202",
+          "surface-container-lowest": "#ffffff",
+          "tertiary-container": "#653923",
+          "surface-bright": "#fcf9f4",
+          "secondary-container": "#afeeed",
+          "surface": "#fcf9f4",
+          "on-primary-container": "#85bbbb",
+          "on-primary": "#ffffff",
+          "on-secondary-fixed": "#002020",
+          "surface-container": "#f0ede9",
+          "outline-variant": "#bfc8c8",
+          "on-error-container": "#93000a",
+          "on-secondary-fixed-variant": "#024f4f",
+          "on-surface-variant": "#404848",
+          "inverse-on-surface": "#f3f0eb",
+          "primary": "#003434",
+          "surface-container-low": "#f6f3ee",
+          "inverse-surface": "#31302d",
+          "surface-container-highest": "#e5e2dd",
+          "secondary": "#286867",
+          "secondary-fixed-dim": "#94d1d1",
+          "primary-fixed": "#b5edec",
+          "surface-dim": "#dcdad5",
+          "on-primary-fixed-variant": "#134f4f"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-tablet": "2.5rem",
+          "gutter-md": "1.5rem",
+          "margin-mobile": "1.25rem",
+          "gutter-xl": "4rem",
+          "margin-desktop": "5rem",
+          "gutter-lg": "2.5rem",
+          "gutter-xs": "0.5rem",
+          "gutter-sm": "1rem",
+          "content-max-width": "84rem"
+        },
+        "fontFamily": {
+          "headline-lg": [
+            "EB Garamond"
+          ],
+          "display-xl": [
+            "EB Garamond"
+          ],
+          "label-lg": [
+            "Inter"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "headline-md-mobile": [
+            "EB Garamond"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "headline-sm": [
+            "EB Garamond"
+          ],
+          "display-xl-mobile": [
+            "EB Garamond"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "headline-lg-mobile": [
+            "EB Garamond"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "headline-md": [
+            "EB Garamond"
+          ]
+        },
+        "fontSize": {
+          "headline-lg": [
+            "56px",
+            {
+              "lineHeight": "64px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-xl": [
+            "80px",
+            {
+              "lineHeight": "88px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-lg": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-sm": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.05em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md-mobile": [
+            "28px",
+            {
+              "lineHeight": "34px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-md": [
+            "15px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-xl-mobile": [
+            "48px",
+            {
+              "lineHeight": "54px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-sm": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg-mobile": [
+            "36px",
+            {
+              "lineHeight": "42px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-lg": [
+            "18px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-md": [
+            "36px",
+            {
+              "lineHeight": "44px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-background text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface border-b-2 border-on-surface"><div class="h-20 w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between"><div class="flex items-center gap-4"><img alt="Editorial Travel Emblem" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0N1-p99GULXEEEn9Y525YSboUICd8Besr74O_ECrItNOBzRhrKyxp-ywjDmVixQId7iGaXC6Ov4mL5ScdeEFSr973FpkA9QNnGnJGl-SsWCKnvFroIU0VpSc4NgdQHOehrzY43ybs2tnDJQ-nssBaTzndKrhp9cvr4VrM_iIiIENMxoWMZbN5j-8tOQ99UP4DzzPZ8VZd9Sn41ydEJ6IJOBg5CIhDHi6v8mmtpiVbXHYf8S-7D4aV"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">WAYFARE</span></div><nav class="hidden md:flex items-center gap-8" data-active-classes="bg-primary text-on-primary rounded-full px-4 py-1.5"><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="{{DATA:SCREEN:SCREEN_19}}">Explore</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="itinerary" href="{{DATA:SCREEN:SCREEN_15}}">Itinerary</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="stays" href="{{DATA:SCREEN:SCREEN_17}}">Stays</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="journal" href="#">Journal</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="my-trips" href="{{DATA:SCREEN:SCREEN_9}}">My Trips</a></nav><div class="flex items-center gap-5"><a href="{{DATA:SCREEN:SCREEN_5}}" aria-label="Switch to Night Mode" class="flex items-center p-1 bg-surface-container-low border-2 border-on-surface rounded-full transition-colors cursor-pointer"><span class="flex items-center justify-center w-7 h-7 rounded-full bg-primary-container text-on-primary"><span class="material-symbols-outlined text-[16px]">light_mode</span></span><span class="flex items-center justify-center w-7 h-7 rounded-full text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">dark_mode</span></span></a><div class="border-2 border-on-surface rounded-full p-[2px] flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn6ptYpm-nXWS4NtnTAXxftdenQKgihaKIh-2-rXfObJkYscNzUcYr-9z3Xc7qvIazIIn-iJclmWCgkBK27jGgKB4_hP0KtIB5qQO7MZUoxiBr8mdRq-tslZlHkqEH_w4hSlD-RuYa35B0-he6jkW0ednIRxHhWTkk7rVOfTuN6tezpiHJWemwOslAo0jEiDAKbfkkJmdhwFDtqSLn6ciV38XbyPdqTFlFmvJFBE-82swArMJJhN7I"></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full relative">
+<div class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop py-10 opacity-30 select-none pointer-events-none filter blur-[2px] transition-all">
+<div class="flex items-baseline justify-between border-b-2 border-on-surface pb-6 mb-12">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Dispatch No. 04 / Kansai</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mt-1">Autumn in Western Kyoto</h1>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-lg text-label-lg px-4 py-1.5 rounded-full border-2 border-on-surface bg-surface-container">Day 2 of 6</span>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-gutter-md">
+<div class="col-span-12 md:col-span-4 flex flex-col gap-6">
+<div class="p-8 rounded-[32px] border-2 border-on-surface bg-surface-container-lowest">
+<span class="font-label-sm text-label-sm uppercase text-secondary tracking-wider">Morning Route</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-2">Sagano Arashiyama</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-4">Winding alleys through towering bamboo stands, traditional shukubo, and quiet hill temples nestled into the cedar canopy.</p>
+</div>
+<div class="h-64 rounded-[32px] border-2 border-on-surface bg-cover bg-center" data-alt="Soft atmospheric wide angle photograph of morning mist in a dense bamboo forest grove in Arashiyama Kyoto, cinematic morning diffused amber sunlight casting long gentle shadows across quiet stone paved walkway." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD1TYf0jcrcuWnAPIaVQlLicO-PHysKiKx7pR3hdH7oFZks5FWR4WBEi4vYARhEsZbmyFIdogoowiNNu8oE4FObDPRrP2smJPJ9jKBOQua81fhaNnPxsIZV4O8OeT6Nk9ZMf816xK-4AGWNNbwhdHR4SFc8nYV-70nh1gaUdvQSV5o2nnsYSDTd5NkNwWt9KKRgug9eIw5ByNmdNyD8g3lrEHh1zxyBnM1qpnzW5j1dbj2lfaVkktPk')"></div>
+</div>
+<div class="col-span-12 md:col-span-8 flex flex-col gap-6">
+<div class="p-8 rounded-[32px] border-2 border-on-surface bg-surface-container-low flex flex-col gap-6">
+<div class="flex items-center justify-between border-b-2 border-on-surface pb-4">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">08:30 AM — Curated Stop</span>
+<span class="font-label-sm text-label-sm text-on-surface">Verified Entry</span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Giou-ji Moss Garden</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">A secluded hermitage covered in lush velvet moss beneath tall maples.</p>
+</div>
+<span class="px-3 py-1 rounded-full border-2 border-on-surface font-label-sm text-label-sm bg-surface-container-highest">Completed</span>
+</div>
+</div>
+<div class="p-8 rounded-[32px] border-2 border-on-surface bg-surface-container flex flex-col gap-4">
+<div class="flex items-center justify-between border-b-2 border-on-surface pb-4">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">11:00 AM — Primary Highlight</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">Selected Location</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Otagi Nenbutsu-ji Temple</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Sagano, Western Kyoto · 1,200 Whimsical Rakan Statues</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/40 backdrop-blur-sm p-4 md:p-6 overflow-y-auto" id="modal-backdrop" onclick="if(event.target===this)window.location.href='{{DATA:SCREEN:SCREEN_15}}'">
+<div aria-labelledby="modal-place-title" aria-modal="true" class="relative w-full max-w-2xl md:max-w-3xl bg-[#FAF7F2] border-2 border-[#1A1A1A] rounded-[32px] overflow-hidden my-auto flex flex-col" role="dialog">
+<div class="relative w-full h-72 md:h-96 border-b-2 border-[#1A1A1A] overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover object-center" data-alt="Intimate, warm Mediterranean and Nordic morning sunlit editorial photograph of Otagi Nenbutsu-ji courtyard in western Kyoto. Hundreds of hand-carved stone Buddhist rakan sculptures blanketed in thick emerald green moss, textured damp slate pathways, weathered cedar temple pavilions, gentle morning sunbeams piercing golden autumn leaves, tranquil, lived-in archival atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0V1er4wUtyZJimF41lNh1NggfMS-n49CJULOlbclxrwJex-cqAsDBP2b6nQTKwewlfpIjdKunGubtmJepRdbavU8N-y06D17emwG3p4XFiWODrU0KEnnkj2OXUHY7HtxRTXML1-dfUW8KViQIHy475aaEPHTEysy82LctaFJq-pxGi8oN0v3l6bDoDcJagEeyiJt5K5kdWjwuemDuUvbSjVug3SsZX4LncnhylDDHy5QaYbqULPKm">
+<div class="absolute top-5 left-5">
+<span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border-2 border-[#1A1A1A] text-on-surface font-label-sm text-label-sm tracking-wider uppercase font-medium">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+            Heritage Atelier Stop
+          </span>
+</div>
+<a href="{{DATA:SCREEN:SCREEN_15}}" aria-label="Close place overview" class="absolute top-5 right-5 w-11 h-11 rounded-full bg-[#FAF7F2] border-2 border-[#1A1A1A] flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors focus:outline-none focus:ring-2 focus:ring-primary" id="close-modal-btn"><span class="material-symbols-outlined text-[20px] leading-none">close</span></a>
+<div class="absolute bottom-4 right-5 bg-[#FAF7F2] border-2 border-[#1A1A1A] rounded-full px-3 py-1 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-on-surface">photo_camera</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider">Fig. 12 · Sagano</span>
+</div>
+</div>
+<div class="p-6 md:p-10 flex flex-col gap-8 bg-[#FAF7F2]">
+<div class="flex flex-col gap-3">
+<div class="flex flex-wrap items-center justify-between gap-3">
+<div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border-2 border-[#1A1A1A] bg-[#0F4C4C] text-[#FAF7F2]">
+<span class="w-2 h-2 rounded-full bg-[#9ad0d0] animate-pulse"></span>
+<span class="font-label-sm text-label-sm tracking-wide uppercase font-medium">Open now · Closes at 5:00 PM</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary">location_on</span>
+              Sagano Foothills
+            </span>
+</div>
+<h2 class="font-headline-lg text-[42px] leading-[48px] text-on-surface tracking-tight mt-1" id="modal-place-title">
+            Otagi Nenbutsu-ji Temple
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Sagano, Western Kyoto · 400 Moss Statues &amp; Hand-Carved Rakan
+          </p>
+</div>
+<div class="h-0.5 w-full bg-[#1A1A1A]"></div>
+<div class="flex flex-col gap-4">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-medium">Field Journal &amp; Impression</span>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+            Perched at the quiet terminus of the traditional preservation district, this secluded hillside temple offers a sensory antidote to the crowded avenues below. Over one thousand whimsical stone sculptures—each uniquely expressive and veiled in lush mountain moss—rest beneath ancient cedar and Japanese maples. The subtle scent of damp river stone and burning cypress incense anchors a sanctuary best witnessed in soft morning light.
+          </p>
+</div>
+<div class="flex flex-col gap-3">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-medium">Tactile Highlights</span>
+<div class="flex flex-wrap gap-2.5">
+<span class="px-4 py-2 rounded-full border-2 border-[#1A1A1A] bg-[#FAF7F2] text-on-surface font-label-sm text-label-sm uppercase tracking-wide hover:bg-surface-container-high transition-colors">
+              Quiet Sanctuary
+            </span>
+<span class="px-4 py-2 rounded-full border-2 border-[#1A1A1A] bg-[#FAF7F2] text-on-surface font-label-sm text-label-sm uppercase tracking-wide hover:bg-surface-container-high transition-colors">
+              Free Entry with Pass
+            </span>
+<span class="px-4 py-2 rounded-full border-2 border-[#1A1A1A] bg-[#FAF7F2] text-on-surface font-label-sm text-label-sm uppercase tracking-wide hover:bg-surface-container-high transition-colors">
+              Tea Garden Adjacent
+            </span>
+<span class="px-4 py-2 rounded-full border-2 border-[#1A1A1A] bg-[#FAF7F2] text-on-surface font-label-sm text-label-sm uppercase tracking-wide hover:bg-surface-container-high transition-colors">
+              Photography Allowed
+            </span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl border-2 border-[#1A1A1A] bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Optimal Light</span>
+<span class="font-body-md text-body-md text-on-surface font-medium mt-0.5">09:00 — 11:30 AM</span>
+</div>
+<div class="flex flex-col sm:border-l-2 sm:border-[#1A1A1A] sm:pl-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Quietude Index</span>
+<span class="font-body-md text-body-md text-on-surface font-medium mt-0.5">High (Level 4/5)</span>
+</div>
+<div class="flex flex-col sm:border-l-2 sm:border-[#1A1A1A] sm:pl-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Suggested Pace</span>
+<span class="font-body-md text-body-md text-on-surface font-medium mt-0.5">45 Minutes</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t-2 border-[#1A1A1A]">
+<button class="w-full sm:w-auto px-7 py-3.5 rounded-full border-2 border-[#1A1A1A] bg-[#FAF7F2] text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors flex items-center justify-center gap-2" id="save-collection-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+<span class="">Save to Collection</span>
+</button>
+<button class="w-full sm:w-auto px-8 py-3.5 rounded-full border-2 border-[#1A1A1A] bg-[#0F4C4C] text-[#FAF7F2] font-label-lg text-label-lg hover:bg-[#135858] transition-colors flex items-center justify-center gap-2" id="add-itinerary-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span class="">Add to Day 2 Itinerary</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      const addBtn = document.getElementById('add-itinerary-btn');
+      const saveBtn = document.getElementById('save-collection-btn');
+      const modal = document.getElementById('modal-backdrop');
+
+      if (addBtn) {
+        addBtn.addEventListener('click', () => {
+          const originalContent = addBtn.innerHTML;
+          addBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">done</span><span>Added to Schedule</span>';
+          addBtn.classList.remove('bg-[#0F4C4C]', 'hover:bg-[#135858]');
+          addBtn.classList.add('bg-secondary');
+          setTimeout(() => {
+            addBtn.innerHTML = originalContent;
+            addBtn.classList.add('bg-[#0F4C4C]', 'hover:bg-[#135858]');
+            addBtn.classList.remove('bg-secondary');
+          }, 2400);
+        });
+      }
+
+      if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+          const icon = saveBtn.querySelector('.material-symbols-outlined');
+          const spanText = saveBtn.querySelector('span:not(.material-symbols-outlined)');
+          if (icon && spanText) {
+            if (icon.textContent === 'bookmark_border') {
+              icon.textContent = 'bookmark';
+              spanText.textContent = 'Saved in Archive';
+              saveBtn.classList.add('bg-surface-container-high');
+            } else {
+              icon.textContent = 'bookmark_border';
+              spanText.textContent = 'Save to Collection';
+              saveBtn.classList.remove('bg-surface-container-high');
+            }
+          }
+        });
+      }
+
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.style.display = 'none';
+          }
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-low border-t-2 border-on-surface mt-16 py-12"><div class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col md:flex-row items-center justify-between gap-6"><div class="flex items-center gap-3"><img alt="Editorial Travel Emblem" class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0N1-p99GULXEEEn9Y525YSboUICd8Besr74O_ECrItNOBzRhrKyxp-ywjDmVixQId7iGaXC6Ov4mL5ScdeEFSr973FpkA9QNnGnJGl-SsWCKnvFroIU0VpSc4NgdQHOehrzY43ybs2tnDJQ-nssBaTzndKrhp9cvr4VrM_iIiIENMxoWMZbN5j-8tOQ99UP4DzzPZ8VZd9Sn41ydEJ6IJOBg5CIhDHi6v8mmtpiVbXHYf8S-7D4aV"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">WAYFARE</span></div><p class="font-body-sm text-body-sm text-on-surface-variant text-center">© 2024 WAYFARE Atelier Travel. All journal rights reserved.</p><div class="flex items-center gap-6"><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-on-surface" href="#">Archive</a><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-on-surface" href="#">Colophon</a><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-on-surface" href="#">Dispatch</a></div></div></footer>
+
+</body></html>

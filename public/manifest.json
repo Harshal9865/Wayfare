@@ -1,0 +1,21 @@
+{
+  "name": "WAYFARE Atelier — AI Travel Discovery & Planning",
+  "short_name": "WAYFARE",
+  "description": "Grounded AI itineraries, verified operational sanctuaries, and quiet observation.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#003434",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

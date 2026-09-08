@@ -1,0 +1,567 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-bright": "#393939",
+          "secondary-fixed": "#e5e2dd",
+          "on-error-container": "#ffdad6",
+          "tertiary-container": "#489e94",
+          "on-tertiary-fixed": "#00201d",
+          "primary-fixed-dim": "#76d7c9",
+          "surface": "#131313",
+          "outline": "#879390",
+          "on-secondary": "#31302d",
+          "on-error": "#690005",
+          "error-container": "#93000a",
+          "surface-variant": "#353534",
+          "on-tertiary": "#003732",
+          "tertiary-fixed-dim": "#81d5c9",
+          "on-primary-container": "#00302b",
+          "primary-fixed": "#93f4e5",
+          "surface-container-highest": "#353534",
+          "surface-container-low": "#1c1b1b",
+          "inverse-primary": "#006a61",
+          "on-surface-variant": "#bdc9c6",
+          "on-primary-fixed-variant": "#005048",
+          "surface-tint": "#76d7c9",
+          "secondary-container": "#474743",
+          "outline-variant": "#3e4947",
+          "surface-container": "#201f1f",
+          "surface-container-high": "#2a2a2a",
+          "error": "#ffb4ab",
+          "inverse-on-surface": "#313030",
+          "on-secondary-container": "#b7b5b0",
+          "surface-dim": "#131313",
+          "on-tertiary-container": "#00302b",
+          "inverse-surface": "#e5e2e1",
+          "on-tertiary-fixed-variant": "#005049",
+          "on-background": "#e5e2e1",
+          "secondary-fixed-dim": "#c8c6c2",
+          "primary-container": "#3aa093",
+          "primary": "#76d7c9",
+          "tertiary-fixed": "#9df2e5",
+          "on-secondary-fixed": "#1c1c19",
+          "background": "#131313",
+          "tertiary": "#81d5c9",
+          "secondary": "#c8c6c2",
+          "on-primary": "#003732",
+          "on-primary-fixed": "#00201c",
+          "on-secondary-fixed-variant": "#474743",
+          "surface-container-lowest": "#0e0e0e",
+          "on-surface": "#FAF7F2"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "gutter-desktop": "2rem",
+          "space-sm": "0.75rem",
+          "space-4xl": "6rem",
+          "space-2xs": "0.25rem",
+          "space-2xl": "3rem",
+          "space-md": "1rem",
+          "space-xs": "0.5rem",
+          "margin-desktop": "4rem",
+          "space-lg": "1.5rem",
+          "gutter-mobile": "1rem",
+          "space-xl": "2rem",
+          "space-3xl": "4.5rem",
+          "margin-mobile": "1.25rem",
+          "margin-tablet": "2.5rem"
+        },
+        "fontFamily": {
+          "display-hero": [
+            "EB Garamond"
+          ],
+          "display-hero-mobile": [
+            "EB Garamond"
+          ],
+          "label-caps": [
+            "Inter"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "label-lg": [
+            "Inter"
+          ],
+          "headline-md-mobile": [
+            "EB Garamond"
+          ],
+          "headline-lg-mobile": [
+            "EB Garamond"
+          ],
+          "headline-sm": [
+            "EB Garamond"
+          ],
+          "label-md": [
+            "Inter"
+          ],
+          "headline-md": [
+            "EB Garamond"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "headline-lg": [
+            "EB Garamond"
+          ]
+        },
+        "fontSize": {
+          "display-hero": [
+            "64px",
+            {
+              "lineHeight": "72px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-hero-mobile": [
+            "40px",
+            {
+              "lineHeight": "46px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-caps": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.12em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-sm": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "fontWeight": "500"
+            }
+          ],
+          "label-lg": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md-mobile": [
+            "26px",
+            {
+              "lineHeight": "32px",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg-mobile": [
+            "32px",
+            {
+              "lineHeight": "38px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "24px",
+            {
+              "lineHeight": "30px",
+              "fontWeight": "400"
+            }
+          ],
+          "label-md": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md": [
+            "36px",
+            {
+              "lineHeight": "42px",
+              "fontWeight": "400"
+            }
+          ],
+          "body-sm": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "fontWeight": "400"
+            }
+          ],
+          "body-lg": [
+            "18px",
+            {
+              "lineHeight": "28px",
+              "fontWeight": "400"
+            }
+          ],
+          "body-md": [
+            "15px",
+            {
+              "lineHeight": "24px",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg": [
+            "48px",
+            {
+              "lineHeight": "54px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-[#131313] text-[#FAF7F2] antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-[#131313] border-b-2 border-[#FAF7F2]/40"><div class="h-20 w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between"><div class="flex items-center gap-4"><img alt="Editorial Travel Emblem" class="h-8 w-auto object-contain brightness-0 invert opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0N1-p99GULXEEEn9Y525YSboUICd8Besr74O_ECrItNOBzRhrKyxp-ywjDmVixQId7iGaXC6Ov4mL5ScdeEFSr973FpkA9QNnGnJGl-SsWCKnvFroIU0VpSc4NgdQHOehrzY43ybs2tnDJQ-nssBaTzndKrhp9cvr4VrM_iIiIENMxoWMZbN5j-8tOQ99UP4DzzPZ8VZd9Sn41ydEJ6IJOBg5CIhDHi6v8mmtpiVbXHYf8S-7D4aV"><span class="font-headline-sm text-headline-sm tracking-tight text-[#FAF7F2] uppercase">WAYFARE</span></div><nav class="hidden md:flex items-center gap-8" data-active-classes="bg-primary-container text-white rounded-full px-4 py-1.5"><a class="font-label-lg text-label-lg text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors" data-path="explore" href="{{DATA:SCREEN:SCREEN_8}}">Explore</a><a class="font-label-lg text-label-lg text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors" data-path="itinerary" href="{{DATA:SCREEN:SCREEN_6}}">Itinerary</a><a class="font-label-lg text-label-lg text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors" data-path="stays" href="{{DATA:SCREEN:SCREEN_7}}">Stays</a><a class="font-label-lg text-label-lg text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors" data-path="journal" href="#">Journal</a><a aria-current="page" class="font-label-lg transition-colors bg-[#1A7A70] text-white rounded-full px-4 py-1.5" data-path="my-trips" href="{{DATA:SCREEN:SCREEN_3}}">My Trips</a></nav><div class="flex items-center gap-5"><div class="flex items-center p-1 bg-[#1C1B1B] border-2 border-[#FAF7F2]/40 rounded-full"><a href="{{DATA:SCREEN:SCREEN_9}}" class="flex items-center justify-center w-7 h-7 rounded-full text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px]">light_mode</span></a><span class="flex items-center justify-center w-7 h-7 rounded-full bg-[#1A7A70] text-white"><span class="material-symbols-outlined text-[16px]">dark_mode</span></span></div><div class="border-2 border-[#FAF7F2]/40 rounded-full p-[2px] flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn6ptYpm-nXWS4NtnTAXxftdenQKgihaKIh-2-rXfObJkYscNzUcYr-9z3Xc7qvIazIIn-iJclmWCgkBK27jGgKB4_hP0KtIB5qQO7MZUoxiBr8mdRq-tslZlHkqEH_w4hSlD-RuYa35B0-he6jkW0ednIRxHhWTkk7rVOfTuN6tezpiHJWemwOslAo0jEiDAKbfkkJmdhwFDtqSLn6ciV38XbyPdqTFlFmvJFBE-82swArMJJhN7I"></div></div></div></header><main class="w-full pt-20 bg-[#131313]"><div class="flex flex-col w-full">
+<div class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop py-12 flex flex-col gap-12">
+<!-- Header Section: Typography & Mode Toggle -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8 border-b-2 border-[#FAF7F2]/30">
+<div class="flex flex-col gap-3 max-w-2xl">
+<div class="flex items-center gap-3">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-[#76d7c9] font-semibold">Atelier Portfolio</span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#FAF7F2]/60"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-[#bdc9c6]">Autumn / Winter Edition</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-[#FAF7F2] tracking-tight leading-none">My Journeys</h1>
+<p class="font-body-md text-body-md text-[#bdc9c6]">3 active plans · 8 archived journals</p>
+</div>
+<!-- Controls: Search, View Mode & Day/Night Indicator -->
+<div class="flex items-center flex-wrap gap-4">
+<div class="relative flex items-center">
+<input class="bg-[#1C1B1B] text-[#FAF7F2] placeholder:text-[#bdc9c6]/60 font-body-sm text-body-sm rounded-full pl-11 pr-5 py-2.5 border-2 border-[#FAF7F2]/40 focus:outline-none focus:border-[#76d7c9] w-56 sm:w-72 transition-all" placeholder="Search itineraries &amp; stays..." type="text">
+<span class="material-symbols-outlined text-[18px] text-[#FAF7F2] absolute left-4 pointer-events-none">search</span>
+</div>
+<div class="flex items-center p-1 bg-[#1C1B1B] border-2 border-[#FAF7F2]/40 rounded-full">
+<a href="{{DATA:SCREEN:SCREEN_9}}" class="flex items-center justify-center w-8 h-8 rounded-full text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors cursor-pointer" id="day-btn" title="Day View"><span class="material-symbols-outlined text-[18px]">light_mode</span></a>
+<button class="flex items-center justify-center w-8 h-8 rounded-full bg-[#1A7A70] text-white transition-colors" id="night-btn" title="Night View">
+<span class="material-symbols-outlined text-[18px]">dark_mode</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Navigation & Filter Bar -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+<!-- Tab Pills -->
+<div class="flex items-center flex-wrap gap-2.5" role="tablist">
+<button class="trip-filter active font-label-lg text-label-lg px-5 py-2 rounded-full border-2 border-[#76d7c9] bg-[#1A7A70] text-white transition-all duration-200" data-filter="all">
+          All Journeys
+        </button>
+<button class="trip-filter font-label-lg text-label-lg px-5 py-2 rounded-full border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] text-[#FAF7F2] hover:bg-[#2a2a2a] transition-all duration-200" data-filter="upcoming">
+          Upcoming <span class="ml-1 text-xs opacity-75 font-mono">(1)</span>
+</button>
+<button class="trip-filter font-label-lg text-label-lg px-5 py-2 rounded-full border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] text-[#FAF7F2] hover:bg-[#2a2a2a] transition-all duration-200" data-filter="in-progress">
+          In Progress <span class="ml-1 text-xs opacity-75 font-mono">(1)</span>
+</button>
+<button class="trip-filter font-label-lg text-label-lg px-5 py-2 rounded-full border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] text-[#FAF7F2] hover:bg-[#2a2a2a] transition-all duration-200" data-filter="archived">
+          Archived <span class="ml-1 text-xs opacity-75 font-mono">(8)</span>
+</button>
+<button class="trip-filter font-label-lg text-label-lg px-5 py-2 rounded-full border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] text-[#FAF7F2] hover:bg-[#2a2a2a] transition-all duration-200" data-filter="shared">
+          Shared <span class="ml-1 text-xs opacity-75 font-mono">(2)</span>
+</button>
+</div>
+<!-- Quick Actions / Sort -->
+<div class="flex items-center gap-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-[#bdc9c6]">Order by:</span>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] text-[#FAF7F2] font-label-sm text-label-sm hover:bg-[#2a2a2a] transition-colors">
+<span class="">Departure Date</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+<!-- Card 1: Distinct First Item (+ Plan a New Trip) -->
+<div class="group relative flex flex-col justify-between p-8 rounded-[32px] border-2 border-[#76d7c9]/60 bg-[#1C1B1B] min-h-[460px] overflow-hidden transition-all duration-300 hover:border-[#76d7c9] hover:bg-[#201f1f]">
+<!-- Background Pattern Watermark -->
+<div class="absolute -right-8 -bottom-8 pointer-events-none opacity-5 text-[#76d7c9]">
+<svg fill="currentColor" height="240" viewBox="0 0 100 100" width="240">
+<polygon points="50 0, 100 50, 50 100, 0 50"></polygon>
+</svg>
+</div>
+<div class="flex items-start justify-between">
+<a href="{{DATA:SCREEN:SCREEN_8}}" class="w-14 h-14 rounded-full border-2 border-[#76d7c9] flex items-center justify-center bg-[#1A7A70]/40 text-[#76d7c9] group-hover:scale-105 transition-transform cursor-pointer"><span class="material-symbols-outlined text-[28px]">add</span></a>
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3.5 py-1 rounded-full border-2 border-[#76d7c9] text-[#76d7c9] font-semibold bg-[#1A7A70]/30">
+            Custom Itinerary
+          </span>
+</div>
+<div class="my-auto py-6 flex flex-col gap-3 z-10">
+<div class="flex items-center gap-2 text-[#76d7c9]">
+<span class="material-symbols-outlined text-[18px]">edit_calendar</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest">White-Glove Drafting</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-[#FAF7F2] group-hover:text-[#76d7c9] transition-colors">
+            Begin a New Journey
+          </h2>
+<p class="font-body-md text-body-md text-[#bdc9c6] max-w-md">
+            Start fresh with dates, destinations, or quiet notes. Compose daily rituals, boutique stays, and transit logistics into a bespoke gazetteer.
+          </p>
+</div>
+<div class="pt-6 border-t-2 border-[#FAF7F2]/15 flex items-center justify-between z-10">
+<span class="font-label-sm text-label-sm text-[#bdc9c6]">Step 1 of 3: Destination Blueprint</span>
+<a href="{{DATA:SCREEN:SCREEN_8}}" class="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-[#76d7c9] bg-[#1A7A70] text-white font-label-lg text-label-lg group-hover:bg-[#76d7c9] group-hover:text-[#003732] transition-colors cursor-pointer"><span class="">Compose Trip</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+</div>
+</div>
+<!-- Card 2: Kyoto & The Autumn Valleys -->
+<article class="flex flex-col rounded-[32px] border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] overflow-hidden transition-all duration-300 hover:bg-[#201f1f] hover:border-[#FAF7F2]/70" data-category="upcoming">
+<div class="relative h-64 w-full overflow-hidden border-b-2 border-[#FAF7F2]/40">
+<img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105 brightness-[0.85] contrast-[1.05]" data-alt="Serene traditional Japanese Zen temple garden in Kyoto during late autumn, displaying fiery red maple leaves, raked gravel patterns, mossy stone lanterns, and soft morning mist with authentic warm tones and sharp graphic contrast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_MmFEdHRJoz1lNWefw7Qj-KGSEqajWxIcuy7CkZW4E0Gq6KXDojHgb7dpWfMqOeEMZNmQrLZZBJCWMrwGsqL2v9Eddl4ngDyWJX_aI7Rf9lvZsn2wmrBWdZaMR_4JuT0yFInEjpWsk5D0K5sHiIpS3YVxpv2tkbaXXXJ13tU-PKJtMzkTJPLS0nQkremDOQdwyRIP_Uo6abp8nCj1JJgM4OtkNlFpGLQahSr0JECHFH5GpZZoIc5L">
+<div class="absolute inset-0 bg-black/25 pointer-events-none"></div>
+<div class="absolute top-4 left-4 flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3.5 py-1 rounded-full border-2 border-[#76d7c9] bg-[#1A7A70] text-white font-semibold shadow-sm">
+              Departing in 12 days
+            </span>
+</div>
+<div class="absolute top-4 right-4">
+<span class="font-label-sm text-label-sm px-3.5 py-1 rounded-full border-2 border-[#FAF7F2]/60 bg-[#131313]/90 text-[#FAF7F2] font-mono backdrop-blur-sm">
+              Oct 14 – 21
+            </span>
+</div>
+</div>
+<div class="p-8 flex flex-col flex-1 justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-[#bdc9c6]">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-[#76d7c9] font-semibold">Kansai Region, Japan</span>
+<span class="font-label-sm text-label-sm font-mono text-[#bdc9c6]/80">CONF: #WY-9042</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-[#FAF7F2] tracking-tight">Kyoto &amp; The Autumn Valleys</h2>
+<p class="font-body-md text-body-md text-[#bdc9c6]">
+              Tea ceremonies in Uji, morning meditation across Daitoku-ji, and an overnight stay in a timber Machiya along the Kamogawa.
+            </p>
+</div>
+<div class="pt-4 border-t-2 border-[#FAF7F2]/15 flex items-center justify-between">
+<div class="flex items-center gap-4 text-[#FAF7F2]">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[18px] text-[#76d7c9]">pin_drop</span>
+<span class="">6 places planned</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-[#bdc9c6]">
+<span class="material-symbols-outlined text-[18px]">bed</span>
+<span class="">3 stays</span>
+</div>
+</div>
+<a class="flex items-center gap-1.5 font-label-lg text-label-lg text-[#76d7c9] hover:text-white font-semibold group" href="{{DATA:SCREEN:SCREEN_6}}">
+<span class="">View Itinerary</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+<!-- Card 3: Lisbon & The Silver Coast -->
+<article class="flex flex-col rounded-[32px] border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] overflow-hidden transition-all duration-300 hover:bg-[#201f1f] hover:border-[#FAF7F2]/70" data-category="archived">
+<div class="relative h-64 w-full overflow-hidden border-b-2 border-[#FAF7F2]/40">
+<img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105 brightness-[0.85] contrast-[1.05]" data-alt="Sun-drenched cobblestone alleyway in Alfama Lisbon with yellow vintage tram tracks, worn pastel tile facades, linen drying overhead, and golden late-afternoon maritime sunlight in an authentic editorial aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxyMwshlc33HkNbDQrlnGNWXXBa2LkRA7VLaaa0D2-fybjuPwD-bxRKyZ2N634-pU740g8MFoqQqDfiv-qLat4GKx88jG_CiwQQsCU7nO9l76qbxuTqDphitKfZNJXfZ8bCl7--lU8-ohnkwCIPgFlmaDRDN0KzJV13GWsIZDpyFBNvTbpbxMJnj7EgSaRRdBw176q_-IQB-fXD5AODDaNdXN50BTNv0ggexKZHlK016i_FXjXYZYh">
+<div class="absolute inset-0 bg-black/25 pointer-events-none"></div>
+<div class="absolute top-4 left-4">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3.5 py-1 rounded-full border-2 border-[#FAF7F2]/40 bg-[#2a2a2a]/90 text-[#FAF7F2] font-semibold backdrop-blur-sm">
+              Archived · May 2024
+            </span>
+</div>
+<div class="absolute top-4 right-4">
+<span class="font-label-sm text-label-sm px-3.5 py-1 rounded-full border-2 border-[#FAF7F2]/60 bg-[#131313]/90 text-[#FAF7F2] font-mono backdrop-blur-sm">
+              7 Days Logged
+            </span>
+</div>
+</div>
+<div class="p-8 flex flex-col flex-1 justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-[#bdc9c6]">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-[#76d7c9] font-semibold">Atlantic Seaboard, Portugal</span>
+<span class="font-label-sm text-label-sm font-mono text-[#76d7c9]">Complete</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-[#FAF7F2] tracking-tight">Lisbon &amp; The Silver Coast</h2>
+<p class="font-body-md text-body-md text-[#bdc9c6]">
+              Natural wine ateliers in Principe Real, cliffside fado sessions, and secluded architectural ruins tucked into the Sintra pine canopies.
+            </p>
+</div>
+<div class="pt-4 border-t-2 border-[#FAF7F2]/15 flex items-center justify-between">
+<div class="flex items-center gap-4 text-[#FAF7F2]">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[18px] text-[#76d7c9]">auto_stories</span>
+<span class="">14 places archived</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-[#bdc9c6]">
+<span class="material-symbols-outlined text-[18px]">photo_library</span>
+<span class="">48 notes</span>
+</div>
+</div>
+<a class="flex items-center gap-1.5 font-label-lg text-label-lg text-[#FAF7F2] hover:text-[#76d7c9] font-semibold group" href="#">
+<span class="">Read Journal</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+<!-- Card 4: Oaxaca & Sierra Sur -->
+<article class="flex flex-col rounded-[32px] border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] overflow-hidden transition-all duration-300 hover:bg-[#201f1f] hover:border-[#FAF7F2]/70" data-category="in-progress">
+<div class="relative h-64 w-full overflow-hidden border-b-2 border-[#FAF7F2]/40">
+<img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105 brightness-[0.85] contrast-[1.05]" data-alt="Quiet sun-baked clay courtyard in Oaxaca Mexico featuring handcrafted black clay pottery, lush potted agave plants, textured ochre stucco walls, and gentle morning courtyard shadows in a cinematic high-end travel photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH-vL8rTWG4cASPOyPonIuoHclMXq534N7gkiTDZeQRhM_4eLKBgd7JHAaLL-4wr0BtXv8lqwrlpoOVxDz--FUq-3-3fo0hbMspyh1ZyhkQa978fqd1bG2sBgH8B_U6fDft1IR2LXxzvECux0M__9SJ7_9NOhbsUzBlUCmKbc8prLXQe9FXH1RAswWCopbTO7vlMdsVrZtpilVyjqYNLrxyUw9-wiyIfUhjSeYBWIvKmrhPCcJ-F69">
+<div class="absolute inset-0 bg-black/25 pointer-events-none"></div>
+<div class="absolute top-4 left-4">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3.5 py-1 rounded-full border-2 border-[#76d7c9]/80 bg-[#1C1B1B]/95 text-[#76d7c9] font-semibold backdrop-blur-sm">
+              Drafting Itinerary
+            </span>
+</div>
+<div class="absolute top-4 right-4">
+<span class="font-label-sm text-label-sm px-3.5 py-1 rounded-full border-2 border-[#FAF7F2]/60 bg-[#131313]/90 text-[#FAF7F2] font-mono backdrop-blur-sm">
+              Target: Feb 2025
+            </span>
+</div>
+</div>
+<div class="p-8 flex flex-col flex-1 justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-[#bdc9c6]">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-[#76d7c9] font-semibold">Central Valleys &amp; Highlands</span>
+<span class="font-label-sm text-label-sm font-mono text-[#bdc9c6]/80">SHARED WITH 1 GUEST</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-[#FAF7F2] tracking-tight">Oaxaca &amp; Sierra Sur</h2>
+<p class="font-body-md text-body-md text-[#bdc9c6]">
+              Textile weavers of Teotitlan del Valle, artisanal mezcal palenques, and high-altitude cloud forest retreats in San Jose del Pacifico.
+            </p>
+</div>
+<div class="pt-4 border-t-2 border-[#FAF7F2]/15 flex items-center justify-between">
+<div class="flex items-center gap-4 text-[#FAF7F2]">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[18px] text-[#76d7c9]">bookmark</span>
+<span class="">4 saved stays</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm text-[#bdc9c6]">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="">Collaborative</span>
+</div>
+</div>
+<a class="flex items-center gap-1.5 font-label-lg text-label-lg text-[#76d7c9] hover:text-white font-semibold group" href="#">
+<span class="">Continue Draft</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+</div>
+<!-- Supplementary Section: Curated Reading & Travel Dispatches -->
+<section class="mt-8 pt-12 border-t-2 border-[#FAF7F2]/30 flex flex-col gap-8">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-[#76d7c9] font-semibold">Gazette Excerpts</span>
+<h3 class="font-headline-sm text-headline-sm text-[#FAF7F2] mt-1">Field Notes &amp; Preparation Guides</h3>
+</div>
+<a class="font-label-lg text-label-lg text-[#FAF7F2] hover:text-[#76d7c9] underline decoration-2 underline-offset-4" href="#">
+          Browse Library Archive →
+        </a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Dispatch 1 -->
+<div class="p-6 rounded-[24px] border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] flex flex-col justify-between gap-4 transition-all duration-300 hover:border-[#76d7c9]/60 hover:bg-[#201f1f]">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-mono text-[#bdc9c6]">VOL. 18 / KYOTO</span>
+<span class="material-symbols-outlined text-[18px] text-[#76d7c9]">menu_book</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-[#FAF7F2]">Rhythm of the Ryokan: Etiquette of Thermal Bathing</h4>
+<p class="font-body-sm text-body-sm text-[#bdc9c6]">
+            A quiet inquiry into the restorative mechanics of hot spring water, seasonal kaiseki services, and dawn garden walks.
+          </p>
+<div class="pt-2 border-t-2 border-[#FAF7F2]/15 flex items-center justify-between font-label-sm text-label-sm text-[#bdc9c6]">
+<span class="">6 min read</span>
+<span class="text-[#FAF7F2] font-semibold">• Downloaded</span>
+</div>
+</div>
+<!-- Dispatch 2 -->
+<div class="p-6 rounded-[24px] border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] flex flex-col justify-between gap-4 transition-all duration-300 hover:border-[#76d7c9]/60 hover:bg-[#201f1f]">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-mono text-[#bdc9c6]">VOL. 09 / LISBON</span>
+<span class="material-symbols-outlined text-[18px] text-[#76d7c9]">palette</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-[#FAF7F2]">Glazed Terracotta: Preserving Portuguese Azulejos</h4>
+<p class="font-body-sm text-body-sm text-[#bdc9c6]">
+            Documenting historic artisanal workshops in the Mouraria district revitalizing hand-painted ceramic craft.
+          </p>
+<div class="pt-2 border-t-2 border-[#FAF7F2]/15 flex items-center justify-between font-label-sm text-label-sm text-[#bdc9c6]">
+<span class="">4 min read</span>
+<span class="text-[#FAF7F2] font-semibold">• Archived</span>
+</div>
+</div>
+<!-- Dispatch 3 -->
+<div class="p-6 rounded-[24px] border-2 border-[#FAF7F2]/40 bg-[#1C1B1B] flex flex-col justify-between gap-4 transition-all duration-300 hover:border-[#76d7c9]/60 hover:bg-[#201f1f]">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-mono text-[#bdc9c6]">VOL. 22 / PACKING</span>
+<span class="material-symbols-outlined text-[18px] text-[#76d7c9]">inventory_2</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-[#FAF7F2]">The Unburdened Luggage: Capsule Wardrobes for Rail</h4>
+<p class="font-body-sm text-body-sm text-[#bdc9c6]">
+            Selecting resilient raw wools, Japanese poplin shirts, and minimal camera equipment for multi-leg carriage trips.
+          </p>
+<div class="pt-2 border-t-2 border-[#FAF7F2]/15 flex items-center justify-between font-label-sm text-label-sm text-[#bdc9c6]">
+<span class="">9 min read</span>
+<span class="text-[#FAF7F2] font-semibold">• Pinned</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<script>
+  (function() {
+    // Interactive Tab Filtering
+    const filterButtons = document.querySelectorAll('.trip-filter');
+    const articles = document.querySelectorAll('article[data-category]');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Reset button classes
+        filterButtons.forEach(btn => {
+          btn.classList.remove('bg-[#1A7A70]', 'text-white', 'border-[#76d7c9]');
+          btn.classList.add('bg-[#1C1B1B]', 'text-[#FAF7F2]', 'border-[#FAF7F2]/40');
+        });
+
+        // Set active button
+        button.classList.remove('bg-[#1C1B1B]', 'text-[#FAF7F2]', 'border-[#FAF7F2]/40');
+        button.classList.add('bg-[#1A7A70]', 'text-white', 'border-[#76d7c9]');
+
+        const category = button.getAttribute('data-filter');
+
+        articles.forEach(card => {
+          if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Simple Day/Night visual switcher toggle (UI feedback)
+    const dayBtn = document.getElementById('day-btn');
+    const nightBtn = document.getElementById('night-btn');
+
+    if (dayBtn && nightBtn) {
+      dayBtn.addEventListener('click', () => {
+        dayBtn.classList.add('bg-[#1A7A70]', 'text-white');
+        dayBtn.classList.remove('text-[#bdc9c6]');
+        nightBtn.classList.remove('bg-[#1A7A70]', 'text-white');
+        nightBtn.classList.add('text-[#bdc9c6]');
+      });
+
+      nightBtn.addEventListener('click', () => {
+        nightBtn.classList.add('bg-[#1A7A70]', 'text-white');
+        nightBtn.classList.remove('text-[#bdc9c6]');
+        dayBtn.classList.remove('bg-[#1A7A70]', 'text-white');
+        dayBtn.classList.add('text-[#bdc9c6]');
+      });
+    }
+  })();
+</script></main><footer class="w-full bg-[#131313] border-t-2 border-[#FAF7F2]/30 mt-16 py-12"><div class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col md:flex-row items-center justify-between gap-6"><div class="flex items-center gap-3"><img alt="Editorial Travel Emblem" class="h-6 w-auto object-contain brightness-0 invert opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0N1-p99GULXEEEn9Y525YSboUICd8Besr74O_ECrItNOBzRhrKyxp-ywjDmVixQId7iGaXC6Ov4mL5ScdeEFSr973FpkA9QNnGnJGl-SsWCKnvFroIU0VpSc4NgdQHOehrzY43ybs2tnDJQ-nssBaTzndKrhp9cvr4VrM_iIiIENMxoWMZbN5j-8tOQ99UP4DzzPZ8VZd9Sn41ydEJ6IJOBg5CIhDHi6v8mmtpiVbXHYf8S-7D4aV"><span class="font-headline-sm text-headline-sm tracking-tight text-[#FAF7F2] uppercase">WAYFARE</span></div><p class="font-body-sm text-body-sm text-[#bdc9c6] text-center">© 2024 WAYFARE Atelier Travel. All journal rights reserved.</p><div class="flex items-center gap-6"><a class="font-label-sm text-label-sm uppercase tracking-wider text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors" href="#">Archive</a><a class="font-label-sm text-label-sm uppercase tracking-wider text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors" href="#">Colophon</a><a class="font-label-sm text-label-sm uppercase tracking-wider text-[#bdc9c6] hover:text-[#FAF7F2] transition-colors" href="#">Dispatch</a></div></div></footer>
+
+</body></html>

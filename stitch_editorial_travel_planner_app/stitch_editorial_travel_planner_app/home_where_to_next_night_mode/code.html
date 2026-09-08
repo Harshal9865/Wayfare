@@ -1,0 +1,487 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "error-container": "#ffdad6",
+          "surface-variant": "#e5e2dd",
+          "primary-fixed-dim": "#9ad0d0",
+          "primary-container": "#0f4c4c",
+          "on-secondary-container": "#2f6e6e",
+          "on-secondary": "#ffffff",
+          "on-background": "#1c1c19",
+          "on-tertiary-container": "#e2a487",
+          "error": "#ba1a1a",
+          "tertiary": "#4a230f",
+          "on-tertiary-fixed-variant": "#683b25",
+          "tertiary-fixed": "#ffdbcc",
+          "on-surface": "#1c1c19",
+          "inverse-primary": "#9ad0d0",
+          "surface-container-high": "#ebe8e3",
+          "outline": "#707978",
+          "secondary-fixed": "#afeeed",
+          "on-error": "#ffffff",
+          "tertiary-fixed-dim": "#f9b89a",
+          "background": "#fcf9f4",
+          "on-primary-fixed": "#002020",
+          "on-tertiary": "#ffffff",
+          "surface-tint": "#306767",
+          "on-tertiary-fixed": "#331202",
+          "surface-container-lowest": "#ffffff",
+          "tertiary-container": "#653923",
+          "surface-bright": "#fcf9f4",
+          "secondary-container": "#afeeed",
+          "surface": "#fcf9f4",
+          "on-primary-container": "#85bbbb",
+          "on-primary": "#ffffff",
+          "on-secondary-fixed": "#002020",
+          "surface-container": "#f0ede9",
+          "outline-variant": "#bfc8c8",
+          "on-error-container": "#93000a",
+          "on-secondary-fixed-variant": "#024f4f",
+          "on-surface-variant": "#404848",
+          "inverse-on-surface": "#f3f0eb",
+          "primary": "#003434",
+          "surface-container-low": "#f6f3ee",
+          "inverse-surface": "#31302d",
+          "surface-container-highest": "#e5e2dd",
+          "secondary": "#286867",
+          "secondary-fixed-dim": "#94d1d1",
+          "primary-fixed": "#b5edec",
+          "surface-dim": "#dcdad5",
+          "on-primary-fixed-variant": "#134f4f"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-tablet": "2.5rem",
+          "gutter-md": "1.5rem",
+          "margin-mobile": "1.25rem",
+          "gutter-xl": "4rem",
+          "margin-desktop": "5rem",
+          "gutter-lg": "2.5rem",
+          "gutter-xs": "0.5rem",
+          "gutter-sm": "1rem",
+          "content-max-width": "84rem"
+        },
+        "fontFamily": {
+          "headline-lg": [
+            "EB Garamond"
+          ],
+          "display-xl": [
+            "EB Garamond"
+          ],
+          "label-lg": [
+            "Inter"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "headline-md-mobile": [
+            "EB Garamond"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "headline-sm": [
+            "EB Garamond"
+          ],
+          "display-xl-mobile": [
+            "EB Garamond"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "headline-lg-mobile": [
+            "EB Garamond"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "headline-md": [
+            "EB Garamond"
+          ]
+        },
+        "fontSize": {
+          "headline-lg": [
+            "56px",
+            {
+              "lineHeight": "64px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-xl": [
+            "80px",
+            {
+              "lineHeight": "88px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-lg": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-sm": [
+            "11px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.05em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md-mobile": [
+            "28px",
+            {
+              "lineHeight": "34px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-md": [
+            "15px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-sm": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-xl-mobile": [
+            "48px",
+            {
+              "lineHeight": "54px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-sm": [
+            "13px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg-mobile": [
+            "36px",
+            {
+              "lineHeight": "42px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "body-lg": [
+            "18px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-md": [
+            "36px",
+            {
+              "lineHeight": "44px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      },
+    },
+  }</script><style id="dark-mode-overrides">:root{color-scheme:dark;}body{background-color:#131313!important;color:#FAF7F2!important;}header{background-color:#131313!important;border-color:#383633!important;}main{background-color:#131313!important;}footer{background-color:#1c1b1b!important;border-color:#383633!important;}article{background-color:#1c1b1b!important;border-color:#383633!important;}article > div.p-6{background-color:#1c1b1b!important;}article .border-surface-container{border-color:#2a2a2a!important;}h1,h2,h3{color:#FAF7F2!important;}.text-on-surface{color:#FAF7F2!important;}.text-on-surface-variant{color:#B5B2AB!important;}.text-outline{color:#879390!important;}.border-on-surface{border-color:#383633!important;}.bg-surface-container-lowest{background-color:#1c1b1b!important;color:#FAF7F2!important;}.bg-surface-container-low{background-color:#1c1b1b!important;}.bg-surface-container{background-color:#242323!important;}input#destinationSearch{color:#FAF7F2!important;}input#destinationSearch::placeholder{color:#879390!important;}button[type="submit"],.bg-primary-container{background-color:#1A7A70!important;color:#FAF7F2!important;border-color:#383633!important;}nav [data-active-classes],nav a.bg-primary{background-color:#1A7A70!important;color:#FAF7F2!important;}.text-primary{color:#76d7c9!important;}.text-secondary{color:#81d5c9!important;}article img,section img{filter:brightness(0.92) contrast(1.04);}</style></head><body class="bg-background text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface border-b-2 border-on-surface"><div class="h-20 w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between"><div class="flex items-center gap-4"><img alt="Editorial Travel Emblem" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0N1-p99GULXEEEn9Y525YSboUICd8Besr74O_ECrItNOBzRhrKyxp-ywjDmVixQId7iGaXC6Ov4mL5ScdeEFSr973FpkA9QNnGnJGl-SsWCKnvFroIU0VpSc4NgdQHOehrzY43ybs2tnDJQ-nssBaTzndKrhp9cvr4VrM_iIiIENMxoWMZbN5j-8tOQ99UP4DzzPZ8VZd9Sn41ydEJ6IJOBg5CIhDHi6v8mmtpiVbXHYf8S-7D4aV"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">WAYFARE</span></div><nav class="hidden md:flex items-center gap-8" data-active-classes="bg-primary text-on-primary rounded-full px-4 py-1.5"><a aria-current="page" class="font-label-lg transition-colors bg-primary text-on-primary rounded-full px-4 py-1.5 cursor-pointer" data-path="home" href="{{DATA:SCREEN:SCREEN_8}}">Explore</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" data-path="itinerary" href="{{DATA:SCREEN:SCREEN_6}}">Itinerary</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" data-path="stays" href="{{DATA:SCREEN:SCREEN_7}}">Stays</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" data-path="journal" href="#">Journal</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" data-path="my-trips" href="{{DATA:SCREEN:SCREEN_3}}">My Trips</a></nav><div class="flex items-center gap-5"><div class="flex items-center p-1 bg-surface-container-low border-2 border-on-surface rounded-full"><a href="{{DATA:SCREEN:SCREEN_19}}" aria-label="Switch to Day Mode" class="flex items-center justify-center w-7 h-7 rounded-full text-outline hover:text-on-surface transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px]">light_mode</span></a><a href="{{DATA:SCREEN:SCREEN_8}}" aria-label="Night Mode Active" class="flex items-center justify-center w-7 h-7 rounded-full bg-primary-container text-on-primary transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px]">dark_mode</span></a></div><div class="border-2 border-on-surface rounded-full p-[2px] flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn6ptYpm-nXWS4NtnTAXxftdenQKgihaKIh-2-rXfObJkYscNzUcYr-9z3Xc7qvIazIIn-iJclmWCgkBK27jGgKB4_hP0KtIB5qQO7MZUoxiBr8mdRq-tslZlHkqEH_w4hSlD-RuYa35B0-he6jkW0ednIRxHhWTkk7rVOfTuN6tezpiHJWemwOslAo0jEiDAKbfkkJmdhwFDtqSLn6ciV38XbyPdqTFlFmvJFBE-82swArMJJhN7I"></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full">
+<!-- Hero Section -->
+<section class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop pt-16 md:pt-24 pb-20 flex flex-col items-center text-center">
+<!-- Meta Editorial Stamp -->
+<div class="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border-2 border-on-surface bg-surface-container-low">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Autumn &amp; Winter Compendium • Vol. XIV</span>
+</div>
+<!-- Oversized Regular Serif Headline -->
+<h1 class="font-display-xl text-display-xl-mobile md:text-display-xl text-on-surface max-w-4xl tracking-tight mb-8">
+      Where would you wander?
+    </h1>
+<!-- Spacious Editorial Search Shell with Warm Ambient Glow -->
+<div class="w-full max-w-3xl relative mt-2 group">
+<!-- Ambient Glow Behind Input -->
+<div class="absolute -inset-1.5 bg-gradient-to-r from-tertiary-fixed via-secondary-fixed to-primary-fixed rounded-[68px] opacity-70 blur-xl transition-all duration-500 group-hover:opacity-90"></div>
+<!-- Crisp Search Bar -->
+<form class="relative flex items-center w-full bg-surface-container-lowest border-2 border-on-surface rounded-[60px] p-2 md:p-3 transition-transform" onsubmit="event.preventDefault(); window.location.href='{{DATA:SCREEN:SCREEN_6}}';">
+<div class="pl-4 md:pl-6 pr-2 text-on-surface-variant flex items-center">
+<span class="material-symbols-outlined text-[26px]">travel_explore</span>
+</div>
+<input class="w-full bg-transparent font-body-lg text-body-md md:text-body-lg text-on-surface placeholder:text-outline focus:outline-none px-2 tracking-normal" id="destinationSearch" placeholder="Search destinations, hidden corners, or coastal stays..." type="text">
+<!-- Filter Trigger -->
+<button class="hidden sm:flex items-center gap-1.5 py-2.5 px-4 mr-2 rounded-full border-2 border-on-surface bg-surface-container hover:bg-surface-variant transition-colors text-on-surface" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Filters</span>
+</button>
+<!-- Deep Teal Search CTA -->
+<button class="flex items-center justify-center gap-2 bg-primary-container text-surface-container-lowest hover:bg-primary transition-colors px-6 md:px-8 py-3.5 md:py-4 rounded-full border-2 border-on-surface flex-shrink-0 cursor-pointer" type="submit">
+<span class="font-label-lg text-label-lg tracking-wide hidden sm:inline">Search</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+</div>
+<!-- Curated Search Hints -->
+<div class="flex flex-wrap items-center justify-center gap-3 mt-8">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Suggested searches:</span>
+<button class="font-label-sm text-label-sm uppercase tracking-wider px-3.5 py-1 rounded-full border-2 border-on-surface bg-surface-container-low hover:bg-surface text-on-surface transition-colors">Amorgos Monasteries</button>
+<button class="font-label-sm text-label-sm uppercase tracking-wider px-3.5 py-1 rounded-full border-2 border-on-surface bg-surface-container-low hover:bg-surface text-on-surface transition-colors">Kyoto Tea Pavilions</button>
+<button class="font-label-sm text-label-sm uppercase tracking-wider px-3.5 py-1 rounded-full border-2 border-on-surface bg-surface-container-low hover:bg-surface text-on-surface transition-colors">Oaxaca Ceramicists</button>
+<button class="font-label-sm text-label-sm uppercase tracking-wider px-3.5 py-1 rounded-full border-2 border-on-surface bg-surface-container-low hover:bg-surface text-on-surface transition-colors">Tangier Medina Riads</button>
+</div>
+</section>
+<!-- Section: Trending Destinations -->
+<section class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop pt-8 pb-20">
+<!-- Header with Narrative & Scroll Controls -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b-2 border-on-surface gap-4">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-semibold">Seasonal Dispatch</span>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight mt-1">Trending Destinations</h2>
+</div>
+<!-- Controls & Overview -->
+<div class="flex items-center gap-4">
+<span class="font-body-sm text-body-sm text-on-surface-variant hidden sm:inline">5 hand-curated geographic dossiers</span>
+<div class="flex items-center gap-2">
+<button aria-label="Scroll left" class="w-11 h-11 rounded-full border-2 border-on-surface bg-surface-container-lowest hover:bg-surface-container flex items-center justify-center transition-colors text-on-surface cursor-pointer" id="scrollLeftBtn">
+<span class="material-symbols-outlined text-[20px]">west</span>
+</button>
+<button aria-label="Scroll right" class="w-11 h-11 rounded-full border-2 border-on-surface bg-surface-container-lowest hover:bg-surface-container flex items-center justify-center transition-colors text-on-surface cursor-pointer" id="scrollRightBtn">
+<span class="material-symbols-outlined text-[20px]">east</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Horizontally Scrolling Row of Destination Cards -->
+<div class="flex gap-6 overflow-x-auto pb-6 scroll-smooth pt-2 -mx-margin-mobile md:-mx-margin-tablet lg:-mx-margin-desktop px-margin-mobile md:px-margin-tablet lg:px-margin-desktop scrollbar-none" id="destinationsScrollRow">
+<!-- Card 1: Kyoto -->
+<article class="flex-none w-[320px] md:w-[350px] bg-surface-container-lowest border-2 border-on-surface rounded-[32px] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 group cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_6}}';">
+<!-- Photo (70% Visual Ratio) -->
+<div class="relative h-[360px] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Candid, warm daylight photograph of an ancient stone pathway at a Zen Buddhist temple in Kyoto, surrounded by glowing Japanese red maple leaves in late autumn, traditional moss-covered stone lanterns, soft diffused morning sunlight, rich film texture, editorial travel photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUxdy1gLJelF7kJfu_xPCAmTMVJlCERSNZqv4m5eqlgHfgcAukWyi88MkrsoDAgNt4mZwePGoPcFFcysJ_PbxfGMaYECzya0VCIbr_OUSQiLPmTo4nKzJPGxw8npYO4IYM5nEfvtdI44w4RqKrRkn-SLRfPJoz-nxxRplrlLoKVOMGjB4vIo0E58TFJfp9Lj-qIPgej-QUrT0j8y6UUV5mHswB5oNiEDfHbJGUdFHIxn4pkbLSj7hG">
+<div class="absolute top-4 left-4">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3 py-1 rounded-full border-2 border-on-surface bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface">
+              Autumn foliage
+            </span>
+</div>
+<div class="absolute bottom-4 right-4 bg-surface-container-lowest border-2 border-on-surface w-9 h-9 rounded-full flex items-center justify-center text-on-surface transition-transform group-hover:rotate-45">
+<span class="material-symbols-outlined text-[18px]">north_east</span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-6 flex flex-col flex-1 justify-between bg-surface-container-lowest">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Kansai Region</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Kyoto, Japan</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">
+              Quiet temple corridors, morning tea ceremonies in Uji, and golden cedar forests drenched in autumn rain.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Avg. Stay • 6 Nights</span>
+<span class="font-label-sm text-label-sm font-semibold text-primary">From $340 / d</span>
+</div>
+</div>
+</article>
+<!-- Card 2: Lisbon -->
+<article class="flex-none w-[320px] md:w-[350px] bg-surface-container-lowest border-2 border-on-surface rounded-[32px] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 group cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_6}}';">
+<!-- Photo -->
+<div class="relative h-[360px] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Editorial warm photograph of sun-drenched terracotta rooftops overlooking the Tagus River in Lisbon Portugal, historic yellow tram curving along steep cobblestone street in Alfama, pastel hand-painted azulejo ceramic tiles on stucco wall, golden hour Mediterranean light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFTm4Dlbwf454gf1fmxmQcy-_VspKwatLbmXadotn7mnV6KUQs258Ro1H7wvpNGQQboXPY7BonXz4yqF2svQ6VIY2GVwcab8m-fdiVqrfeysjc3ZMXp82UIf_gdcYGWA5EDbjYVb_0XkY_gbMwjIKKpjyg3UId3qnaCfJsU-rMHBTajSWXqkwbYZbOzUoLk8UGLIrYhgoQ7-ygZAm4UOuhXPSbCZhG3TKDaXvTH_Z4q1flr8kHsw-x">
+<div class="absolute top-4 left-4">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3 py-1 rounded-full border-2 border-on-surface bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface">
+              Coastal heritage
+            </span>
+</div>
+<div class="absolute bottom-4 right-4 bg-surface-container-lowest border-2 border-on-surface w-9 h-9 rounded-full flex items-center justify-center text-on-surface transition-transform group-hover:rotate-45">
+<span class="material-symbols-outlined text-[18px]">north_east</span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-6 flex flex-col flex-1 justify-between bg-surface-container-lowest">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Estremadura Coast</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Lisbon, Portugal</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">
+              Sun-bleached limestone alleys, fado echoing across Alfama, and vibrant natural wine taverns along the Tagus.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Avg. Stay • 4 Nights</span>
+<span class="font-label-sm text-label-sm font-semibold text-primary">From $260 / d</span>
+</div>
+</div>
+</article>
+<!-- Card 3: Oaxaca -->
+<article class="flex-none w-[320px] md:w-[350px] bg-surface-container-lowest border-2 border-on-surface rounded-[32px] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 group cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_6}}';">
+<!-- Photo -->
+<div class="relative h-[360px] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Editorial candid photography of a sunlit courtyard in Oaxaca Mexico, terracotta pots with desert cacti, warm clay artisan pottery arranged on wooden benches, deep ochre and cobalt walls, dappled midday sun creating geometric shadows on flagstone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_7_-3OT4Kh54kLqNEKcJG26yD-Q06KGFGojJhTLybfeMeZFNES7lPpcCDtfPa-V7gYCdfT39HIlenrbyzcenBDD68WSdt7MYSAFX9TBxR8kL_P0giqnf5uBVCqm0BC3KHOJgzs9FQwuPcJcu11S6v7_i_Bjo3Zti4HwbUtOhZB6jqnON_e4c8eg7bKhipUP-5y132AFIErerWVsNuVM1roCNxPLspcrtlL1mCCQyZ_92TrA4ziN2-">
+<div class="absolute top-4 left-4">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3 py-1 rounded-full border-2 border-on-surface bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface">
+              Culinary &amp; Clay
+            </span>
+</div>
+<div class="absolute bottom-4 right-4 bg-surface-container-lowest border-2 border-on-surface w-9 h-9 rounded-full flex items-center justify-center text-on-surface transition-transform group-hover:rotate-45">
+<span class="material-symbols-outlined text-[18px]">north_east</span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-6 flex flex-col flex-1 justify-between bg-surface-container-lowest">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Central Valleys</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Oaxaca, Mexico</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">
+              Artisan weaving hamlets, centuries-old mezcal palenques, and smoky street markets laden with heirloom herbs.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Avg. Stay • 7 Nights</span>
+<span class="font-label-sm text-label-sm font-semibold text-primary">From $210 / d</span>
+</div>
+</div>
+</article>
+<!-- Card 4: Tangier -->
+<article class="flex-none w-[320px] md:w-[350px] bg-surface-container-lowest border-2 border-on-surface rounded-[32px] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 group cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_6}}';">
+<!-- Photo -->
+<div class="relative h-[360px] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Atmospheric architectural photography of Tangier Morocco, whitewashed archways framing views of the deep blue Mediterranean Sea and Gibraltar Strait, vintage wicker chairs outside a historic cafe, mint tea steam rising in soft afternoon light, film grain aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXfkx2fhZs_vk-WFVswv-RSdCjFX2IySk6RTsmTIbzhzBFLu-4yxz1azxJE2xwwAEcnF-1mC5CgtVQ9jsUS03gi_BHA5hS0G5o9ZjDdd7QTDbDUWud5HYiZNRIFULsBacimYv8TxW2E5M8HhGa9UNSwe1MSfPzoDux8NSlfOkYYZNtu3uREGpdu4MxqNObliDIdq2mVQjYyIYEhrg72WA4pTGZVm8rGX6n2WCkn1xBj9s8Ud-gPC2a">
+<div class="absolute top-4 left-4">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3 py-1 rounded-full border-2 border-on-surface bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface">
+              Bohemian Port
+            </span>
+</div>
+<div class="absolute bottom-4 right-4 bg-surface-container-lowest border-2 border-on-surface w-9 h-9 rounded-full flex items-center justify-center text-on-surface transition-transform group-hover:rotate-45">
+<span class="material-symbols-outlined text-[18px]">north_east</span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-6 flex flex-col flex-1 justify-between bg-surface-container-lowest">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Strait of Gibraltar</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Tangier, Morocco</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">
+              Literary cafes overlooking maritime straits, fragrant spice spice-merchant bazaars, and whitewashed kasbahs.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Avg. Stay • 5 Nights</span>
+<span class="font-label-sm text-label-sm font-semibold text-primary">From $290 / d</span>
+</div>
+</div>
+</article>
+<!-- Card 5: Amorgos -->
+<article class="flex-none w-[320px] md:w-[350px] bg-surface-container-lowest border-2 border-on-surface rounded-[32px] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 group cursor-pointer" onclick="window.location.href='{{DATA:SCREEN:SCREEN_6}}';">
+<!-- Photo -->
+<div class="relative h-[360px] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Editorial warm landscape photograph of Amorgos island Greece, the iconic cliffside white monastery of Panagia Hozoviotissa carved into soaring rust-colored cliffs above the crystalline Aegean sea, stark Cycladic sunlight, deep turquoise water, serene remote mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtLt4T3X8E7b9PjEIKLcQjePMFifKpPm0tDTfPmj5npmUwhFwXLqaSAFr-H6EuzXZqQEyCxz9mT8SgCWUj5_kOr1hzv2sg8ORxl9y01oCLKxii3d4tRLC-_7js1uSZm_7afdaCdfQG9vpABW07l6UUZRWswJWNm5RaJLzb5sVbJ2w0dlkbo6mDLPX3T8qwS6ARQdnPReWqW0HLc7YDzAh02OmQ0NMWP2TX8wksd8WTL_-XH7eDJ-Zz">
+<div class="absolute top-4 left-4">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-3 py-1 rounded-full border-2 border-on-surface bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface">
+              Cycladic Isolation
+            </span>
+</div>
+<div class="absolute bottom-4 right-4 bg-surface-container-lowest border-2 border-on-surface w-9 h-9 rounded-full flex items-center justify-center text-on-surface transition-transform group-hover:rotate-45">
+<span class="material-symbols-outlined text-[18px]">north_east</span>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-6 flex flex-col flex-1 justify-between bg-surface-container-lowest">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Aegean Archipelago</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Amorgos, Greece</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-2">
+              Cliffside whitewashed monasteries clinging to sheer gorges, ancient goat paths, and cobalt crystalline bays.
+            </p>
+</div>
+<div class="pt-4 mt-4 border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Avg. Stay • 6 Nights</span>
+<span class="font-label-sm text-label-sm font-semibold text-primary">From $245 / d</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Editorial Feature Vignette: The Art of Unhurried Journey -->
+<section class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop py-12">
+<div class="bg-surface-container-low border-2 border-on-surface rounded-[40px] md:rounded-[60px] p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12">
+<div class="lg:w-1/2 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-semibold">Curator's Note • Autumn 2024</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mt-3 tracking-tight">
+          Travel as an act of quiet observation.
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-6 leading-relaxed">
+          We reject the checklist trip. Wayfare charters journeys intended for the contemplative voyager: properties hand-built by local families, routes charted along slow train corridors, and meals taken in kitchen-table taverns.
+        </p>
+<div class="flex items-center gap-4 mt-8">
+<a class="inline-flex items-center gap-2 bg-primary text-on-primary px-7 py-3.5 rounded-full border-2 border-on-surface font-label-lg text-label-lg hover:bg-surface-tint transition-colors" href="#">
+<span class="">Read The Manifesto</span>
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+</a>
+<a class="inline-flex items-center gap-2 bg-surface-container-lowest text-on-surface px-6 py-3.5 rounded-full border-2 border-on-surface font-label-lg text-label-lg hover:bg-surface-variant transition-colors" href="#">
+<span class="">Our Criteria</span>
+</a>
+</div>
+</div>
+<!-- Feature Image Frame -->
+<div class="lg:w-1/2 w-full">
+<div class="relative w-full h-[360px] md:h-[440px] rounded-[32px] md:rounded-[44px] overflow-hidden border-2 border-on-surface">
+<img class="w-full h-full object-cover" data-alt="Editorial warm daylight photo of a traveler sitting at a weathered wooden desk inside an open-air stone villa in southern Europe, journaling with an espresso cup, soft linen curtains billowing with sea breeze, dappled olive tree shadows outside, warm quiet mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATvhdl3L0n_fI86vb6t1wBecFUns4gTCcxwGUyTht4TppnXwDCdPJef3XGK55o0xk4eKu0mN1Y0HE6HwLySg8KAqteJDjDypLQPXq4UsKRfff8DnCg3TIkEvtMlm7W3FS4ncr8PxuxK6eJRZaNQQQri1LhWwP58Pre0WUyivOgBpNe8nMw-0ZTOZqvpDgKmrcxh4DKlBpfKJX798WAwd84G5FucfaBtyT4rSL1Vgg7Vz2523SoekHi">
+<div class="absolute bottom-4 left-4 bg-surface-container-lowest/95 backdrop-blur-sm border-2 border-on-surface px-4 py-2 rounded-full">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface">Peloponnese, Greece • Villa Kerasia</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Scroll & Interaction Script -->
+<script>
+    (function() {
+      const scrollContainer = document.getElementById('destinationsScrollRow');
+      const leftBtn = document.getElementById('scrollLeftBtn');
+      const rightBtn = document.getElementById('scrollRightBtn');
+
+      if (scrollContainer && leftBtn && rightBtn) {
+        leftBtn.addEventListener('click', () => {
+          scrollContainer.scrollBy({ left: -380, behavior: 'smooth' });
+        });
+        rightBtn.addEventListener('click', () => {
+          scrollContainer.scrollBy({ left: 380, behavior: 'smooth' });
+        });
+      }
+
+      // Quick-fill search hints
+      const searchInput = document.getElementById('destinationSearch');
+      document.querySelectorAll('button').forEach(btn => {
+        if (btn.innerText.includes('Kyoto') || btn.innerText.includes('Amorgos') || btn.innerText.includes('Oaxaca') || btn.innerText.includes('Tangier')) {
+          btn.addEventListener('click', (e) => {
+            if (searchInput) {
+              searchInput.value = e.target.innerText.trim();
+              searchInput.focus();
+            }
+          });
+        }
+      });
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-low border-t-2 border-on-surface mt-16 py-12"><div class="w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col md:flex-row items-center justify-between gap-6"><div class="flex items-center gap-3"><img alt="Editorial Travel Emblem" class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0N1-p99GULXEEEn9Y525YSboUICd8Besr74O_ECrItNOBzRhrKyxp-ywjDmVixQId7iGaXC6Ov4mL5ScdeEFSr973FpkA9QNnGnJGl-SsWCKnvFroIU0VpSc4NgdQHOehrzY43ybs2tnDJQ-nssBaTzndKrhp9cvr4VrM_iIiIENMxoWMZbN5j-8tOQ99UP4DzzPZ8VZd9Sn41ydEJ6IJOBg5CIhDHi6v8mmtpiVbXHYf8S-7D4aV"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">WAYFARE</span></div><p class="font-body-sm text-body-sm text-on-surface-variant text-center">© 2024 WAYFARE Atelier Travel. All journal rights reserved.</p><div class="flex items-center gap-6"><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-on-surface" href="#">Archive</a><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-on-surface" href="#">Colophon</a><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-on-surface" href="#">Dispatch</a></div></div></footer>
+
+</body></html>
