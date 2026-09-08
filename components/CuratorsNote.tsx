@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRegion } from "@/lib/region";
 
@@ -8,15 +8,36 @@ export default function CuratorsNote() {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [showCriteriaModal, setShowCriteriaModal] = useState(false);
   const { region } = useRegion();
+  const [featureImage, setFeatureImage] = useState(
+    region === "india"
+      ? "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=1000&auto=format&fit=crop&q=80"
+      : "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1000&auto=format&fit=crop&q=80"
+  );
 
   const toggleSoundscape = () => {
     setIsPlayingAudio(!isPlayingAudio);
   };
 
-  const featureImage =
-    region === "india"
-      ? "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=1000&auto=format&fit=crop&q=80"
-      : "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1000&auto=format&fit=crop&q=80";
+  // Fetch live Google Places photo when region changes
+  useEffect(() => {
+    const query =
+      region === "india"
+        ? "Dashashwamedh Ghat Varanasi evening aarti"
+        : "Arashiyama Bamboo Grove Kyoto Japan";
+
+    const fallback =
+      region === "india"
+        ? "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=1000&auto=format&fit=crop&q=80"
+        : "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1000&auto=format&fit=crop&q=80";
+
+    setFeatureImage(fallback); // show fallback immediately while fetching
+    fetch(`/api/places/photos?query=${encodeURIComponent(query)}&count=1`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.photos?.[0]) setFeatureImage(data.photos[0]);
+      })
+      .catch(() => {}); // keep fallback on error
+  }, [region]);
 
   const featureLocation =
     region === "india"

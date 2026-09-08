@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRegion } from "@/lib/region";
 
@@ -12,8 +12,8 @@ interface DestinationCard {
   stayDuration: string;
   estPrice: string;
   description: string;
-  imageUrl: string;
-  query: string;
+  fallbackImage: string; // used while Google photo loads
+  query: string; // query sent to /api/places/photos
   bestSeason: string;
   heritageScore: number;
 }
@@ -27,8 +27,8 @@ const GLOBAL_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 6 Nights",
     estPrice: "From $340 / d",
     description: "Quiet temple corridors, morning tea ceremonies in Uji, and golden cedar forests drenched in autumn rain.",
-    imageUrl: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&auto=format&fit=crop&q=80",
-    query: "Kyoto, Japan",
+    fallbackImage: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&auto=format&fit=crop&q=80",
+    query: "Kyoto Japan tourist attractions",
     bestSeason: "Oct – Dec",
     heritageScore: 98,
   },
@@ -40,8 +40,8 @@ const GLOBAL_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 4 Nights",
     estPrice: "From $260 / d",
     description: "Sun-bleached limestone alleys, fado echoing across Alfama, and vibrant natural wine taverns along the Tagus.",
-    imageUrl: "https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=800&auto=format&fit=crop&q=80",
-    query: "Lisbon, Portugal",
+    fallbackImage: "https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=800&auto=format&fit=crop&q=80",
+    query: "Lisbon Portugal landmark",
     bestSeason: "Apr – Oct",
     heritageScore: 94,
   },
@@ -53,8 +53,8 @@ const GLOBAL_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 7 Nights",
     estPrice: "From $210 / d",
     description: "Artisan weaving hamlets, centuries-old mezcal palenques, and smoky street markets laden with heirloom herbs.",
-    imageUrl: "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?w=800&auto=format&fit=crop&q=80",
-    query: "Oaxaca, Mexico",
+    fallbackImage: "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?w=800&auto=format&fit=crop&q=80",
+    query: "Oaxaca Mexico city center",
     bestSeason: "Oct – Feb",
     heritageScore: 96,
   },
@@ -66,8 +66,8 @@ const GLOBAL_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 5 Nights",
     estPrice: "From $290 / d",
     description: "Literary cafes overlooking maritime straits, fragrant spice-merchant bazaars, and whitewashed kasbahs.",
-    imageUrl: "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=800&auto=format&fit=crop&q=80",
-    query: "Tangier, Morocco",
+    fallbackImage: "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=800&auto=format&fit=crop&q=80",
+    query: "Tangier Morocco medina",
     bestSeason: "May – Oct",
     heritageScore: 92,
   },
@@ -79,8 +79,8 @@ const GLOBAL_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 6 Nights",
     estPrice: "From $245 / d",
     description: "Cliffside whitewashed monasteries clinging to sheer gorges, ancient goat paths, and cobalt crystalline bays.",
-    imageUrl: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&auto=format&fit=crop&q=80",
-    query: "Amorgos, Greece",
+    fallbackImage: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&auto=format&fit=crop&q=80",
+    query: "Amorgos Greece island",
     bestSeason: "Jun – Sep",
     heritageScore: 95,
   },
@@ -92,8 +92,8 @@ const GLOBAL_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 5 Nights",
     estPrice: "From $380 / d",
     description: "Lemon groves overhanging turquoise coves, pastel villas clinging to vertical cliffs, and coastal boat cruises.",
-    imageUrl: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&auto=format&fit=crop&q=80",
-    query: "Amalfi, Italy",
+    fallbackImage: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&auto=format&fit=crop&q=80",
+    query: "Amalfi Coast Italy scenic view",
     bestSeason: "May – Oct",
     heritageScore: 97,
   },
@@ -108,8 +108,8 @@ const INDIAN_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 3 Nights",
     estPrice: "From ₹3,500 / d",
     description: "Dawn rowing past ancient ghats, resonant chants of evening Ganga Aarti, silk weavers, and labyrinthine alleys.",
-    imageUrl: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&auto=format&fit=crop&q=80",
-    query: "Varanasi, India",
+    fallbackImage: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&auto=format&fit=crop&q=80",
+    query: "Varanasi Ghats India",
     bestSeason: "Nov – Mar",
     heritageScore: 99,
   },
@@ -121,8 +121,8 @@ const INDIAN_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 4 Nights",
     estPrice: "From ₹2,800 / d",
     description: "Serene ashrams along the emerald river Ganges, sunrise yoga over suspended bridges, and satvik organic cafes.",
-    imageUrl: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80",
-    query: "Rishikesh, India",
+    fallbackImage: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80",
+    query: "Rishikesh India Lakshman Jhula",
     bestSeason: "Sep – Apr",
     heritageScore: 96,
   },
@@ -134,8 +134,8 @@ const INDIAN_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 6 Nights",
     estPrice: "From ₹4,500 / d",
     description: "Stark mountain deserts, ancient Buddhist gompas, vibrant prayer flags fluttering over Pangong Tso lake.",
-    imageUrl: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&auto=format&fit=crop&q=80",
-    query: "Leh Ladakh, India",
+    fallbackImage: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&auto=format&fit=crop&q=80",
+    query: "Leh Ladakh Pangong Lake India",
     bestSeason: "May – Sep",
     heritageScore: 97,
   },
@@ -147,8 +147,8 @@ const INDIAN_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 4 Nights",
     estPrice: "From ₹3,800 / d",
     description: "Gliding through palm-fringed backwater canals on traditional Kettuvallam houseboats with authentic Sadya feasts.",
-    imageUrl: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&q=80",
-    query: "Alleppey, India",
+    fallbackImage: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&q=80",
+    query: "Alleppey backwaters Kerala houseboat",
     bestSeason: "Oct – Mar",
     heritageScore: 95,
   },
@@ -160,8 +160,8 @@ const INDIAN_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 4 Nights",
     estPrice: "From ₹4,200 / d",
     description: "Terracotta havelis, amber fort sunsets, block-print textile artisans, and regal Rajasthani cuisine.",
-    imageUrl: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800&auto=format&fit=crop&q=80",
-    query: "Jaipur, India",
+    fallbackImage: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800&auto=format&fit=crop&q=80",
+    query: "Amber Fort Jaipur Rajasthan",
     bestSeason: "Oct – Mar",
     heritageScore: 98,
   },
@@ -173,19 +173,43 @@ const INDIAN_DESTINATIONS: DestinationCard[] = [
     stayDuration: "Avg. Stay • 3 Nights",
     estPrice: "From ₹2,500 / d",
     description: "Surreal granite boulder fields, carved stone chariots, coracle boat rides on the Tungabhadra river.",
-    imageUrl: "https://images.unsplash.com/photo-1600100397608-f010e423b971?w=800&auto=format&fit=crop&q=80",
-    query: "Hampi, India",
+    fallbackImage: "https://images.unsplash.com/photo-1600100397608-f010e423b971?w=800&auto=format&fit=crop&q=80",
+    query: "Hampi Virupaksha Temple Karnataka ruins",
     bestSeason: "Oct – Feb",
     heritageScore: 97,
   },
 ];
 
+// Fetches a single Google Places photo URL for a destination query
+async function fetchDestinationPhoto(query: string): Promise<string | null> {
+  try {
+    const res = await fetch(`/api/places/photos?query=${encodeURIComponent(query)}&count=1`);
+    const data = await res.json();
+    return data.photos?.[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export default function TrendingDestinations() {
   const scrollRowRef = useRef<HTMLDivElement>(null);
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
   const { region } = useRegion();
+  const [liveImages, setLiveImages] = useState<Record<string, string>>({});
 
   const destinations = region === "india" ? INDIAN_DESTINATIONS : GLOBAL_DESTINATIONS;
+
+  // Fetch Google Places photos for each destination on mount / region change
+  useEffect(() => {
+    setLiveImages({}); // reset when region changes
+    destinations.forEach((dest) => {
+      fetchDestinationPhoto(dest.query).then((url) => {
+        if (url) {
+          setLiveImages((prev) => ({ ...prev, [dest.id]: url }));
+        }
+      });
+    });
+  }, [region]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRowRef.current) {
@@ -231,13 +255,17 @@ export default function TrendingDestinations() {
         </div>
       </div>
 
-      {/* Horizontally Scrolling Row of Destination Cards with Hover Physics */}
+      {/* Horizontally Scrolling Row of Destination Cards */}
       <div
         ref={scrollRowRef}
         className="flex gap-6 overflow-x-auto pb-6 scroll-smooth pt-2 -mx-margin-mobile md:-mx-margin-tablet lg:-mx-margin-desktop px-margin-mobile md:px-margin-tablet lg:px-margin-desktop scrollbar-none snap-x snap-mandatory"
       >
         {destinations.map((dest) => {
           const isHovered = hoveredCardId === dest.id;
+          // Use live Google photo if loaded, else fallback Unsplash
+          const imageUrl = liveImages[dest.id] || dest.fallbackImage;
+          const isLoadingPhoto = !liveImages[dest.id];
+
           return (
             <Link
               key={dest.id}
@@ -246,16 +274,29 @@ export default function TrendingDestinations() {
               onMouseLeave={() => setHoveredCardId(null)}
               className="flex-none w-[320px] md:w-[350px] bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[32px] overflow-hidden flex flex-col transition-all duration-500 hover:-translate-y-2 hover:shadow-card group cursor-pointer snap-start"
             >
-              {/* Photo with Perspective Zoom */}
+              {/* Photo */}
               <div className="relative h-[340px] w-full overflow-hidden bg-surface-container dark:bg-[#201F1F]">
                 <img
-                  src={dest.imageUrl}
+                  src={imageUrl}
                   alt={dest.name}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
-                
+
+                {/* Subtle shimmer overlay while Google photo loads */}
+                {isLoadingPhoto && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-surface-container/40 via-surface-container-high/60 to-surface-container/40 dark:from-[#2A2A2A]/40 dark:via-[#333]/60 dark:to-[#2A2A2A]/40 animate-pulse pointer-events-none" />
+                )}
+
+                {/* Live badge — shown once Google photo has loaded */}
+                {!isLoadingPhoto && (
+                  <div className="absolute top-4 right-4 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="font-sans text-[9px] text-white uppercase tracking-wider font-semibold">Live Photo</span>
+                  </div>
+                )}
+
                 {/* Category Pill Tag */}
                 <div className="absolute top-4 left-4">
                   <span className="font-sans text-xs uppercase tracking-wider px-3 py-1 rounded-full border-2 border-on-surface dark:border-[#FAF7F2] bg-surface-container-lowest/90 dark:bg-[#131313]/90 backdrop-blur-sm text-on-surface dark:text-[#FAF7F2]">
@@ -263,7 +304,7 @@ export default function TrendingDestinations() {
                   </span>
                 </div>
 
-                {/* Arrow Glyph rotating 45 deg on hover */}
+                {/* Arrow Glyph */}
                 <div className="absolute bottom-4 right-4 bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[#FAF7F2] w-9 h-9 rounded-full flex items-center justify-center text-on-surface dark:text-[#FAF7F2] transition-transform duration-500 group-hover:rotate-45 group-hover:bg-primary group-hover:text-white dark:group-hover:bg-[#1E8C80] dark:group-hover:text-[#131313]">
                   <span className="material-symbols-outlined text-[18px]">north_east</span>
                 </div>
