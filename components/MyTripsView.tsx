@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import GroupExpenseSplitterModal from "@/components/GroupExpenseSplitterModal";
 import { supabase } from "@/lib/supabase";
+import { getStoredUser, toWayfareUser } from "@/lib/auth";
 
 interface JourneyCard {
   id: string;
@@ -81,12 +82,17 @@ export default function MyTripsView() {
           }
         }
 
-        // 2. Load from Supabase if logged in
+        // 2. Load stored user & cloud session
+        const storedUser = getStoredUser();
+        if (storedUser) {
+          setCurrentUser(storedUser);
+        }
+
         let dbJourneys: JourneyCard[] = [];
         const { data: { session } } = await supabase.auth.getSession();
         const user = session?.user;
         if (user) {
-          setCurrentUser(user);
+          setCurrentUser(toWayfareUser(user));
           const { data, error } = await supabase
             .from("trips")
             .select("*")
@@ -219,26 +225,26 @@ export default function MyTripsView() {
         {currentUser ? (
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 mb-8 rounded-[28px] bg-surface-container-low dark:bg-[#1C1B1B] border-2 border-primary/40 dark:border-[#1E8C80]/50 gap-4 animate-in fade-in duration-300">
             <div className="flex items-center gap-4">
-              {currentUser.user_metadata?.avatar_url || currentUser.user_metadata?.picture ? (
+              {currentUser.avatar || currentUser.user_metadata?.avatar_url || currentUser.user_metadata?.picture ? (
                 <img
-                  src={currentUser.user_metadata?.avatar_url || currentUser.user_metadata?.picture}
-                  alt={currentUser.user_metadata?.full_name || "Voyager"}
+                  src={currentUser.avatar || currentUser.user_metadata?.avatar_url || currentUser.user_metadata?.picture}
+                  alt={currentUser.name || currentUser.user_metadata?.full_name || "Voyager"}
                   className="w-14 h-14 rounded-full object-cover border-2 border-primary dark:border-[#1E8C80] shadow-sm"
                 />
               ) : (
                 <div className="w-14 h-14 rounded-full bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] font-serif text-2xl font-semibold flex items-center justify-center">
-                  {(currentUser.user_metadata?.full_name || currentUser.email || "U").charAt(0).toUpperCase()}
+                  {(currentUser.name || currentUser.user_metadata?.full_name || currentUser.email || "V").charAt(0).toUpperCase()}
                 </div>
               )}
               <div>
                 <div className="flex items-center gap-1.5">
                   <h3 className="font-serif text-xl text-on-surface dark:text-[#FAF7F2]">
-                    {currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email?.split("@")[0]}
+                    {currentUser.name || currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email?.split("@")[0]}
                   </h3>
                   <span className="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-[18px]">verified</span>
                 </div>
                 <p className="font-sans text-xs text-on-surface-variant dark:text-[rgba(250,247,242,0.65)]">
-                  {currentUser.email} • <span className="text-primary dark:text-[#1E8C80] font-semibold">Google Account Connected</span>
+                  {currentUser.email} • <span className="text-primary dark:text-[#1E8C80] font-semibold">{currentUser.provider === "atelier" ? "Atelier Voyager Active" : "Google Account Connected"}</span>
                 </p>
               </div>
             </div>

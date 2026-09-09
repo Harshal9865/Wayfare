@@ -105,8 +105,11 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
         setStoredUser(wUser);
         setUser(wUser);
       } else if (event === "SIGNED_OUT") {
-        setStoredUser(null);
-        setUser(null);
+        const current = getStoredUser();
+        if (current && current.provider === "google") {
+          setStoredUser(null);
+          setUser(null);
+        }
       }
     });
 
@@ -162,8 +165,9 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     { label: "My Trips", icon: "folder_open", href: "/my-trips" },
   ];
 
-  const userAvatar = user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
+  const userAvatar = user?.avatar || user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
   const userName =
+    user?.name ||
     user?.user_metadata?.full_name ||
     user?.user_metadata?.name ||
     (user?.email ? user.email.split("@")[0] : "");
@@ -171,7 +175,7 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     ? userName.charAt(0).toUpperCase()
     : user?.email
     ? user.email.charAt(0).toUpperCase()
-    : "U";
+    : "V";
 
   return (
     <>

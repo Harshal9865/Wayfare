@@ -7,6 +7,7 @@ import { PlaceSearchSuggestion } from "@/lib/types";
 import { useRegion } from "@/lib/region";
 import { supabase } from "@/lib/supabase";
 import { trackSearch } from "@/lib/analytics";
+import { getStoredUser, onAuthChanged } from "@/lib/auth";
 
 interface HeroSearchProps {
   onSearch?: (location: string, days: number, style: string, diet: string) => void;
@@ -60,27 +61,32 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
 
   // Sync user authentication state
   useEffect(() => {
+    const cached = getStoredUser();
+    if (cached) setUser(cached);
+
+    const unsub = onAuthChanged((u) => {
+      setUser(u);
+    });
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         setUser(session.user);
-      } else if (typeof window !== "undefined") {
-        const localEmail = localStorage.getItem("wayfare_user_email");
-        if (localEmail) setUser({ email: localEmail, id: "demo" });
       }
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         setUser(session.user);
-      } else if (typeof window !== "undefined") {
-        const localEmail = localStorage.getItem("wayfare_user_email");
-        setUser(localEmail ? { email: localEmail, id: "demo" } : null);
       } else {
-        setUser(null);
+        const local = getStoredUser();
+        setUser(local);
       }
     });
 
-    return () => listener?.subscription.unsubscribe();
+    return () => {
+      unsub();
+      listener?.subscription.unsubscribe();
+    };
   }, []);
 
   // Sync dietary default when region changes if set to default
@@ -253,7 +259,7 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
         <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border-2 border-primary/40 dark:border-[#1E8C80]/50 bg-primary/10 dark:bg-[#1E8C80]/15 text-on-surface dark:text-[#FAF7F2] animate-in fade-in duration-300">
           <span className="material-symbols-outlined text-[16px] text-primary dark:text-[#1E8C80]">verified</span>
           <span className="font-sans text-xs font-semibold text-primary dark:text-[#1E8C80]">
-            Welcome, {user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0]}
+            Welcome, {user.name || user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Voyager"}
           </span>
           <span className="text-outline dark:text-[rgba(250,247,242,0.4)]">•</span>
           <Link
