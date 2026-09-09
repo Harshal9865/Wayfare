@@ -11,6 +11,7 @@ export interface Place {
   place_id: string;
   name: string;
   formatted_address?: string;
+  vicinity?: string;
   lat: number;
   lng: number;
   category: PlaceCategory;

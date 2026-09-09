@@ -31,7 +31,7 @@ export default function PlaceDetailModal({
   // Fetch live Google Places photos when modal opens
   useEffect(() => {
     if (isOpen && place) {
-      trackPlaceViewed(place.name, place.vicinity || place.name);
+      trackPlaceViewed(place.name, place.formatted_address || place.name);
       setPhotosLoading(true);
       setLivePhotos([]);
       fetch(`/api/places/photos?query=${encodeURIComponent(place.name)}&count=5`)
