@@ -24,6 +24,8 @@ export default function ItineraryAuthGate({
   const [isSending, setIsSending] = useState(false);
   const [magicSent, setMagicSent] = useState(false);
   const [error, setError] = useState("");
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [providerNotice, setProviderNotice] = useState<string | null>(null);
 
   // Listen for auth changes — if user logs in while modal is open, auto-navigate
   useEffect(() => {
@@ -41,18 +43,46 @@ export default function ItineraryAuthGate({
 
   const handleGoogleLogin = async () => {
     try {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
-      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+      setGoogleLoading(true);
+      setProviderNotice(null);
+      setError("");
+
+      const origin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || "");
+      const targetRedirect = `${origin}${redirectUrl.startsWith("/") ? redirectUrl : `/${redirectUrl}`}`;
+
+      const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${siteUrl}${redirectUrl}`,
+          skipBrowserRedirect: true,
+          redirectTo: targetRedirect,
         },
       });
+
       if (oauthError) throw oauthError;
-    } catch {
-      // Demo fallback — simulate a session so the user can still explore
-      router.push(redirectUrl);
-      onClose();
+
+      if (data?.url) {
+        // Probe whether provider is enabled in Supabase without navigating away
+        try {
+          const probe = await fetch(data.url, { method: "HEAD" });
+          if (probe.status === 400) {
+            setProviderNotice(
+              "Google Sign-In is not enabled yet in your Supabase project (vajjeedldbzcwxwqsmhs). Please enable Google in your Supabase Dashboard, or click below to proceed right away!"
+            );
+            setGoogleLoading(false);
+            return;
+          }
+        } catch {
+          // If probe fails due to CORS on redirect, it means Supabase redirected to Google OAuth successfully
+        }
+        window.location.href = data.url;
+      }
+    } catch (err: any) {
+      console.warn("Google login fallback:", err);
+      setProviderNotice(
+        "Google sign-in is currently pending setup in Supabase. Click below to continue directly."
+      );
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
@@ -153,18 +183,56 @@ export default function ItineraryAuthGate({
                 <span>Continue Instantly (No Sign-in Needed)</span>
               </button>
 
+              {/* Provider Notice Callout if Google is disabled in Supabase */}
+              {providerNotice && (
+                <div className="mb-4 p-3.5 rounded-[20px] bg-amber-500/10 border-2 border-amber-500/40 text-left animate-in fade-in">
+                  <div className="flex items-start gap-2.5">
+                    <span className="material-symbols-outlined text-amber-600 dark:text-amber-400 text-lg flex-shrink-0 mt-0.5">
+                      info
+                    </span>
+                    <div className="flex-1">
+                      <p className="font-sans text-xs text-amber-800 dark:text-amber-300 font-semibold mb-1">
+                        Google Auth Setup Notice
+                      </p>
+                      <p className="font-sans text-[11px] text-on-surface-variant dark:text-[rgba(250,247,242,0.7)] leading-relaxed mb-2.5">
+                        {providerNotice}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={handleContinueAsGuest}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container dark:bg-[#1E8C80] text-white dark:text-[#131313] font-sans text-xs font-semibold hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
+                      >
+                        <span>Continue to Itinerary Now</span>
+                        <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Google Sign In */}
               <button
+                type="button"
                 onClick={handleGoogleLogin}
-                className="w-full flex items-center justify-center gap-3 py-3 rounded-full bg-surface-container-lowest dark:bg-[#131313] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] text-on-surface dark:text-[#FAF7F2] font-sans text-xs font-semibold hover:bg-surface-container dark:hover:bg-[#1C1B1B] transition-all cursor-pointer mb-3"
+                disabled={googleLoading}
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-full bg-surface-container-lowest dark:bg-[#131313] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] text-on-surface dark:text-[#FAF7F2] font-sans text-xs font-semibold hover:bg-surface-container dark:hover:bg-[#1C1B1B] transition-all cursor-pointer mb-3 disabled:opacity-75"
               >
-                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                </svg>
-                Continue with Google
+                {googleLoading ? (
+                  <>
+                    <span className="w-4 h-4 rounded-full border-2 border-primary dark:border-[#1E8C80] border-t-transparent animate-spin" />
+                    <span>Verifying Google Auth...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                    </svg>
+                    <span>Continue with Google</span>
+                  </>
+                )}
               </button>
 
               {/* Divider */}
