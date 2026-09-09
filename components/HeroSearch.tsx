@@ -224,100 +224,103 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
         Where would you wander?
       </h1>
 
-      {/* Spacious Editorial Search Shell with Breathing Multi-Color Ambient Glow */}
-      <div ref={dropdownRef} className="w-full max-w-3xl relative mt-2 group">
-        {/* Breathing Glow Behind Input */}
-        <div className="absolute -inset-2 bg-gradient-to-r from-[#ffdbcc] via-[#afeeed] to-[#b5edec] dark:from-[#3aa093] dark:via-[#1E8C80] dark:to-[#489e94] rounded-[68px] opacity-70 blur-xl transition-all duration-700 group-hover:opacity-100 group-focus-within:opacity-100 group-focus-within:scale-[1.02]"></div>
+      {/* Editorial Search Shell */}
+      <div ref={dropdownRef} className="w-full max-w-3xl relative mt-2">
+        {/* Search Bar with Contained Ambient Glow */}
+        <div className="relative w-full group">
+          {/* Breathing Glow Behind Input - strictly contained to search pill */}
+          <div className="absolute -inset-2 bg-gradient-to-r from-[#ffdbcc] via-[#afeeed] to-[#b5edec] dark:from-[#3aa093] dark:via-[#1E8C80] dark:to-[#489e94] rounded-[68px] opacity-70 blur-xl transition-all duration-700 group-hover:opacity-100 group-focus-within:opacity-100 group-focus-within:scale-[1.02] pointer-events-none -z-10"></div>
 
-        {/* Crisp Search Bar Form */}
-        <form
-          onSubmit={handleSubmit}
-          className="relative flex items-center w-full bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.35)] rounded-[60px] p-2 md:p-3 transition-all duration-300 group-focus-within:border-primary dark:group-focus-within:border-[#1E8C80]"
-        >
-          <div className="pl-3 md:pl-6 pr-1 sm:pr-2 text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] flex items-center">
-            <span className="material-symbols-outlined text-[22px] sm:text-[26px]">travel_explore</span>
-          </div>
+          {/* Crisp Search Bar Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="relative z-10 flex items-center w-full bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.35)] rounded-[60px] p-2 md:p-3 transition-all duration-300 group-focus-within:border-primary dark:group-focus-within:border-[#1E8C80]"
+          >
+            <div className="pl-3 md:pl-6 pr-1 sm:pr-2 text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] flex items-center">
+              <span className="material-symbols-outlined text-[22px] sm:text-[26px]">travel_explore</span>
+            </div>
 
-          <input
-            ref={inputRef}
-            type="text"
-            id="destinationSearch"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={currentPlaceholder}
-            className="w-full bg-transparent font-sans text-sm sm:text-base md:text-lg text-on-surface dark:text-[#FAF7F2] placeholder:text-outline dark:placeholder:text-[rgba(250,247,242,0.4)] focus:outline-none px-2 tracking-normal transition-all"
-            autoComplete="off"
-          />
+            <input
+              ref={inputRef}
+              type="text"
+              id="destinationSearch"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={currentPlaceholder}
+              className="w-full bg-transparent font-sans text-sm sm:text-base md:text-lg text-on-surface dark:text-[#FAF7F2] placeholder:text-outline dark:placeholder:text-[rgba(250,247,242,0.4)] focus:outline-none px-2 tracking-normal transition-all"
+              autoComplete="off"
+            />
 
-          {/* Clear button when text exists */}
-          {query.length > 0 && (
+            {/* Clear button when text exists */}
+            {query.length > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  inputRef.current?.focus();
+                }}
+                className="p-1.5 mr-1 sm:mr-2 rounded-full text-on-surface-variant hover:text-on-surface dark:text-[rgba(250,247,242,0.6)] hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors cursor-pointer"
+                aria-label="Clear search input"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            )}
+
+            {/* Keyboard shortcut hint (Ctrl+K) */}
+            <div className="hidden lg:flex items-center gap-1 mr-2 px-2.5 py-1 rounded-md border border-on-surface/20 dark:border-[rgba(250,247,242,0.2)] bg-surface-container-low/70 dark:bg-[#201F1F] text-[10px] font-sans text-outline dark:text-[rgba(250,247,242,0.5)] select-none">
+              <kbd className="font-sans font-semibold">⌘K</kbd>
+            </div>
+
+            {/* Filter Trigger Button */}
             <button
               type="button"
-              onClick={() => {
-                setQuery("");
-                inputRef.current?.focus();
-              }}
-              className="p-1.5 mr-1 sm:mr-2 rounded-full text-on-surface-variant hover:text-on-surface dark:text-[rgba(250,247,242,0.6)] hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors cursor-pointer"
-              aria-label="Clear search input"
+              onClick={() => setShowFilters(!showFilters)}
+              className={`flex items-center gap-1 py-2 px-3 sm:px-4 mr-1 sm:mr-2 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] transition-all text-on-surface dark:text-[#FAF7F2] cursor-pointer hover:scale-105 active:scale-95 ${
+                showFilters
+                  ? "bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] border-on-surface"
+                  : "bg-surface-container dark:bg-[#2A2A2A] hover:bg-surface-variant"
+              }`}
+              title="Adjust trip preferences"
             >
-              <span className="material-symbols-outlined text-[18px]">close</span>
+              <span className="material-symbols-outlined text-[18px]">tune</span>
+              <span className="font-sans text-xs uppercase tracking-wider font-semibold hidden sm:inline">
+                {showFilters ? "Close" : "Preferences"}
+              </span>
             </button>
-          )}
 
-          {/* Keyboard shortcut hint (Ctrl+K) */}
-          <div className="hidden lg:flex items-center gap-1 mr-2 px-2.5 py-1 rounded-md border border-on-surface/20 dark:border-[rgba(250,247,242,0.2)] bg-surface-container-low/70 dark:bg-[#201F1F] text-[10px] font-sans text-outline dark:text-[rgba(250,247,242,0.5)] select-none">
-            <kbd className="font-sans font-semibold">⌘K</kbd>
-          </div>
-
-          {/* Filter Trigger Button */}
-          <button
-            type="button"
-            onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-1 py-2 px-3 sm:px-4 mr-1 sm:mr-2 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] transition-all text-on-surface dark:text-[#FAF7F2] cursor-pointer hover:scale-105 active:scale-95 ${
-              showFilters
-                ? "bg-surface-container-highest dark:bg-[#353534]"
-                : "bg-surface-container dark:bg-[#2A2A2A] hover:bg-surface-variant"
-            }`}
-            title="Adjust trip preferences"
-          >
-            <span className="material-symbols-outlined text-[18px]">tune</span>
-            <span className="font-sans text-xs uppercase tracking-wider font-medium hidden sm:inline">
-              {showFilters ? "Close" : "Preferences"}
-            </span>
-          </button>
-
-          {/* Deep Teal Search CTA */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="flex items-center justify-center gap-2 bg-primary-container dark:bg-[#1E8C80] text-surface-container-lowest dark:text-[#131313] hover:bg-primary dark:hover:bg-[#1A7A70] transition-all px-6 md:px-8 py-3.5 md:py-4 rounded-full border-2 border-on-surface dark:border-[#1E8C80] flex-shrink-0 cursor-pointer hover:scale-105 active:scale-95 disabled:opacity-80"
-          >
-            {isSubmitting ? (
-              <>
-                <span className="w-4 h-4 rounded-full border-2 border-white dark:border-[#131313] border-t-transparent animate-spin" />
-                <span className="font-sans text-sm tracking-wide hidden sm:inline font-medium">
-                  Curating...
-                </span>
-              </>
-            ) : (
-              <>
-                <span className="font-sans text-sm tracking-wide hidden sm:inline font-medium">
-                  Search
-                </span>
-                <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
-              </>
-            )}
-          </button>
-        </form>
+            {/* Deep Teal Search CTA */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex items-center justify-center gap-2 bg-primary-container dark:bg-[#1E8C80] text-surface-container-lowest dark:text-[#131313] hover:bg-primary dark:hover:bg-[#1A7A70] transition-all px-6 md:px-8 py-3.5 md:py-4 rounded-full border-2 border-on-surface dark:border-[#1E8C80] flex-shrink-0 cursor-pointer hover:scale-105 active:scale-95 disabled:opacity-80"
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="w-4 h-4 rounded-full border-2 border-white dark:border-[#131313] border-t-transparent animate-spin" />
+                  <span className="font-sans text-sm tracking-wide hidden sm:inline font-medium">
+                    Curating...
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="font-sans text-sm tracking-wide hidden sm:inline font-medium">
+                    Search
+                  </span>
+                  <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
+                </>
+              )}
+            </button>
+          </form>
+        </div>
 
         {/* Live Autocomplete Dropdown */}
         {showDropdown && suggestions.length > 0 && (
-          <div className="absolute left-0 right-0 top-full mt-2 bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[28px] p-2 z-50 text-left shadow-dropdown animate-in fade-in-50 duration-200">
+          <div className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[28px] p-2 z-50 text-left shadow-2xl">
             {suggestions.map((item) => (
               <div
                 key={item.place_id}
                 onClick={() => handleSelectSuggestion(item)}
-                className="px-5 py-3 hover:bg-surface-container-low dark:hover:bg-[#222222] rounded-[20px] flex items-center justify-between cursor-pointer transition-all hover:translate-x-1"
+                className="px-5 py-3 hover:bg-[#f6f3ee] dark:hover:bg-[#222222] rounded-[20px] flex items-center justify-between cursor-pointer transition-all hover:translate-x-1"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full border-2 border-on-surface/20 dark:border-[#FAF7F2]/20 flex items-center justify-center bg-surface-container dark:bg-[#201F1F]">
@@ -344,13 +347,13 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
           </div>
         )}
 
-        {/* Expandable Preferences Drawer */}
+        {/* Expandable Preferences Drawer with High Contrast & Crisp Styling */}
         {showFilters && (
-          <div className="mt-4 p-6 bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[32px] text-left grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in-50 slide-in-from-top-2 duration-300">
+          <div className="relative z-20 mt-4 p-6 bg-white dark:bg-[#1C1B1B] border-2 border-on-surface dark:border-[rgba(250,247,242,0.35)] rounded-[32px] text-left grid grid-cols-1 md:grid-cols-3 gap-6 shadow-xl">
             {/* Duration */}
             <div>
-              <label className="font-sans text-xs uppercase tracking-widest text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] font-semibold block mb-2">
-                Trip Duration ({days} {days === 1 ? "Day" : "Days"})
+              <label className="font-sans text-xs uppercase tracking-widest text-[#1c1c19] dark:text-[#FAF7F2] font-bold block mb-2">
+                Trip Duration: <span className="text-secondary dark:text-[#1E8C80] font-bold">{days} {days === 1 ? "Day" : "Days"}</span>
               </label>
               <div className="flex gap-2">
                 {[1, 2, 3, 5, 7].map((num) => (
@@ -358,10 +361,10 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
                     key={num}
                     type="button"
                     onClick={() => setDays(num)}
-                    className={`px-3.5 py-1.5 rounded-full border-2 text-xs font-medium cursor-pointer transition-all hover:scale-105 active:scale-95 ${
+                    className={`px-3.5 py-1.5 rounded-full border-2 text-xs font-semibold cursor-pointer transition-all hover:scale-105 active:scale-95 ${
                       days === num
-                        ? "bg-primary-container text-white border-on-surface dark:bg-[#1E8C80] dark:text-[#131313] dark:border-[#1E8C80]"
-                        : "border-on-surface dark:border-[rgba(250,247,242,0.2)] bg-surface-container dark:bg-[#201F1F] text-on-surface dark:text-[#FAF7F2]"
+                        ? "bg-[#003434] text-white border-[#003434] dark:bg-[#1E8C80] dark:text-[#131313] dark:border-[#1E8C80] shadow-sm"
+                        : "border-[#1c1c19]/30 dark:border-[rgba(250,247,242,0.25)] bg-[#f6f3ee] dark:bg-[#2A2A2A] text-[#1c1c19] dark:text-[#FAF7F2] hover:bg-[#e5e2dd]"
                     }`}
                   >
                     {num}d
@@ -372,13 +375,13 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
 
             {/* Travel Style */}
             <div>
-              <label className="font-sans text-xs uppercase tracking-widest text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] font-semibold block mb-2">
+              <label className="font-sans text-xs uppercase tracking-widest text-[#1c1c19] dark:text-[#FAF7F2] font-bold block mb-2">
                 Travel Character
               </label>
               <select
                 value={tripStyle}
                 onChange={(e) => setTripStyle(e.target.value)}
-                className="w-full bg-surface-container dark:bg-[#201F1F] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-full px-4 py-2 text-xs text-on-surface dark:text-[#FAF7F2] focus:outline-none cursor-pointer"
+                className="w-full bg-[#f6f3ee] dark:bg-[#2A2A2A] border-2 border-[#1c1c19] dark:border-[rgba(250,247,242,0.35)] rounded-full px-4 py-2 text-xs font-medium text-[#1c1c19] dark:text-[#FAF7F2] focus:outline-none cursor-pointer"
               >
                 <option value="balanced">Balanced Exploration</option>
                 <option value="backpacker">Backpacker &amp; Budget</option>
@@ -389,17 +392,18 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
 
             {/* Dietary Preference */}
             <div>
-              <label className="font-sans text-xs uppercase tracking-widest text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] font-semibold block mb-2">
+              <label className="font-sans text-xs uppercase tracking-widest text-[#1c1c19] dark:text-[#FAF7F2] font-bold block mb-2">
                 Dietary Preference
               </label>
               <select
                 value={dietaryPref}
                 onChange={(e) => setDietaryPref(e.target.value)}
-                className="w-full bg-surface-container dark:bg-[#201F1F] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-full px-4 py-2 text-xs text-on-surface dark:text-[#FAF7F2] focus:outline-none cursor-pointer"
+                className="w-full bg-[#f6f3ee] dark:bg-[#2A2A2A] border-2 border-[#1c1c19] dark:border-[rgba(250,247,242,0.35)] rounded-full px-4 py-2 text-xs font-medium text-[#1c1c19] dark:text-[#FAF7F2] focus:outline-none cursor-pointer"
               >
                 <option value="any">Any / Local Specialties</option>
+                <option value="satvik">Satvik &amp; Pure Veg (No Onion/Garlic)</option>
                 <option value="pure_veg">100% Pure Vegetarian</option>
-                <option value="jain_friendly">Jain Friendly (No Onion/Garlic)</option>
+                <option value="jain_friendly">Jain Friendly</option>
               </select>
             </div>
           </div>

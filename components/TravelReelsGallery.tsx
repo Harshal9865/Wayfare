@@ -27,6 +27,7 @@ export default function TravelReelsGallery() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [likedReelIds, setLikedReelIds] = useState<string[]>([]);
+  const [videoError, setVideoError] = useState(false);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
 
   const filterTabs = useMemo(() => {
@@ -34,6 +35,28 @@ export default function TravelReelsGallery() {
       ? ["All", "Varanasi", "Rishikesh", "Ladakh", "Kerala", "Jaipur"]
       : ["All", "Kyoto", "Lisbon", "Oaxaca", "Amalfi"];
   }, [region]);
+
+  // Sync play/pause with HTML5 video element
+  useEffect(() => {
+    if (modalVideoRef.current) {
+      if (isPlaying) {
+        modalVideoRef.current.play().catch(() => {});
+      } else {
+        modalVideoRef.current.pause();
+      }
+    }
+  }, [isPlaying, activeReel]);
+
+  // Escape key closes modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && activeReel) {
+        setActiveReel(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeReel]);
 
   // Fetch reels from API
   useEffect(() => {
@@ -57,21 +80,35 @@ export default function TravelReelsGallery() {
     };
   }, [region, selectedFilter]);
 
-  const toggleLike = (reelId: string, e?: React.MouseEvent) => {
+  const toggleLike = async (reelId: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+    const isCurrentlyLiked = likedReelIds.includes(reelId);
     setLikedReelIds((prev) =>
-      prev.includes(reelId) ? prev.filter((id) => id !== reelId) : [...prev, reelId]
+      isCurrentlyLiked ? prev.filter((id) => id !== reelId) : [...prev, reelId]
     );
+
+    try {
+      await fetch("/api/reels", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          reelId,
+          action: isCurrentlyLiked ? "unlike" : "like",
+        }),
+      });
+    } catch (_) {}
   };
 
   const handleOpenModal = (reel: ReelItem) => {
     setActiveReel(reel);
     setIsPlaying(true);
     setIsMuted(true);
+    setVideoError(false);
   };
 
   const handleCloseModal = () => {
     setActiveReel(null);
+    setVideoError(false);
   };
 
   return (
@@ -196,18 +233,54 @@ export default function TravelReelsGallery() {
             className="relative w-full max-w-sm h-[80vh] max-h-[680px] bg-black rounded-[36px] overflow-hidden border-2 border-white/30 shadow-2xl flex flex-col justify-between p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* HTML5 Video Element */}
-            <video
-              ref={modalVideoRef}
-              src={activeReel.videoUrl}
-              autoPlay
-              loop
-              muted={isMuted}
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-              onClick={() => setIsPlaying(!isPlaying)}
-            />
+            {/* Video or Fallback Atmosphere Frame */}
+            {videoError ? (
+              <div className="absolute inset-0 w-full h-full bg-black">
+                <img
+                  src={activeReel.thumbnailUrl}
+                  alt={activeReel.destination}
+                  className="w-full h-full object-cover opacity-80 scale-105 transition-transform duration-1000"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/60 flex items-center justify-center p-6 text-center">
+                  <div className="bg-black/80 backdrop-blur-md border border-white/20 rounded-2xl p-4 max-w-xs">
+                    <span className="material-symbols-outlined text-[32px] text-[#1E8C80] mb-2">
+                      photo_camera
+                    </span>
+                    <p className="font-sans text-xs text-white font-medium">
+                      Atmospheric Still Edition
+                    </p>
+                    <p className="font-sans text-[10px] text-white/60 mt-1">
+                      Direct video stream preview mode
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <video
+                ref={modalVideoRef}
+                src={activeReel.videoUrl}
+                autoPlay
+                loop
+                muted={isMuted}
+                playsInline
+                onError={() => setVideoError(true)}
+                className="absolute inset-0 w-full h-full object-cover cursor-pointer"
+                onClick={() => setIsPlaying(!isPlaying)}
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/50 pointer-events-none" />
+
+            {/* Center Pause/Play Indicator (shown when paused) */}
+            {!isPlaying && !videoError && (
+              <button
+                type="button"
+                onClick={() => setIsPlaying(true)}
+                className="absolute inset-0 m-auto w-16 h-16 rounded-full bg-black/60 backdrop-blur-md border-2 border-white/80 flex items-center justify-center text-white z-20 hover:scale-110 active:scale-95 transition-transform cursor-pointer"
+                aria-label="Resume video"
+              >
+                <span className="material-symbols-outlined text-[32px]">play_arrow</span>
+              </button>
+            )}
 
             {/* Top Modal Bar */}
             <div className="relative z-10 flex items-center justify-between">
@@ -233,7 +306,7 @@ export default function TravelReelsGallery() {
                   <span className="material-symbols-outlined text-[16px]">
                     {isMuted ? "volume_off" : "volume_up"}
                   </span>
-                  <span>{isMuted ? "Unmute" : "Muted"}</span>
+                  <span>{isMuted ? "Unmute" : "Sound On"}</span>
                 </button>
 
                 {/* Like Button */}
