@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import PersonalizedPlanModal from "@/components/PersonalizedPlanModal";
 import HowItWorksModal from "@/components/HowItWorksModal";
 import { useCurrency, CURRENCIES, CurrencyCode } from "@/lib/currency";
@@ -11,6 +11,7 @@ import { supabase } from "@/lib/supabase";
 
 export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { currency, setCurrency } = useCurrency();
   const { region, setRegion } = useRegion();
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -302,7 +303,7 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
                 </button>
               ) : (
                 <button
-                  onClick={onOpenLogin}
+                  onClick={() => (onOpenLogin ? onOpenLogin() : router.push("/login"))}
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-lowest dark:bg-[#201F1F] text-xs font-sans uppercase tracking-wider font-semibold text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[15px]">person</span>

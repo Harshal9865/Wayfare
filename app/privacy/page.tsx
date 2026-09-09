@@ -15,7 +15,7 @@ const SITE_NAME = "WAYFARE";
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background dark:bg-[#131313] transition-colors">
-      <Navbar onOpenLogin={() => {}} />
+      <Navbar />
 
       <main className="flex-1 w-full max-w-3xl mx-auto px-6 pt-32 pb-20">
         {/* Header */}
