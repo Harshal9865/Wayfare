@@ -19,6 +19,7 @@ import { SAMPLE_TRIP_PLANS, getOrCreateTripPlan } from "@/lib/mock-itinerary";
 import { Place, TripPlan, ItineraryItem, TripStyle, VegDietaryStatus } from "@/lib/types";
 import { useCurrency } from "@/lib/currency";
 import { supabase } from "@/lib/supabase";
+import { isIndianDestination } from "@/lib/geo-resolver";
 
 function ItineraryContent() {
   const searchParams = useSearchParams();
@@ -56,17 +57,42 @@ function ItineraryContent() {
     if (cachedPlanStr) {
       try {
         const cached = JSON.parse(cachedPlanStr);
-        setTripPlan(cached);
-        return;
+        const isIndianSearch = isIndianDestination(locationParam);
+
+        // Invalidate stale bad fallback caches
+        const isStaleFallback =
+          isIndianSearch &&
+          (cached.lat === 35.0116 ||
+            cached.title?.includes("Contemplative Journey in Ganga") ||
+            cached.days?.[0]?.items?.[0]?.place?.name?.includes("Central Historic Plaza"));
+
+        if (!isStaleFallback && cached.days && cached.days.length > 0) {
+          setTripPlan(cached);
+          return;
+        } else {
+          localStorage.removeItem(cacheKey);
+        }
       } catch (e) {
         console.warn("Cached plan parse error:", e);
       }
     }
 
-    // If matches static curated presets
-    if (SAMPLE_TRIP_PLANS[locationParam]) {
-      setTripPlan(SAMPLE_TRIP_PLANS[locationParam]);
-      return;
+    // If matches static curated presets (case-insensitive normalized)
+    const norm = locationParam.trim().toLowerCase();
+    for (const [key, plan] of Object.entries(SAMPLE_TRIP_PLANS)) {
+      const kLower = key.toLowerCase();
+      if (kLower === norm || norm.includes(kLower) || kLower.includes(norm)) {
+        setTripPlan(plan);
+        return;
+      }
+    }
+
+    if (norm.includes("ganga") || norm.includes("ganges")) {
+      const gangaPlan = SAMPLE_TRIP_PLANS["Ganga, India"] || SAMPLE_TRIP_PLANS["Ganga"];
+      if (gangaPlan) {
+        setTripPlan(gangaPlan);
+        return;
+      }
     }
 
     // Tier 3: Fetch dynamic itinerary from API (Google Places + Gemini AI)

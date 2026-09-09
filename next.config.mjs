@@ -17,7 +17,7 @@ const securityHeaders = [
       "img-src 'self' data: blob: https://images.unsplash.com https://maps.googleapis.com https://lh3.googleusercontent.com https://streetviewpixels-pa.googleapis.com https://cf.bstatic.com https://images.pexels.com https://videos.pexels.com https://www.google-analytics.com https://*.clarity.ms https://c.bing.com",
       "media-src 'self' blob: data: https://videos.pexels.com https://player.vimeo.com https://commondatastorage.googleapis.com https://*.pexels.com",
       "frame-src 'self' https://www.openstreetmap.org",
-      "connect-src 'self' https://*.supabase.co https://maps.googleapis.com https://nominatim.openstreetmap.org https://api.pexels.com https://generativelanguage.googleapis.com https://www.google-analytics.com https://analytics.google.com https://*.clarity.ms https://c.bing.com",
+      "connect-src 'self' https://*.supabase.co https://maps.googleapis.com https://nominatim.openstreetmap.org https://api.pexels.com https://generativelanguage.googleapis.com https://www.google-analytics.com https://analytics.google.com https://*.clarity.ms https://c.bing.com https://api.open-meteo.com",
     ].join("; "),
   },
 ];

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Place } from "@/lib/types";
 import FoodDietaryTaggingModal from "@/components/FoodDietaryTaggingModal";
 import { trackPlaceViewed } from "@/lib/analytics";
+import { getSmartContextualPhoto } from "@/lib/image-resolver";
 
 interface PlaceDetailModalProps {
   place: Place | null;
@@ -83,19 +84,23 @@ export default function PlaceDetailModal({
 
   if (!isOpen || !place) return null;
 
-  // Prefer live Google photos; fall back to place.photos or a single photo_url + editorial fillers
+  const smartPhotos = getSmartContextualPhoto(
+    place.name,
+    place.sub_category || place.category,
+    place.formatted_address || place.vicinity || ""
+  );
+
   const fallbackPhotos =
     place.photos && place.photos.length > 0
-      ? place.photos
-      : [
-          place.photo_url || "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1000",
-          "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1000",
-          "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=1000",
-          "https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=1000",
-          "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1000",
-        ];
+      ? place.photos.filter((p) => !p.includes("photo-1509840841025") && !p.includes("photo-1576092768241"))
+      : [place.photo_url, ...smartPhotos.angles].filter(Boolean);
 
-  const photoGallery = livePhotos.length > 0 ? livePhotos : fallbackPhotos;
+  const photoGallery =
+    livePhotos.length > 0
+      ? livePhotos
+      : fallbackPhotos.length > 0
+      ? fallbackPhotos
+      : [smartPhotos.main, ...smartPhotos.angles];
 
   const photoAngleLabels = [
     "Perspective #1 • Main Architectural Facade",

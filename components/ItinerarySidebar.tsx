@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { BudgetBreakdown } from "@/lib/types";
 import FestivalsCalendarModal from "@/components/FestivalsCalendarModal";
 import { fetchLiveWeather, RealTimeWeather } from "@/lib/weather";
+import { resolveLocationCoords } from "@/lib/geo-resolver";
 
 interface ItinerarySidebarProps {
   locationName: string;
@@ -43,12 +44,13 @@ export default function ItinerarySidebar({
   }, []);
 
   useEffect(() => {
-    const latitude = lat || 35.0116;
-    const longitude = lng || 135.7681;
+    const geo = resolveLocationCoords(locationName || "India");
+    const latitude = lat || geo.lat;
+    const longitude = lng || geo.lng;
     fetchLiveWeather(latitude, longitude).then((data) => {
       if (data) setLiveWeather(data);
     });
-  }, [lat, lng]);
+  }, [lat, lng, locationName]);
 
   const toggleChecklist = (item: string) => {
     if (checkedChecklist.includes(item)) {

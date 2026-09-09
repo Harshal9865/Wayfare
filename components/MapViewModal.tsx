@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ItineraryDay, Place } from "@/lib/types";
+import { resolveLocationCoords } from "@/lib/geo-resolver";
 
 interface MapViewModalProps {
   isOpen: boolean;
@@ -22,9 +23,10 @@ export default function MapViewModal({
   lat,
   lng,
 }: MapViewModalProps) {
-  const [mapLat, setMapLat] = useState(lat || 0);
-  const [mapLng, setMapLng] = useState(lng || 0);
-  const [isGeoLoading, setIsGeoLoading] = useState(!lat || !lng);
+  const geo = resolveLocationCoords(locationName || "India");
+  const [mapLat, setMapLat] = useState(lat || geo.lat);
+  const [mapLng, setMapLng] = useState(lng || geo.lng);
+  const [isGeoLoading, setIsGeoLoading] = useState(!lat && !geo.lat);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -32,6 +34,10 @@ export default function MapViewModal({
     if (lat && lng) {
       setMapLat(lat);
       setMapLng(lng);
+      setIsGeoLoading(false);
+    } else if (geo.lat && geo.lng) {
+      setMapLat(geo.lat);
+      setMapLng(geo.lng);
       setIsGeoLoading(false);
     } else {
       setIsGeoLoading(true);
@@ -48,7 +54,7 @@ export default function MapViewModal({
         .catch((err) => console.error("Nominatim geocode error:", err))
         .finally(() => setIsGeoLoading(false));
     }
-  }, [isOpen]);
+  }, [isOpen, lat, lng, locationName]);
 
   if (!isOpen) return null;
 

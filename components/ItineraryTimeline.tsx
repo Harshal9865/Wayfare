@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ItineraryDay, ItineraryItem, Place } from "@/lib/types";
+import { getSmartContextualPhoto, generateTravelCardPlaceholderSvg } from "@/lib/image-resolver";
 
 interface ItineraryTimelineProps {
   days: ItineraryDay[];
@@ -19,23 +20,46 @@ function ItineraryItemCard({
   idx: number;
   onSelectPlace: (place: Place) => void;
 }) {
-  const [photoUrl, setPhotoUrl] = useState<string>(
-    item.place.photo_url || "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800"
+  const smartFallback = getSmartContextualPhoto(
+    item.place?.name || "Waypoint",
+    item.place?.sub_category || "",
+    item.place?.formatted_address || ""
   );
-  const [isLoadingPhoto, setIsLoadingPhoto] = useState(true);
+
+  const initialPhoto =
+    item.place?.photo_url &&
+    !item.place.photo_url.includes("photo-1509840841025") &&
+    !item.place.photo_url.includes("photo-1576092768241")
+      ? item.place.photo_url
+      : smartFallback.main;
+
+  const [photoUrl, setPhotoUrl] = useState<string>(initialPhoto);
+  const [isLoadingPhoto, setIsLoadingPhoto] = useState<boolean>(!initialPhoto);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
-    if (item.place.name) {
+    if (initialPhoto && initialPhoto.startsWith("http") && !initialPhoto.includes("unsplash.com/photo-1561361513")) {
+      setIsLoadingPhoto(false);
+      return;
+    }
+
+    if (item.place?.name) {
       setIsLoadingPhoto(true);
       fetch(`/api/places/photos?query=${encodeURIComponent(item.place.name)}&count=1`)
         .then((res) => res.json())
         .then((data) => {
           if (isMounted && data.photos && data.photos.length > 0) {
             setPhotoUrl(data.photos[0]);
+          } else if (isMounted) {
+            setPhotoUrl(smartFallback.main);
           }
         })
-        .catch(() => {})
+        .catch(() => {
+          if (isMounted) {
+            setPhotoUrl(smartFallback.main);
+          }
+        })
         .finally(() => {
           if (isMounted) setIsLoadingPhoto(false);
         });
@@ -45,10 +69,22 @@ function ItineraryItemCard({
     return () => {
       isMounted = false;
     };
-  }, [item.place.name]);
+  }, [item.place?.name, initialPhoto]);
 
-  const fallbackPhoto =
-    item.place.photo_url || "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800";
+  const handleImageError = () => {
+    if (!hasError) {
+      setHasError(true);
+      setPhotoUrl(smartFallback.main);
+    } else {
+      setPhotoUrl(
+        generateTravelCardPlaceholderSvg(
+          item.place?.name || "Waypoint",
+          item.place?.sub_category || "Spot",
+          item.place?.vicinity || "Heritage Corridor"
+        )
+      );
+    }
+  };
 
   return (
     <div
@@ -57,20 +93,24 @@ function ItineraryItemCard({
     >
       {/* Photo with Open Status Badge */}
       <div className="sm:w-64 h-56 sm:h-auto shrink-0 relative overflow-hidden bg-surface-container dark:bg-[#201F1F]">
-        <img
-          src={photoUrl}
-          alt={item.place.name}
-          loading="lazy"
-          decoding="async"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = fallbackPhoto;
-          }}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-        />
-
-        {/* Shimmer overlay while photo is loading */}
-        {isLoadingPhoto && (
-          <div className="absolute inset-0 bg-gradient-to-r from-surface-container/40 via-surface-container-high/60 to-surface-container/40 dark:from-[#2A2A2A]/40 dark:via-[#333]/60 dark:to-[#2A2A2A]/40 animate-pulse pointer-events-none" />
+        {isLoadingPhoto || !photoUrl ? (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-surface-container-high/60 dark:bg-[#252525] animate-pulse">
+            <span className="material-symbols-outlined text-[32px] text-on-surface-variant/40 dark:text-white/20 mb-1">
+              photo_camera
+            </span>
+            <span className="font-sans text-[10px] uppercase tracking-wider text-on-surface-variant/50 dark:text-white/30 font-medium">
+              Loading Verified View…
+            </span>
+          </div>
+        ) : (
+          <img
+            src={photoUrl}
+            alt={item.place.name}
+            loading="lazy"
+            decoding="async"
+            onError={handleImageError}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          />
         )}
 
         <span className="absolute top-4 left-4 inline-flex items-center px-3 py-1 rounded-full bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] border-2 border-on-surface dark:border-[#1E8C80] font-sans text-xs font-semibold shadow-sm">
