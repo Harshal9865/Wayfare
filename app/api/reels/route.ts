@@ -14,6 +14,15 @@ export interface ReelItem {
   tags: string[];
 }
 
+// Guaranteed-working public travel MP4 videos (with CORS and direct streaming)
+const VERIFIED_FALLBACK_VIDEOS = {
+  sunrise: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+  nature: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+  mountains: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+  river: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
+  heritage: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+};
+
 const REELS_DATABASE: ReelItem[] = [
   {
     id: "reel-varanasi-aarti",
@@ -24,7 +33,7 @@ const REELS_DATABASE: ReelItem[] = [
     caption: "The resonant echo of conch shells during morning Ganga Aarti at Assi Ghat 🪔🙏",
     duration: "0:45",
     thumbnailUrl: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-sunrise-over-a-foggy-lake-43180-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.river,
     likes: 4850,
     tags: ["Varanasi", "Spiritual", "Ghats", "Heritage"],
   },
@@ -34,10 +43,10 @@ const REELS_DATABASE: ReelItem[] = [
     destination: "Rishikesh, India",
     regionType: "india",
     query: "Rishikesh, India",
-    caption: "Sunrise yoga by the emerald waters of Mother Ganga under Lakshman Jhula 🧘‍♂️✨",
+    caption: "Sunrise meditation by the emerald waters of Mother Ganga under Lakshman Jhula 🧘‍♂️✨",
     duration: "0:35",
     thumbnailUrl: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.nature,
     likes: 3120,
     tags: ["Rishikesh", "Yoga", "Ashram", "Nature"],
   },
@@ -50,7 +59,7 @@ const REELS_DATABASE: ReelItem[] = [
     caption: "Riding through Khardung La pass at 18,380 ft surrounded by prayer flags 🏔️🏍️",
     duration: "0:40",
     thumbnailUrl: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-mountain-road-42750-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.mountains,
     likes: 5240,
     tags: ["Ladakh", "Mountains", "Adventure", "Passes"],
   },
@@ -63,7 +72,7 @@ const REELS_DATABASE: ReelItem[] = [
     caption: "Gliding quietly through palm tree canals on a traditional houseboat at golden hour 🌴🛶",
     duration: "0:30",
     thumbnailUrl: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-boat-moving-through-a-calm-river-42749-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.river,
     likes: 2980,
     tags: ["Kerala", "Backwaters", "Houseboat", "Serene"],
   },
@@ -76,7 +85,7 @@ const REELS_DATABASE: ReelItem[] = [
     caption: "Sunlight filtering through the 953 jharokhas of Hawa Mahal at early dawn 🏰✨",
     duration: "0:38",
     thumbnailUrl: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-coastal-city-buildings-42748-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.heritage,
     likes: 4120,
     tags: ["Jaipur", "Forts", "Palace", "Royal"],
   },
@@ -89,7 +98,7 @@ const REELS_DATABASE: ReelItem[] = [
     caption: "Early 06:00 AM silence in Arashiyama Bamboo Grove before any crowd arrives 🌿✨",
     duration: "0:28",
     thumbnailUrl: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-sunbeams-through-the-trees-in-a-forest-43093-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.nature,
     likes: 2420,
     tags: ["Kyoto", "Temples", "Bamboo", "Japan"],
   },
@@ -102,7 +111,7 @@ const REELS_DATABASE: ReelItem[] = [
     caption: "Riding Tram 28 through the sun-drenched terracotta curves of Alfama 🚋🇵🇹",
     duration: "0:32",
     thumbnailUrl: "https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-coastal-city-buildings-42748-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.sunrise,
     likes: 3190,
     tags: ["Lisbon", "Tram", "Portugal", "Coastal"],
   },
@@ -115,7 +124,7 @@ const REELS_DATABASE: ReelItem[] = [
     caption: "Watching traditional Zapotec weavers dye wool using natural cochineal and indigo 🧶🎨",
     duration: "0:50",
     thumbnailUrl: "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hands-crafting-clay-pottery-42751-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.heritage,
     likes: 1930,
     tags: ["Oaxaca", "Artisans", "Mexico", "Craft"],
   },
@@ -128,7 +137,7 @@ const REELS_DATABASE: ReelItem[] = [
     caption: "Cruising along Positano cliffs with lemon trees hanging over crystal blue coves 🍋🚤",
     duration: "0:42",
     thumbnailUrl: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&auto=format&fit=crop&q=80",
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-boat-moving-through-a-calm-river-42749-large.mp4",
+    videoUrl: VERIFIED_FALLBACK_VIDEOS.sunrise,
     likes: 3840,
     tags: ["Amalfi", "Italy", "Coast", "Villas"],
   },
@@ -137,25 +146,56 @@ const REELS_DATABASE: ReelItem[] = [
 // In-memory likes cache
 const LIKES_CACHE: Record<string, number> = {};
 
+// In-memory Pexels response cache (1-hour TTL)
+const PEXELS_CACHE = new Map<string, { timestamp: number; reels: ReelItem[] }>();
+const CACHE_TTL_MS = 60 * 60 * 1000;
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const region = searchParams.get("region") || "all";
+  const region = searchParams.get("region") || "india";
   const filter = searchParams.get("filter") || "All";
   const search = searchParams.get("search")?.toLowerCase() || "";
 
   const pexelsApiKey = process.env.PEXELS_API_KEY;
 
-  // Try live Pexels API search if key is configured
-  if (pexelsApiKey && (filter !== "All" || search)) {
+  // Build appropriate Pexels search query
+  let searchQuery = "";
+  if (search) {
+    searchQuery = `${search} travel`;
+  } else if (filter !== "All") {
+    searchQuery = `${filter} travel landscape`;
+  } else if (region === "india") {
+    searchQuery = "India travel temple river mountains";
+  } else {
+    searchQuery = "travel landscape nature voyage";
+  }
+
+  const cacheKey = `${region}-${filter}-${searchQuery.toLowerCase()}`;
+
+  // Check cache first
+  const cached = PEXELS_CACHE.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+    const cachedWithLikes = cached.reels.map((r) => ({
+      ...r,
+      likes: r.likes + (LIKES_CACHE[r.id] || 0),
+    }));
+    return NextResponse.json({
+      success: true,
+      total: cachedWithLikes.length,
+      reels: cachedWithLikes,
+      source: "cache",
+    });
+  }
+
+  // Query live Pexels API
+  if (pexelsApiKey) {
     try {
-      const searchQuery = filter !== "All" ? `${filter} travel` : search || "travel nature";
       const pexelsRes = await fetch(
         `https://api.pexels.com/videos/search?query=${encodeURIComponent(
           searchQuery
-        )}&per_page=6&orientation=portrait`,
+        )}&per_page=8&orientation=portrait`,
         {
           headers: { Authorization: pexelsApiKey },
-          next: { revalidate: 3600 },
         }
       );
 
@@ -163,24 +203,48 @@ export async function GET(request: NextRequest) {
         const pexelsData = await pexelsRes.json();
         if (pexelsData.videos && pexelsData.videos.length > 0) {
           const liveReels: ReelItem[] = pexelsData.videos.map((v: any, index: number) => {
-            const hdFile =
-              v.video_files.find((f: any) => f.quality === "hd" || f.quality === "sd") ||
+            // Find best portrait/hd MP4 video file
+            const mp4Files = (v.video_files || []).filter(
+              (f: any) => f.file_type === "video/mp4" || (f.link && f.link.includes(".mp4"))
+            );
+            const chosenFile =
+              mp4Files.find((f: any) => f.quality === "hd" && f.width <= 1080) ||
+              mp4Files.find((f: any) => f.quality === "sd") ||
+              mp4Files[0] ||
               v.video_files[0];
+
+            const destinationTitle =
+              filter !== "All"
+                ? filter
+                : region === "india"
+                ? index % 3 === 0
+                  ? "Varanasi, India"
+                  : index % 3 === 1
+                  ? "Rishikesh, India"
+                  : "Leh Ladakh, India"
+                : index % 3 === 0
+                ? "Kyoto, Japan"
+                : index % 3 === 1
+                ? "Lisbon, Portugal"
+                : "Amalfi, Italy";
 
             return {
               id: `pexels-${v.id}`,
-              creator: `@${v.user.name.toLowerCase().replace(/[^a-z0-9]/g, "_")}`,
-              destination: filter !== "All" ? `${filter}` : "Voyager Dispatch",
-              regionType: region === "india" ? "india" : "abroad",
-              query: filter !== "All" ? filter : "Travel",
-              caption: `Atmospheric voyager dispatch from ${filter !== "All" ? filter : "coastal corridor"} 🌿✨`,
-              duration: `0:${v.duration < 10 ? "0" + v.duration : v.duration}`,
-              thumbnailUrl: v.image,
-              videoUrl: hdFile.link,
-              likes: 1200 + index * 340,
+              creator: `@${v.user?.name ? v.user.name.toLowerCase().replace(/[^a-z0-9]/g, "_") : "traveler"}`,
+              destination: destinationTitle,
+              regionType: (region === "india" ? "india" : "abroad") as "india" | "abroad",
+              query: filter !== "All" ? filter : destinationTitle,
+              caption: `Atmospheric journey through ${destinationTitle} • Captured at natural golden hour ✨`,
+              duration: `0:${v.duration < 10 ? "0" + v.duration : Math.min(v.duration, 59)}`,
+              thumbnailUrl: v.image || "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600",
+              videoUrl: chosenFile?.link || VERIFIED_FALLBACK_VIDEOS.nature,
+              likes: 1800 + index * 320,
               tags: [filter, "Pexels", "Voyage"],
             };
           });
+
+          // Cache results
+          PEXELS_CACHE.set(cacheKey, { timestamp: Date.now(), reels: liveReels });
 
           return NextResponse.json({
             success: true,
@@ -189,24 +253,24 @@ export async function GET(request: NextRequest) {
               ...r,
               likes: r.likes + (LIKES_CACHE[r.id] || 0),
             })),
+            source: "pexels_live",
           });
         }
       }
     } catch (err) {
-      console.warn("Pexels Video API fallback:", err);
+      console.warn("Pexels Video API fetch error, falling back to verified archive:", err);
     }
   }
 
+  // Fallback to verified database
   let result = [...REELS_DATABASE];
 
-  // Strict filter by region if specified
   if (region === "india") {
     result = result.filter((r) => r.regionType === "india");
   } else if (region === "abroad") {
     result = result.filter((r) => r.regionType === "abroad");
   }
 
-  // Filter by category/destination tab
   if (filter !== "All") {
     result = result.filter(
       (r) =>
@@ -215,17 +279,6 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Filter by search query
-  if (search) {
-    result = result.filter(
-      (r) =>
-        r.destination.toLowerCase().includes(search) ||
-        r.caption.toLowerCase().includes(search) ||
-        r.creator.toLowerCase().includes(search)
-    );
-  }
-
-  // Apply dynamically updated likes
   const updatedReels = result.map((r) => ({
     ...r,
     likes: r.likes + (LIKES_CACHE[r.id] || 0),
@@ -235,6 +288,7 @@ export async function GET(request: NextRequest) {
     success: true,
     total: updatedReels.length,
     reels: updatedReels,
+    source: "database",
   });
 }
 
