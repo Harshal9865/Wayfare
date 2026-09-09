@@ -22,6 +22,37 @@ export default function PlaceDetailModal({
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
   const [livePhotos, setLivePhotos] = useState<string[]>([]);
   const [photosLoading, setPhotosLoading] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  // Stop speech when modal closes or unmounts
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  const toggleAudioCommentary = () => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    } else {
+      const summaryText =
+        place?.editorial_summary ||
+        "Perched at the quiet terminus of the traditional preservation district, this secluded sanctuary offers a sensory antidote to crowded avenues.";
+      const textToSpeak = `Field Dossier for ${place?.name || "this location"}. ${summaryText}`;
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+      setIsSpeaking(true);
+    }
+  };
 
   // Reset active photo index when place changes
   useEffect(() => {
@@ -203,9 +234,26 @@ export default function PlaceDetailModal({
 
           {/* Field Journal / Impression */}
           <div className="py-4 border-t-2 border-b-2 border-surface-container dark:border-[#2A2A2A] mb-6">
-            <span className="font-sans text-xs uppercase tracking-widest text-secondary dark:text-[#1E8C80] font-semibold block mb-2">
-              Field Journal &amp; Atmosphere
-            </span>
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <span className="font-sans text-xs uppercase tracking-widest text-secondary dark:text-[#1E8C80] font-semibold">
+                Field Journal &amp; Atmosphere
+              </span>
+              <button
+                type="button"
+                onClick={toggleAudioCommentary}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border-2 text-xs font-sans font-semibold transition-all cursor-pointer hover:scale-105 active:scale-95 ${
+                  isSpeaking
+                    ? "bg-rose-500 text-white border-rose-600 animate-pulse"
+                    : "bg-surface-container-low dark:bg-[#201F1F] text-primary dark:text-[#1E8C80] border-on-surface/30 dark:border-[rgba(250,247,242,0.3)]"
+                }`}
+                title="Listen to AI Audio Commentary"
+              >
+                <span className="material-symbols-outlined text-[15px]">
+                  {isSpeaking ? "stop_circle" : "volume_up"}
+                </span>
+                <span>{isSpeaking ? "Stop Audio" : "Listen Audio"}</span>
+              </button>
+            </div>
             <p className="font-sans text-sm md:text-base text-on-surface-variant dark:text-[rgba(250,247,242,0.8)] leading-relaxed">
               {place.editorial_summary ||
                 "Perched at the quiet terminus of the traditional preservation district, this secluded sanctuary offers a sensory antidote to crowded avenues. Ancient stone sculptures rest beneath towering trees, while the scent of river stone and burning incense anchors a quiet contemplation best witnessed in morning light."}

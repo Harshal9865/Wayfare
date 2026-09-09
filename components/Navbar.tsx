@@ -18,7 +18,7 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
   const [isPersonalizeOpen, setIsPersonalizeOpen] = useState(false);
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentTime, setCurrentTime] = useState("");
+
   const [user, setUser] = useState<any>(null);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -86,24 +86,9 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    // Real-time IST clock ticker
-    const updateTime = () => {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString("en-IN", {
-        timeZone: "Asia/Kolkata",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
-      setCurrentTime(timeStr);
-    };
-    updateTime();
-    const timer = setInterval(updateTime, 30000);
-
     return () => {
       authListener?.subscription.unsubscribe();
       window.removeEventListener("scroll", handleScroll);
-      clearInterval(timer);
     };
   }, []);
 
@@ -148,7 +133,7 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
         }`}
       >
         <div className="h-full w-full max-w-[84rem] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between gap-2">
-          {/* Left: Logo & Live Dispatch Ticker */}
+          {/* Left: Logo */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="w-8 h-8 rounded-full border-2 border-on-surface dark:border-[#FAF7F2] flex items-center justify-center p-1 bg-surface-container-low dark:bg-[#1C1B1B] transition-transform duration-300 group-hover:rotate-45">
@@ -158,14 +143,6 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
                 WAYFARE
               </span>
             </Link>
-
-            {/* Live IST Dispatch Pill (Hidden on Mobile) */}
-            {currentTime && (
-              <div className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 rounded-full border-2 border-on-surface/20 dark:border-[rgba(250,247,242,0.2)] bg-surface-container-low/60 dark:bg-[#1C1B1B]/60 text-[11px] font-sans text-on-surface-variant dark:text-[rgba(250,247,242,0.7)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Dispatch • {currentTime} IST</span>
-              </div>
-            )}
           </div>
 
           {/* Center Navigation Links */}

@@ -342,7 +342,7 @@ export default function MyTripsView() {
                     </button>
 
                     <Link
-                      href={`/itinerary?location=${encodeURIComponent(journey.title.split(" &")[0])}`}
+                      href={`/itinerary?location=${encodeURIComponent(journey.destination)}`}
                       className="inline-flex items-center gap-1 font-sans text-primary dark:text-[#1E8C80] font-semibold hover:underline"
                     >
                       <span>View Itinerary</span>

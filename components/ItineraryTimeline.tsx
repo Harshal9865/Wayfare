@@ -1,13 +1,149 @@
 "use client";
 
-import React from "react";
-import { ItineraryDay, Place } from "@/lib/types";
+import React, { useState, useEffect } from "react";
+import { ItineraryDay, ItineraryItem, Place } from "@/lib/types";
 
 interface ItineraryTimelineProps {
   days: ItineraryDay[];
   onSelectPlace: (place: Place) => void;
   onSwapSpot?: (place: Place) => void;
   onOpenAddCustomSpot?: (dayNumber: number) => void;
+}
+
+function ItineraryItemCard({
+  item,
+  idx,
+  onSelectPlace,
+}: {
+  item: ItineraryItem;
+  idx: number;
+  onSelectPlace: (place: Place) => void;
+}) {
+  const [photoUrl, setPhotoUrl] = useState<string>(
+    item.place.photo_url || "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800"
+  );
+  const [isLoadingPhoto, setIsLoadingPhoto] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (item.place.name) {
+      setIsLoadingPhoto(true);
+      fetch(`/api/places/photos?query=${encodeURIComponent(item.place.name)}&count=1`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (isMounted && data.photos && data.photos.length > 0) {
+            setPhotoUrl(data.photos[0]);
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          if (isMounted) setIsLoadingPhoto(false);
+        });
+    } else {
+      setIsLoadingPhoto(false);
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [item.place.name]);
+
+  const fallbackPhoto =
+    item.place.photo_url || "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800";
+
+  return (
+    <div
+      onClick={() => onSelectPlace(item.place)}
+      className="group bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[32px] overflow-hidden flex flex-col sm:flex-row transition-all duration-300 hover:bg-surface-container-low dark:hover:bg-[#222222] hover:-translate-y-1 hover:shadow-card cursor-pointer"
+    >
+      {/* Photo with Open Status Badge */}
+      <div className="sm:w-64 h-56 sm:h-auto shrink-0 relative overflow-hidden bg-surface-container dark:bg-[#201F1F]">
+        <img
+          src={photoUrl}
+          alt={item.place.name}
+          loading="lazy"
+          decoding="async"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = fallbackPhoto;
+          }}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+        />
+
+        {/* Shimmer overlay while photo is loading */}
+        {isLoadingPhoto && (
+          <div className="absolute inset-0 bg-gradient-to-r from-surface-container/40 via-surface-container-high/60 to-surface-container/40 dark:from-[#2A2A2A]/40 dark:via-[#333]/60 dark:to-[#2A2A2A]/40 animate-pulse pointer-events-none" />
+        )}
+
+        <span className="absolute top-4 left-4 inline-flex items-center px-3 py-1 rounded-full bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] border-2 border-on-surface dark:border-[#1E8C80] font-sans text-xs font-semibold shadow-sm">
+          {item.place.business_status === "OPERATIONAL" ? "Open now" : "Verified Spot"}
+        </span>
+        <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/30 text-white font-sans text-[10px] uppercase tracking-wider font-semibold shadow-md">
+          <span className="material-symbols-outlined text-[13px] text-amber-300">collections</span>
+          {item.place.photos?.length || 4} Angles
+        </span>
+      </div>
+
+      {/* Card Content */}
+      <div className="p-6 md:p-8 flex flex-col justify-between flex-1 min-w-0">
+        <div>
+          {/* Time slot & Step Number */}
+          <div className="flex items-center justify-between gap-4 mb-2">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary dark:text-[#1E8C80] text-[18px]">
+                schedule
+              </span>
+              <span className="font-sans text-xs uppercase tracking-wider text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] font-semibold">
+                {item.time_slot.toUpperCase()} · Step 0{idx + 1}
+              </span>
+            </div>
+            <span className="font-sans text-xs text-on-surface-variant dark:text-[rgba(250,247,242,0.5)]">
+              Stop #{idx + 1}
+            </span>
+          </div>
+
+          {/* Place Name */}
+          <h3 className="font-serif text-2xl text-on-surface dark:text-[#FAF7F2] mb-2 truncate font-normal group-hover:text-primary dark:group-hover:text-[#1E8C80] transition-colors">
+            {item.place.name}
+          </h3>
+
+          {/* Travel Notes / Summary */}
+          <p className="font-sans text-xs md:text-sm text-on-surface-variant dark:text-[rgba(250,247,242,0.75)] line-clamp-2 leading-relaxed">
+            {item.travel_notes ||
+              item.place.editorial_summary ||
+              "A preserved cultural landmark offering peerless contemplative stillness and authentic architecture."}
+          </p>
+        </div>
+
+        {/* Footer stats: distance, timer, reservation */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-6 border-t-2 border-surface-container dark:border-[#2A2A2A] mt-4">
+          <div className="flex items-center gap-4 text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] font-sans text-xs">
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px]">directions_walk</span>
+              Walkable route
+            </span>
+            <span>·</span>
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px]">timer</span>
+              {item.suggested_duration_mins}m recommended
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelectPlace(item.place);
+              }}
+              className="inline-flex items-center gap-1 font-sans text-xs text-primary dark:text-[#1E8C80] font-semibold hover:underline cursor-pointer group-hover:translate-x-1 transition-transform"
+            >
+              Inspect Dossier
+              <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function ItineraryTimeline({
@@ -53,93 +189,7 @@ export default function ItineraryTimeline({
           <div className="flex flex-col">
             {day.items.map((item, idx) => (
               <React.Fragment key={item.id}>
-                {/* Place Card */}
-                <div
-                  onClick={() => onSelectPlace(item.place)}
-                  className="group bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[32px] overflow-hidden flex flex-col sm:flex-row transition-all duration-300 hover:bg-surface-container-low dark:hover:bg-[#222222] hover:-translate-y-1 hover:shadow-card cursor-pointer"
-                >
-                  {/* Photo with Open Status Badge */}
-                  <div className="sm:w-64 h-56 sm:h-auto shrink-0 relative overflow-hidden bg-surface-container dark:bg-[#201F1F]">
-                    <img
-                      src={
-                        item.place.photo_url ||
-                        "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800"
-                      }
-                      alt={item.place.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    />
-                    <span className="absolute top-4 left-4 inline-flex items-center px-3 py-1 rounded-full bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] border-2 border-on-surface dark:border-[#1E8C80] font-sans text-xs font-semibold shadow-sm">
-                      {item.place.business_status === "OPERATIONAL" ? "Open now" : "Verified Spot"}
-                    </span>
-                    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/30 text-white font-sans text-[10px] uppercase tracking-wider font-semibold shadow-md">
-                      <span className="material-symbols-outlined text-[13px] text-amber-300">collections</span>
-                      {item.place.photos?.length || 4} Angles
-                    </span>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-6 md:p-8 flex flex-col justify-between flex-1 min-w-0">
-                    <div>
-                      {/* Time slot & Step Number */}
-                      <div className="flex items-center justify-between gap-4 mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-primary dark:text-[#1E8C80] text-[18px]">
-                            schedule
-                          </span>
-                          <span className="font-sans text-xs uppercase tracking-wider text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] font-semibold">
-                            {item.time_slot.toUpperCase()} · Step 0{idx + 1}
-                          </span>
-                        </div>
-                        <span className="font-sans text-xs text-on-surface-variant dark:text-[rgba(250,247,242,0.5)]">
-                          Stop #{idx + 1}
-                        </span>
-                      </div>
-
-                      {/* Place Name */}
-                      <h3 className="font-serif text-2xl text-on-surface dark:text-[#FAF7F2] mb-2 truncate font-normal group-hover:text-primary dark:group-hover:text-[#1E8C80] transition-colors">
-                        {item.place.name}
-                      </h3>
-
-                      {/* Travel Notes / Summary */}
-                      <p className="font-sans text-xs md:text-sm text-on-surface-variant dark:text-[rgba(250,247,242,0.75)] line-clamp-2 leading-relaxed">
-                        {item.travel_notes ||
-                          item.place.editorial_summary ||
-                          "A preserved cultural landmark offering peerless contemplative stillness and authentic architecture."}
-                      </p>
-                    </div>
-
-                    {/* Footer stats: distance, timer, reservation */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 pt-6 border-t-2 border-surface-container dark:border-[#2A2A2A] mt-4">
-                      <div className="flex items-center gap-4 text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] font-sans text-xs">
-                        <span className="flex items-center gap-1.5">
-                          <span className="material-symbols-outlined text-[16px]">directions_walk</span>
-                          Walkable route
-                        </span>
-                        <span>·</span>
-                        <span className="flex items-center gap-1.5">
-                          <span className="material-symbols-outlined text-[16px]">timer</span>
-                          {item.suggested_duration_mins}m recommended
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onSelectPlace(item.place);
-                          }}
-                          className="inline-flex items-center gap-1 font-sans text-xs text-primary dark:text-[#1E8C80] font-semibold hover:underline cursor-pointer group-hover:translate-x-1 transition-transform"
-                        >
-                          Inspect Dossier
-                          <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <ItineraryItemCard item={item} idx={idx} onSelectPlace={onSelectPlace} />
 
                 {/* Inter-Card Transit Connector between consecutive stops */}
                 {idx < day.items.length - 1 && (
