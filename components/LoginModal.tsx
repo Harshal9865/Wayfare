@@ -81,13 +81,25 @@ export default function LoginModal({
     }
   };
 
+  const handleInstantVoyagerLogin = () => {
+    setIsSubmitting(true);
+    setAuthStatus("Welcome, Voyager. Atelier credentials activated!");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("wayfare_user_email", "voyager@wayfare.atelier");
+    }
+    setTimeout(() => {
+      if (onLoginSuccess) onLoginSuccess("voyager@wayfare.atelier");
+      onClose();
+    }, 400);
+  };
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md bg-surface dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.35)] rounded-[36px] p-8 text-center"
+        className="relative w-full max-w-md bg-surface dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.35)] rounded-[36px] p-8 text-center shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -101,35 +113,48 @@ export default function LoginModal({
 
         {/* Brand Icon */}
         <div className="w-12 h-12 rounded-full border-2 border-on-surface dark:border-[#FAF7F2] bg-surface-container-low dark:bg-[#201F1F] flex items-center justify-center mx-auto mb-4">
-          <span className="material-symbols-outlined text-[24px] text-on-surface dark:text-[#FAF7F2]">explore</span>
+          <span className="material-symbols-outlined text-[24px] text-primary dark:text-[#1E8C80]">explore</span>
         </div>
 
         {/* Title */}
-        <h2 className="font-serif text-3xl text-on-surface dark:text-[#FAF7F2] font-normal mb-2">
-          Wayfare
+        <h2 className="font-serif text-3xl text-on-surface dark:text-[#FAF7F2] font-normal mb-1">
+          Wayfare Atelier
         </h2>
-        <p className="font-serif italic text-sm text-on-surface-variant dark:text-[rgba(250,247,242,0.7)] mb-8">
+        <p className="font-serif italic text-sm text-on-surface-variant dark:text-[rgba(250,247,242,0.7)] mb-6">
           Enter your quiet sanctuary for thoughtful exploration.
         </p>
 
         {authStatus && (
-          <div className="mb-4 p-4 rounded-[18px] bg-primary/10 border-2 border-primary text-primary dark:text-[#1E8C80] font-sans text-xs">
+          <div className="mb-4 p-3.5 rounded-[20px] bg-primary/10 border-2 border-primary text-primary dark:text-[#1E8C80] font-sans text-xs font-medium">
             {authStatus}
           </div>
         )}
 
         {errorMessage && (
-          <div className="mb-4 p-3 rounded-[18px] bg-rose-500/10 border-2 border-rose-500 text-rose-600 dark:text-rose-400 font-sans text-xs">
+          <div className="mb-4 p-3 rounded-[20px] bg-rose-500/10 border-2 border-rose-500 text-rose-600 dark:text-rose-400 font-sans text-xs">
             {errorMessage}
           </div>
         )}
 
+        {/* One-Click Instant Access */}
+        <button
+          type="button"
+          onClick={handleInstantVoyagerLogin}
+          className="w-full mb-4 flex items-center justify-center gap-2 bg-primary-container dark:bg-[#1E8C80] text-white dark:text-[#131313] hover:bg-primary py-3.5 rounded-full border-2 border-on-surface dark:border-[#1E8C80] font-sans text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-sm cursor-pointer"
+        >
+          <span className="material-symbols-outlined text-[18px]">bolt</span>
+          <span>One-Click Voyager Access</span>
+        </button>
+
+        <div className="flex items-center gap-3 my-4">
+          <div className="flex-1 h-px bg-on-surface/15 dark:bg-white/15" />
+          <span className="text-[11px] font-sans uppercase tracking-widest text-outline dark:text-white/50">or with credentials</span>
+          <div className="flex-1 h-px bg-on-surface/15 dark:bg-white/15" />
+        </div>
+
         {/* Form */}
-        <form onSubmit={handleEmailSubmit} className="space-y-4">
+        <form onSubmit={handleEmailSubmit} className="space-y-3">
           <div className="text-left">
-            <label className="font-sans text-[11px] uppercase tracking-widest text-on-surface-variant dark:text-[rgba(250,247,242,0.6)] font-semibold block mb-1.5 pl-1">
-              Member Credentials
-            </label>
             <input
               type="email"
               value={email}
@@ -140,28 +165,29 @@ export default function LoginModal({
             />
           </div>
 
-          {/* Continue with Google */}
-          <button
-            type="button"
-            onClick={handleGoogleLogin}
-            className="w-full flex items-center justify-center gap-2 bg-primary-container dark:bg-[#1E8C80] text-white dark:text-[#131313] hover:bg-primary py-3.5 rounded-full border-2 border-on-surface dark:border-[#1E8C80] font-sans text-sm font-medium transition-colors cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-[18px]">verified_user</span>
-            <span>Continue with Google</span>
-          </button>
-
           {/* Continue with Email */}
           <button
             type="submit"
             disabled={isSubmitting}
             className="w-full flex items-center justify-center gap-2 bg-surface-container-lowest dark:bg-[#201F1F] text-on-surface dark:text-[#FAF7F2] hover:bg-surface-variant py-3 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] font-sans text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer"
           >
-            {isSubmitting ? "Dispatching Token..." : "Continue with Email"}
+            <span className="material-symbols-outlined text-[16px]">mail</span>
+            <span>{isSubmitting ? "Dispatching..." : "Send Magic Link"}</span>
+          </button>
+
+          {/* Google Sign-in Option */}
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-2 bg-transparent text-on-surface-variant dark:text-white/70 hover:text-on-surface py-2.5 rounded-full border border-on-surface/25 dark:border-white/20 font-sans text-xs font-medium transition-colors cursor-pointer"
+            title="Requires Google Provider enabled in Supabase Dashboard"
+          >
+            <span>Continue with Google</span>
           </button>
         </form>
 
         {/* Guest access */}
-        <div className="mt-6 pt-4 border-t-2 border-surface-container dark:border-[#2A2A2A]">
+        <div className="mt-5 pt-3 border-t border-on-surface/10 dark:border-white/10">
           <button
             type="button"
             onClick={onClose}
