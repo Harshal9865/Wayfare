@@ -13,6 +13,7 @@ import BudgetCalculatorModal from "@/components/BudgetCalculatorModal";
 import MapViewModal from "@/components/MapViewModal";
 import AddCustomSpotModal from "@/components/AddCustomSpotModal";
 import ShareTripModal from "@/components/ShareTripModal";
+import { FloatingShareButton } from "@/components/ShareButton";
 import EditorialLoader from "@/components/EditorialLoader";
 import { SAMPLE_TRIP_PLANS, getOrCreateTripPlan } from "@/lib/mock-itinerary";
 import { Place, TripPlan, ItineraryItem, TripStyle, VegDietaryStatus } from "@/lib/types";
@@ -454,6 +455,9 @@ function ItineraryContent() {
         tripTitle={tripPlan.title}
         locationName={tripPlan.location_name}
       />
+
+      {/* Floating share button for mobile */}
+      <FloatingShareButton destination={tripPlan.location_name} />
 
       {/* Login Modal */}
       <LoginModal

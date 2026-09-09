@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Place } from "@/lib/types";
 import FoodDietaryTaggingModal from "@/components/FoodDietaryTaggingModal";
+import { trackPlaceViewed } from "@/lib/analytics";
 
 interface PlaceDetailModalProps {
   place: Place | null;
@@ -30,6 +31,7 @@ export default function PlaceDetailModal({
   // Fetch live Google Places photos when modal opens
   useEffect(() => {
     if (isOpen && place) {
+      trackPlaceViewed(place.name, place.vicinity || place.name);
       setPhotosLoading(true);
       setLivePhotos([]);
       fetch(`/api/places/photos?query=${encodeURIComponent(place.name)}&count=5`)

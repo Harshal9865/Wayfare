@@ -269,7 +269,7 @@ export default function TrendingDestinations() {
           return (
             <Link
               key={dest.id}
-              href={`/itinerary?location=${encodeURIComponent(dest.query)}`}
+              href={`/itinerary?location=${encodeURIComponent(dest.name)}`}
               onMouseEnter={() => setHoveredCardId(dest.id)}
               onMouseLeave={() => setHoveredCardId(null)}
               className="flex-none w-[320px] md:w-[350px] bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[32px] overflow-hidden flex flex-col transition-all duration-500 hover:-translate-y-2 hover:shadow-card group cursor-pointer snap-start"
@@ -281,6 +281,9 @@ export default function TrendingDestinations() {
                   alt={dest.name}
                   loading="lazy"
                   decoding="async"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = dest.fallbackImage;
+                  }}
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
 

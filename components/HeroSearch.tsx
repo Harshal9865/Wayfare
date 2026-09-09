@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { PlaceSearchSuggestion } from "@/lib/types";
 import { useRegion } from "@/lib/region";
 import { supabase } from "@/lib/supabase";
+import { trackSearch } from "@/lib/analytics";
 
 interface HeroSearchProps {
   onSearch?: (location: string, days: number, style: string, diet: string) => void;
@@ -176,6 +177,7 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
 
   const triggerSearch = async (destination: string) => {
     setShowDropdown(false);
+    trackSearch(destination);
 
     const redirectUrl = `/itinerary?location=${encodeURIComponent(destination)}&days=${days}&style=${tripStyle}&diet=${dietaryPref}`;
 

@@ -202,15 +202,14 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
             <button
               type="button"
               onClick={() => setRegion(region === "india" ? "abroad" : "india")}
+              aria-label={`Switch travel region. Current: ${region === "india" ? "India" : "Abroad"}`}
               className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full border-2 text-xs font-sans font-semibold transition-all cursor-pointer hover:scale-105 active:scale-95 ${
                 region === "india"
                   ? "bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 border-amber-600/40"
                   : "bg-sky-50 dark:bg-sky-950/40 text-sky-900 dark:text-sky-200 border-sky-600/40"
               }`}
-              title={`Switch travel region (Current: ${region === "india" ? "India" : "Abroad"})`}
             >
-              <span>{region === "india" ? "🇮🇳" : "🌐"}</span>
-              {/* Text label: desktop only */}
+              <span aria-hidden="true">{region === "india" ? "🇮🇳" : "🌐"}</span>
               <span className="hidden lg:inline uppercase">{region === "india" ? "India" : "Abroad"}</span>
             </button>
 
@@ -218,10 +217,10 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
             <button
               type="button"
               onClick={() => setIsHowItWorksOpen(true)}
+              aria-label="How Wayfare works — guide"
               className="hidden lg:inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full border-2 border-on-surface/30 dark:border-[rgba(250,247,242,0.3)] bg-surface-container-low dark:bg-[#1C1B1B] text-xs font-sans font-semibold text-primary dark:text-[#1E8C80] hover:bg-surface-container transition-all hover:scale-105 active:scale-95 cursor-pointer"
-              title="How Wayfare works guide"
             >
-              <span className="material-symbols-outlined text-[15px]">help_outline</span>
+              <span className="material-symbols-outlined text-[15px]" aria-hidden="true">help_outline</span>
               <span className="hidden sm:inline">Guide</span>
             </button>
 
@@ -358,13 +357,14 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
             <Link
               key={item.href}
               href={item.href}
+              aria-current={isActive ? "page" : undefined}
               className={`flex flex-col items-center gap-0.5 py-1 px-3 transition-colors ${
                 isActive
                   ? "text-primary dark:text-[#1E8C80]"
                   : "text-on-surface-variant dark:text-[rgba(250,247,242,0.5)]"
               }`}
             >
-              <span className="material-symbols-outlined text-[22px]">{item.icon}</span>
+              <span className="material-symbols-outlined text-[22px]" aria-hidden="true">{item.icon}</span>
               <span className="text-[9px] uppercase tracking-wide font-sans font-semibold">{item.label}</span>
             </Link>
           );
