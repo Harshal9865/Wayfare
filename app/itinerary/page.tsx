@@ -143,20 +143,22 @@ function ItineraryContent() {
               }
             } catch (_) {}
           }
-          supabase.auth.getSession().then(({ data: { session } }) => {
+          supabase.auth.getSession().then(async ({ data: { session } }) => {
             if (session?.user) {
-              supabase.from("trips").upsert({
-                id: data.plan.id,
-                user_id: session.user.id,
-                title: data.plan.title,
-                destination: data.plan.location_name,
-                start_date: new Date().toISOString(),
-                end_date: new Date(Date.now() + data.plan.duration_days * 86400000).toISOString(),
-                budget_inr: data.plan.budget.total_estimate_max,
-                travel_style: data.plan.trip_style,
-                dietary_pref: data.plan.dietary_pref,
-                is_public: true,
-              }).catch(() => {});
+              try {
+                await supabase.from("trips").upsert({
+                  id: data.plan.id,
+                  user_id: session.user.id,
+                  title: data.plan.title,
+                  destination: data.plan.location_name,
+                  start_date: new Date().toISOString(),
+                  end_date: new Date(Date.now() + data.plan.duration_days * 86400000).toISOString(),
+                  budget_inr: data.plan.budget.total_estimate_max,
+                  travel_style: data.plan.trip_style,
+                  dietary_pref: data.plan.dietary_pref,
+                  is_public: true,
+                });
+              } catch (_) {}
             }
           });
         }
