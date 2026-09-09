@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { setStoredUser, toWayfareUser } from "@/lib/auth";
 
 /**
  * AuthSessionSync runs globally on client mount.
- * When a user completes Google OAuth, Supabase redirects with a `?code=` parameter.
- * This component exchanges the code for a full session in localStorage,
- * cleans the URL query string, triggers Supabase onAuthStateChange,
- * and displays an immediate confirmation toast so the user knows they are authenticated.
+ * When a user completes Google OAuth, Supabase redirects with `#access_token=` (implicit)
+ * or `?code=` (PKCE). This component establishes the session, syncs it to local storage
+ * and the global auth event bus, cleans URL params, and displays an immediate confirmation toast.
  */
 export default function AuthSessionSync() {
   const [welcomeToast, setWelcomeToast] = useState<{ name: string; email: string } | null>(null);
@@ -17,7 +17,9 @@ export default function AuthSessionSync() {
     if (typeof window === "undefined") return;
 
     const url = new URL(window.location.href);
-    const hasOAuthParams = url.searchParams.has("code") || window.location.hash.includes("access_token");
+    const hash = window.location.hash;
+    const hasHashTokens = hash.includes("access_token");
+    const hasCode = url.searchParams.has("code");
 
     const cleanUrlParams = () => {
       try {
@@ -32,28 +34,71 @@ export default function AuthSessionSync() {
       } catch (_) {}
     };
 
-    // 1. Listen for Supabase auth state change events
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.user && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
-        const user = session.user;
-        const name =
-          user.user_metadata?.full_name ||
-          user.user_metadata?.name ||
-          user.email?.split("@")[0] ||
-          "Voyager";
+    const handleUserFound = (user: any) => {
+      const wUser = toWayfareUser(user);
+      setStoredUser(wUser);
+      setWelcomeToast({ name: wUser.name || "Voyager", email: wUser.email });
+      cleanUrlParams();
+      setTimeout(() => setWelcomeToast(null), 5000);
 
-        if (hasOAuthParams) {
-          setWelcomeToast({ name, email: user.email || "" });
-          cleanUrlParams();
-          setTimeout(() => setWelcomeToast(null), 5000);
+      // Check if user was trying to access a specific itinerary before login
+      try {
+        const pendingRedirect = sessionStorage.getItem("wayfare_redirect_after_auth");
+        if (pendingRedirect) {
+          sessionStorage.removeItem("wayfare_redirect_after_auth");
+          window.location.assign(pendingRedirect);
         }
+      } catch (_) {}
+    };
+
+    // A. Handle Hash Tokens (Implicit flow: #access_token=...&refresh_token=...)
+    if (hasHashTokens) {
+      const hashParams = new URLSearchParams(hash.replace(/^#/, ""));
+      const access_token = hashParams.get("access_token");
+      const refresh_token = hashParams.get("refresh_token") || "";
+
+      if (access_token) {
+        supabase.auth
+          .setSession({ access_token, refresh_token })
+          .then(({ data, error }) => {
+            if (data?.session?.user && !error) {
+              handleUserFound(data.session.user);
+            }
+          })
+          .catch((err) => {
+            console.warn("Error setting implicit session:", err);
+          });
+      }
+    }
+
+    // B. Handle Code Query Param (PKCE flow: ?code=...)
+    if (hasCode) {
+      const code = url.searchParams.get("code")!;
+      supabase.auth
+        .exchangeCodeForSession(code)
+        .then(({ data, error }) => {
+          if (data?.session?.user && !error) {
+            handleUserFound(data.session.user);
+          }
+        })
+        .catch((err) => {
+          console.warn("Error exchanging code for session:", err);
+        });
+    }
+
+    // C. Listen for Supabase auth state change events
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
+        handleUserFound(session.user);
       }
     });
 
-    // 2. Also check if a session is already present
+    // D. Check existing session in Supabase storage
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user && hasOAuthParams) {
-        cleanUrlParams();
+      if (session?.user) {
+        handleUserFound(session.user);
       }
     });
 

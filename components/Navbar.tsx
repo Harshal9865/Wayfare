@@ -73,6 +73,7 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     setIsDarkMode(isDark);
     if (isDark) {
       document.documentElement.classList.add("dark");
+      if (typeof window !== "undefined") localStorage.setItem("wayfare_theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
@@ -97,19 +98,12 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
       }
     });
 
-
-    // 6. Listen for live Supabase Auth state changes
+    // 5. Listen for live Supabase Auth state changes
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
         const wUser = toWayfareUser(session.user);
         setStoredUser(wUser);
         setUser(wUser);
-      } else if (event === "SIGNED_OUT") {
-        const current = getStoredUser();
-        if (current && current.provider === "google") {
-          setStoredUser(null);
-          setUser(null);
-        }
       }
     });
 

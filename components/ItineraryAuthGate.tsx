@@ -49,11 +49,14 @@ export default function ItineraryAuthGate({
 
       const origin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || "");
       const targetRedirect = `${origin}${redirectUrl.startsWith("/") ? redirectUrl : `/${redirectUrl}`}`;
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("wayfare_redirect_after_auth", targetRedirect);
+      }
 
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: targetRedirect,
+          redirectTo: origin,
         },
       });
 

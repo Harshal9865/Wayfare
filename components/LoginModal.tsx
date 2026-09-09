@@ -24,15 +24,6 @@ export default function LoginModal({
     try {
       setIsSubmitting(true);
       setErrorMessage(null);
-      
-      // If Supabase URL is placeholder, perform instant local demo session
-      if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("placeholder") || !process.env.NEXT_PUBLIC_SUPABASE_URL) {
-        setTimeout(() => {
-          if (onLoginSuccess) onLoginSuccess("voyager@wayfare.atelier");
-          onClose();
-        }, 600);
-        return;
-      }
 
       const redirectUrl = typeof window !== "undefined" ? window.location.origin : undefined;
 
@@ -45,8 +36,8 @@ export default function LoginModal({
 
       if (error) throw error;
     } catch (err: any) {
-      console.warn("Google Auth fallback to demo session:", err);
-      setErrorMessage("Google authentication failed. Use 'One-Click Voyager Access' to continue.");
+      console.warn("Google Auth error:", err);
+      setErrorMessage(err.message || "Google authentication failed. Use 'One-Click Voyager Access' to continue.");
     } finally {
       setIsSubmitting(false);
     }
@@ -58,15 +49,6 @@ export default function LoginModal({
     try {
       setIsSubmitting(true);
       setErrorMessage(null);
-
-      if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("placeholder") || !process.env.NEXT_PUBLIC_SUPABASE_URL) {
-        setAuthStatus(`Magic access token dispatched to ${email}. Logged in successfully!`);
-        setTimeout(() => {
-          if (onLoginSuccess) onLoginSuccess(email);
-          onClose();
-        }, 800);
-        return;
-      }
 
       const { error } = await supabase.auth.signInWithOtp({
         email,
