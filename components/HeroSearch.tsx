@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PlaceSearchSuggestion } from "@/lib/types";
 import { useRegion } from "@/lib/region";
@@ -54,6 +55,33 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchCacheRef = useRef<Map<string, PlaceSearchSuggestion[]>>(new Map());
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  const [user, setUser] = useState<any>(null);
+
+  // Sync user authentication state
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser(session.user);
+      } else if (typeof window !== "undefined") {
+        const localEmail = localStorage.getItem("wayfare_user_email");
+        if (localEmail) setUser({ email: localEmail, id: "demo" });
+      }
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
+      if (session?.user) {
+        setUser(session.user);
+      } else if (typeof window !== "undefined") {
+        const localEmail = localStorage.getItem("wayfare_user_email");
+        setUser(localEmail ? { email: localEmail, id: "demo" } : null);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => listener?.subscription.unsubscribe();
+  }, []);
 
   // Sync dietary default when region changes if set to default
   useEffect(() => {
@@ -219,6 +247,23 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
           {region === "india" ? "India Sacred & Royal Compendium" : "Autumn & Winter Compendium • Vol. XIV"}
         </span>
       </div>
+
+      {/* Personalized Welcome Banner if authenticated */}
+      {user && (
+        <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border-2 border-primary/40 dark:border-[#1E8C80]/50 bg-primary/10 dark:bg-[#1E8C80]/15 text-on-surface dark:text-[#FAF7F2] animate-in fade-in duration-300">
+          <span className="material-symbols-outlined text-[16px] text-primary dark:text-[#1E8C80]">verified</span>
+          <span className="font-sans text-xs font-semibold text-primary dark:text-[#1E8C80]">
+            Welcome, {user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0]}
+          </span>
+          <span className="text-outline dark:text-[rgba(250,247,242,0.4)]">•</span>
+          <Link
+            href="/my-trips"
+            className="font-sans text-xs text-on-surface-variant dark:text-[rgba(250,247,242,0.7)] hover:text-on-surface underline underline-offset-2 font-medium"
+          >
+            View Saved Journeys →
+          </Link>
+        </div>
+      )}
 
       {/* Oversized Regular Serif Headline */}
       <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-on-surface dark:text-[#FAF7F2] max-w-4xl tracking-tight mb-8 font-normal leading-[1.05]">

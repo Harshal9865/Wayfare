@@ -158,6 +158,17 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     { label: "My Trips", icon: "folder_open", href: "/my-trips" },
   ];
 
+  const userAvatar = user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
+  const userName =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    (user?.email ? user.email.split("@")[0] : "");
+  const userInitial = userName
+    ? userName.charAt(0).toUpperCase()
+    : user?.email
+    ? user.email.charAt(0).toUpperCase()
+    : "U";
+
   return (
     <>
       <header
@@ -307,47 +318,92 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
             <div className="relative" ref={userMenuRef}>
               {user ? (
                 <button
+                  type="button"
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-primary dark:border-[#1E8C80] bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] font-serif text-sm font-semibold flex items-center justify-center hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+                  className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full border-2 border-primary/50 dark:border-[#1E8C80] bg-surface-container-low dark:bg-[#1C1B1B] hover:bg-surface-container dark:hover:bg-[#252525] transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
                   title={user.email}
+                  aria-label="Open account menu"
                 >
-                  {user.email ? user.email.charAt(0).toUpperCase() : "U"}
+                  {userAvatar ? (
+                    <img
+                      src={userAvatar}
+                      alt={userName || "Voyager"}
+                      className="w-7 h-7 rounded-full object-cover border border-primary/40 dark:border-[#1E8C80]"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] font-serif text-xs font-semibold flex items-center justify-center">
+                      {userInitial}
+                    </div>
+                  )}
+                  <span className="font-sans text-xs font-semibold text-on-surface dark:text-[#FAF7F2] hidden sm:inline max-w-[120px] truncate">
+                    {userName}
+                  </span>
+                  <span className="material-symbols-outlined text-[14px] text-outline">expand_more</span>
                 </button>
               ) : (
                 <button
                   onClick={() => (onOpenLogin ? onOpenLogin() : router.push("/login"))}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-lowest dark:bg-[#201F1F] text-xs font-sans uppercase tracking-wider font-semibold text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] bg-surface-container-lowest dark:bg-[#201F1F] text-xs font-sans uppercase tracking-wider font-semibold text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  <span className="material-symbols-outlined text-[15px]">person</span>
+                  <span className="material-symbols-outlined text-[16px]">person</span>
                   <span className="hidden sm:inline">Access</span>
                 </button>
               )}
 
               {user && showUserMenu && (
-                <div className="absolute right-0 top-full mt-2 w-56 bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[24px] p-3 shadow-dropdown z-50 animate-in fade-in-50 duration-150 text-left">
-                  <div className="px-3 py-2 border-b-2 border-surface-container dark:border-[#2A2A2A] mb-2">
-                    <span className="font-sans text-[10px] uppercase tracking-widest text-secondary dark:text-[#1E8C80] font-semibold block">
-                      Atelier Member
-                    </span>
-                    <p className="font-sans text-xs text-on-surface dark:text-[#FAF7F2] truncate font-medium mt-0.5">
-                      {user.email}
-                    </p>
+                <div className="absolute right-0 top-full mt-2 w-64 bg-surface-container-lowest dark:bg-[#1A1A1A] border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] rounded-[24px] p-4 shadow-dropdown z-50 animate-in fade-in-50 duration-150 text-left">
+                  <div className="flex items-center gap-3 pb-3 border-b-2 border-surface-container dark:border-[#2A2A2A] mb-3">
+                    {userAvatar ? (
+                      <img
+                        src={userAvatar}
+                        alt={userName}
+                        className="w-10 h-10 rounded-full object-cover border-2 border-primary dark:border-[#1E8C80]"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] font-serif text-base font-semibold flex items-center justify-center">
+                        {userInitial}
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1">
+                        <span className="font-sans text-xs font-bold text-on-surface dark:text-[#FAF7F2] truncate block">
+                          {userName}
+                        </span>
+                        <span className="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-[14px]">verified</span>
+                      </div>
+                      <p className="font-sans text-[11px] text-outline dark:text-[rgba(250,247,242,0.5)] truncate">
+                        {user.email}
+                      </p>
+                    </div>
                   </div>
-                  <Link
-                    href="/my-trips"
-                    onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-[14px] text-xs font-sans text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">folder_open</span>
-                    <span>My Journeys</span>
-                  </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="w-full flex items-center gap-2 px-3 py-2 rounded-[14px] text-xs font-sans text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer text-left mt-1"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">logout</span>
-                    <span>Sign Out</span>
-                  </button>
+                  <div className="space-y-1">
+                    <Link
+                      href="/my-trips"
+                      onClick={() => setShowUserMenu(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-[14px] text-xs font-sans text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-[18px] text-primary dark:text-[#1E8C80]">folder_open</span>
+                      <span className="font-medium">My Journeys</span>
+                    </Link>
+                    <Link
+                      href="/itinerary"
+                      onClick={() => setShowUserMenu(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-[14px] text-xs font-sans text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container dark:hover:bg-[#2A2A2A] transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-[18px] text-primary dark:text-[#1E8C80]">map</span>
+                      <span className="font-medium">Active Itinerary</span>
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[14px] text-xs font-sans text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer text-left mt-1"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">logout</span>
+                      <span className="font-medium">Sign Out</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -414,6 +470,68 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
               <div className="flex justify-center mb-5">
                 <div className="w-10 h-1 rounded-full bg-on-surface/20 dark:bg-[rgba(250,247,242,0.2)]" />
               </div>
+
+              {/* Member Card / Sign In (Mobile) */}
+              {user ? (
+                <div className="p-4 rounded-2xl bg-surface-container-low dark:bg-[#201F1F] border-2 border-primary/40 dark:border-[#1E8C80]/50 mb-5 text-left">
+                  <div className="flex items-center gap-3 mb-3">
+                    {userAvatar ? (
+                      <img
+                        src={userAvatar}
+                        alt={userName}
+                        className="w-11 h-11 rounded-full object-cover border-2 border-primary dark:border-[#1E8C80]"
+                      />
+                    ) : (
+                      <div className="w-11 h-11 rounded-full bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] font-serif text-lg font-semibold flex items-center justify-center">
+                        {userInitial}
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1">
+                        <span className="font-sans text-sm font-bold text-on-surface dark:text-[#FAF7F2] truncate">
+                          {userName}
+                        </span>
+                        <span className="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-[16px]">verified</span>
+                      </div>
+                      <p className="font-sans text-xs text-outline dark:text-[rgba(250,247,242,0.5)] truncate">
+                        {user.email}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Link
+                      href="/my-trips"
+                      onClick={() => setIsMobileSheetOpen(false)}
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] font-sans text-xs font-semibold"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">folder_open</span>
+                      <span>My Journeys</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMobileSheetOpen(false);
+                      }}
+                      className="px-3 py-2 rounded-xl border border-rose-500/30 text-rose-600 dark:text-rose-400 font-sans text-xs font-semibold hover:bg-rose-500/10 transition-colors cursor-pointer"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="mb-5">
+                  <button
+                    onClick={() => {
+                      setIsMobileSheetOpen(false);
+                      if (onOpenLogin) onOpenLogin();
+                    }}
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary-container text-white dark:bg-[#1E8C80] dark:text-[#131313] font-sans text-sm font-semibold border-2 border-on-surface dark:border-[#1E8C80] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">person</span>
+                    <span>Sign In with Google</span>
+                  </button>
+                </div>
+              )}
 
               {/* Section 1: Theme */}
               <p className="font-sans text-[10px] uppercase tracking-widest text-on-surface-variant dark:text-[rgba(250,247,242,0.5)] font-semibold mb-2">
