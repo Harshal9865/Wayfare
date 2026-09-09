@@ -39,8 +39,8 @@ function AnimatedNumber({ end, suffix, started }: { end: number; suffix: string;
   }, [started, end]);
 
   if (end === 0) return <span>Free</span>;
-  if (end === 49) return <span>{started ? (count / 10).toFixed(1) : "0.0"}★</span>;
-  return <span>{started ? count.toLocaleString("en-IN") : "0"}{suffix}</span>;
+  if (end === 49) return <span>{started ? `${(count / 10).toFixed(1)}★` : "0.0★"}</span>;
+  return <span>{started ? `${count.toLocaleString("en-IN")}${suffix}` : `0${suffix}`}</span>;
 }
 
 export default function StatsStrip() {

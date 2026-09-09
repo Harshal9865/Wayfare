@@ -99,6 +99,7 @@ export default function RootLayout({
         {/* Instant Dark Mode initialization to prevent theme loss on navigation or reload */}
         <script
           id="theme-init"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
@@ -118,6 +119,7 @@ export default function RootLayout({
         {/* JSON-LD structured data — TravelAgency schema */}
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
