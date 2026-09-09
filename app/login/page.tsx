@@ -2,11 +2,14 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
+import { setStoredUser } from "@/lib/auth";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,6 +47,21 @@ export default function LoginPage() {
       setErrorMsg(err.message || "Google authentication failed");
       setLoading(false);
     }
+  };
+
+  const handleInstantVoyagerLogin = () => {
+    setLoading(true);
+    const voyagerUser = {
+      id: "voyager-atelier",
+      email: "voyager@wayfare.atelier",
+      name: "Voyager Atelier",
+      avatar: "",
+      provider: "atelier",
+    };
+    setStoredUser(voyagerUser);
+    setTimeout(() => {
+      router.push("/");
+    }, 400);
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
@@ -125,11 +143,28 @@ export default function LoginPage() {
                 />
               </div>
 
+              {/* One-Click Voyager Access */}
+              <button
+                type="button"
+                onClick={handleInstantVoyagerLogin}
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-2 bg-primary-container dark:bg-[#1E8C80] text-white dark:text-[#131313] hover:bg-primary py-3.5 rounded-full border-2 border-on-surface dark:border-[#1E8C80] font-sans text-sm font-semibold transition-all hover:scale-[1.02] active:scale-95 cursor-pointer disabled:opacity-80 shadow-sm mb-3"
+              >
+                <span className="material-symbols-outlined text-[18px]">bolt</span>
+                <span>One-Click Voyager Access</span>
+              </button>
+
+              <div className="flex items-center gap-3 my-3">
+                <div className="flex-1 h-px bg-on-surface/15 dark:bg-white/15" />
+                <span className="font-sans text-[11px] text-outline dark:text-[rgba(250,247,242,0.4)] uppercase tracking-wider">or sign in with</span>
+                <div className="flex-1 h-px bg-on-surface/15 dark:bg-white/15" />
+              </div>
+
               <button
                 type="button"
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 bg-primary-container dark:bg-[#1E8C80] text-white dark:text-[#131313] hover:bg-primary py-3.5 rounded-full border-2 border-on-surface dark:border-[#1E8C80] font-sans text-sm font-medium transition-colors cursor-pointer disabled:opacity-80"
+                className="w-full flex items-center justify-center gap-2 bg-surface-container-lowest dark:bg-[#201F1F] text-on-surface dark:text-[#FAF7F2] hover:bg-surface-container py-3 rounded-full border-2 border-on-surface dark:border-[rgba(250,247,242,0.3)] font-sans text-sm font-medium transition-colors cursor-pointer disabled:opacity-80 mb-3"
               >
                 <span className="material-symbols-outlined text-[18px]">verified_user</span>
                 <span>Continue with Google</span>

@@ -8,6 +8,7 @@ import HowItWorksModal from "@/components/HowItWorksModal";
 import { useCurrency, CURRENCIES, CurrencyCode } from "@/lib/currency";
 import { useRegion } from "@/lib/region";
 import { supabase } from "@/lib/supabase";
+import { getStoredUser, setStoredUser, onAuthChanged, toWayfareUser } from "@/lib/auth";
 
 export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
   const pathname = usePathname();
@@ -66,30 +67,46 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
   }, [pathname]);
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
+    // 1. Theme initialization with localStorage memory
+    const savedTheme = typeof window !== "undefined" ? localStorage.getItem("wayfare_theme") : null;
+    const isDark = savedTheme ? savedTheme === "dark" : document.documentElement.classList.contains("dark");
     setIsDarkMode(isDark);
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
 
-    // Check initial Supabase session safely without triggering 401 network errors
+    // 2. Initial user from synchronous storage cache (instant UI update)
+    const cachedUser = getStoredUser();
+    if (cachedUser) {
+      setUser(cachedUser);
+    }
+
+    // 3. Listen for immediate global auth events across the app
+    const unsubAuth = onAuthChanged((updatedUser) => {
+      setUser(updatedUser);
+    });
+
+    // 4. Verify live session from Supabase
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
-        setUser(session.user);
-      } else if (typeof window !== "undefined") {
-        // Fallback to local stored session if available (e.g. Voyager demo session)
-        const localEmail = localStorage.getItem("wayfare_user_email");
-        if (localEmail) {
-          setUser({ email: localEmail, id: "demo-user" });
-        }
+        const wUser = toWayfareUser(session.user);
+        setStoredUser(wUser);
+        setUser(wUser);
       }
     });
 
-    // Handle OAuth redirect (?code=...) on page load if arriving directly
+    // 5. Handle direct OAuth redirect (?code=...) on page load
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       const code = url.searchParams.get("code");
       if (code) {
         supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
           if (!error && data?.session?.user) {
-            setUser(data.session.user);
+            const wUser = toWayfareUser(data.session.user);
+            setStoredUser(wUser);
+            setUser(wUser);
             url.searchParams.delete("code");
             url.searchParams.delete("state");
             const cleanUrl = url.pathname + (url.search ? url.search : "") + url.hash;
@@ -99,14 +116,14 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
       }
     }
 
-    // Listen for live Supabase Auth changes
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+    // 6. Listen for live Supabase Auth state changes
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
-        setUser(session.user);
-      } else if (typeof window !== "undefined") {
-        const localEmail = localStorage.getItem("wayfare_user_email");
-        setUser(localEmail ? { email: localEmail, id: "demo-user" } : null);
-      } else {
+        const wUser = toWayfareUser(session.user);
+        setStoredUser(wUser);
+        setUser(wUser);
+      } else if (event === "SIGNED_OUT") {
+        setStoredUser(null);
         setUser(null);
       }
     });
@@ -119,6 +136,7 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
+      unsubAuth();
       authListener?.subscription.unsubscribe();
       window.removeEventListener("scroll", handleScroll);
     };
@@ -126,9 +144,7 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("wayfare_user_email");
-    }
+    setStoredUser(null);
     setUser(null);
     setShowUserMenu(false);
   };
@@ -138,8 +154,14 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     setIsDarkMode(nextDark);
     if (nextDark) {
       document.documentElement.classList.add("dark");
+      if (typeof window !== "undefined") {
+        localStorage.setItem("wayfare_theme", "dark");
+      }
     } else {
       document.documentElement.classList.remove("dark");
+      if (typeof window !== "undefined") {
+        localStorage.setItem("wayfare_theme", "light");
+      }
     }
   };
 

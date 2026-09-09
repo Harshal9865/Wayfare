@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { setStoredUser } from "@/lib/auth";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -103,9 +104,14 @@ export default function LoginModal({
   const handleInstantVoyagerLogin = () => {
     setIsSubmitting(true);
     setAuthStatus("Welcome, Voyager. Atelier credentials activated!");
-    if (typeof window !== "undefined") {
-      localStorage.setItem("wayfare_user_email", "voyager@wayfare.atelier");
-    }
+    const voyagerUser = {
+      id: "voyager-atelier",
+      email: "voyager@wayfare.atelier",
+      name: "Voyager Atelier",
+      avatar: "",
+      provider: "atelier",
+    };
+    setStoredUser(voyagerUser);
     setTimeout(() => {
       if (onLoginSuccess) onLoginSuccess("voyager@wayfare.atelier");
       onClose();

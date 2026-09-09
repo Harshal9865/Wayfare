@@ -123,7 +123,42 @@ function ItineraryContent() {
           setTripPlan(data.plan);
           if (typeof window !== "undefined") {
             localStorage.setItem(cacheKey, JSON.stringify(data.plan));
+            try {
+              const localSaved = JSON.parse(localStorage.getItem("wayfare_saved_journeys") || "[]");
+              const exists = localSaved.some((j: any) => j.id === data.plan.id || j.destination === data.plan.location_name);
+              if (!exists) {
+                const newJourney = {
+                  id: data.plan.id,
+                  title: data.plan.title,
+                  destination: data.plan.location_name,
+                  period: `${data.plan.duration_days} Days · Atelier Folio`,
+                  status: "Upcoming",
+                  stopsCount: data.plan.days.reduce((acc: number, d: any) => acc + d.items.length, 0),
+                  staysCount: 1,
+                  imageUrl:
+                    data.plan.days[0]?.items[0]?.place?.photo_url ||
+                    "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800",
+                };
+                localStorage.setItem("wayfare_saved_journeys", JSON.stringify([newJourney, ...localSaved]));
+              }
+            } catch (_) {}
           }
+          supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session?.user) {
+              supabase.from("trips").upsert({
+                id: data.plan.id,
+                user_id: session.user.id,
+                title: data.plan.title,
+                destination: data.plan.location_name,
+                start_date: new Date().toISOString(),
+                end_date: new Date(Date.now() + data.plan.duration_days * 86400000).toISOString(),
+                budget_inr: data.plan.budget.total_estimate_max,
+                travel_style: data.plan.trip_style,
+                dietary_pref: data.plan.dietary_pref,
+                is_public: true,
+              }).catch(() => {});
+            }
+          });
         }
       })
       .catch((err) => {
