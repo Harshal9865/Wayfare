@@ -190,7 +190,8 @@ function ItineraryContent() {
   const handleSaveTrip = async () => {
     try {
       setIsSaved(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { session } } = await supabase.auth.getSession();
+      const user = session?.user;
       if (user) {
         await supabase.from("trips").upsert({
           id: tripPlan.id,

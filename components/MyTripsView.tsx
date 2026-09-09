@@ -82,7 +82,8 @@ export default function MyTripsView() {
 
         // 2. Load from Supabase if logged in
         let dbJourneys: JourneyCard[] = [];
-        const { data: { user } } = await supabase.auth.getUser();
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user;
         if (user) {
           const { data, error } = await supabase
             .from("trips")

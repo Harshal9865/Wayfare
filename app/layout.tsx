@@ -4,6 +4,7 @@ import { CurrencyProvider } from "@/lib/currency";
 import { RegionProvider } from "@/lib/region";
 import CookieBanner from "@/components/CookieBanner";
 import Analytics from "@/components/Analytics";
+import AuthSessionSync from "@/components/AuthSessionSync";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wayfaredun.netlify.app";
 
@@ -127,6 +128,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Analytics />
+        <AuthSessionSync />
         <CurrencyProvider>
           <RegionProvider>
             {children}

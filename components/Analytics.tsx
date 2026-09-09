@@ -2,27 +2,35 @@
 
 import Script from "next/script";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { pageview } from "@/lib/analytics";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "";
 
-function hasConsent(): boolean {
-  if (typeof window === "undefined") return false;
-  return localStorage.getItem("wayfare_cookie_consent") === "accepted";
-}
-
 export default function Analytics() {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
 
-  // Track page views on route change
   useEffect(() => {
-    if (hasConsent() && GA_ID) pageview(pathname);
-  }, [pathname]);
+    setMounted(true);
+  }, []);
 
-  // Don't render scripts in dev or if IDs not set
-  if (!GA_ID && !CLARITY_ID) return null;
+  // Track page views on route change (only if consent granted)
+  useEffect(() => {
+    if (!mounted || !GA_ID) return;
+    try {
+      const consent = localStorage.getItem("wayfare_cookie_consent");
+      if (consent === "accepted") {
+        pageview(pathname);
+      }
+    } catch {
+      // Safe local storage fallback
+    }
+  }, [pathname, mounted]);
+
+  // Don't render anything during SSR or if IDs are not present
+  if (!mounted || (!GA_ID && !CLARITY_ID)) return null;
 
   return (
     <>
@@ -31,9 +39,18 @@ export default function Analytics() {
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
+            onError={(e) => {
+              console.warn("Analytics script blocked by client or policy:", e);
+            }}
           />
-          <Script id="ga4-init" strategy="afterInteractive">
+          <Script
+            id="ga4-init"
+            strategy="lazyOnload"
+            onError={(e) => {
+              console.warn("Analytics init warning:", e);
+            }}
+          >
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
@@ -47,9 +64,15 @@ export default function Analytics() {
         </>
       )}
 
-      {/* Microsoft Clarity — privacy-friendly heatmaps, no cookie consent needed */}
+      {/* Microsoft Clarity — privacy-friendly heatmaps */}
       {CLARITY_ID && (
-        <Script id="clarity-init" strategy="afterInteractive">
+        <Script
+          id="clarity-init"
+          strategy="lazyOnload"
+          onError={(e) => {
+            console.warn("Clarity script blocked by client or policy:", e);
+          }}
+        >
           {`
             (function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

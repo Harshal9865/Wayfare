@@ -69,14 +69,46 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
     const isDark = document.documentElement.classList.contains("dark");
     setIsDarkMode(isDark);
 
-    // Check initial Supabase user
-    supabase.auth.getUser().then(({ data: { user: currentUser } }) => {
-      setUser(currentUser);
+    // Check initial Supabase session safely without triggering 401 network errors
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser(session.user);
+      } else if (typeof window !== "undefined") {
+        // Fallback to local stored session if available (e.g. Voyager demo session)
+        const localEmail = localStorage.getItem("wayfare_user_email");
+        if (localEmail) {
+          setUser({ email: localEmail, id: "demo-user" });
+        }
+      }
     });
+
+    // Handle OAuth redirect (?code=...) on page load if arriving directly
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get("code");
+      if (code) {
+        supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
+          if (!error && data?.session?.user) {
+            setUser(data.session.user);
+            url.searchParams.delete("code");
+            url.searchParams.delete("state");
+            const cleanUrl = url.pathname + (url.search ? url.search : "") + url.hash;
+            window.history.replaceState({}, document.title, cleanUrl);
+          }
+        }).catch((err) => console.warn("Code exchange notice:", err));
+      }
+    }
 
     // Listen for live Supabase Auth changes
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+      if (session?.user) {
+        setUser(session.user);
+      } else if (typeof window !== "undefined") {
+        const localEmail = localStorage.getItem("wayfare_user_email");
+        setUser(localEmail ? { email: localEmail, id: "demo-user" } : null);
+      } else {
+        setUser(null);
+      }
     });
 
     // Passive scroll listener for 120fps dynamic height & glassmorphism
@@ -94,6 +126,9 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("wayfare_user_email");
+    }
     setUser(null);
     setShowUserMenu(false);
   };

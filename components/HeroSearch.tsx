@@ -181,10 +181,11 @@ export default function HeroSearch({ onSearch, onRequireLogin }: HeroSearchProps
 
     const redirectUrl = `/itinerary?location=${encodeURIComponent(destination)}&days=${days}&style=${tripStyle}&diet=${dietaryPref}`;
 
-    // Check auth state — gate itinerary behind login if handler is provided
+    // Check auth state safely without triggering 401 network errors
     if (onRequireLogin) {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
+      const { data: { session } } = await supabase.auth.getSession();
+      const localEmail = typeof window !== "undefined" ? localStorage.getItem("wayfare_user_email") : null;
+      if (!session?.user && !localEmail) {
         onRequireLogin(destination, redirectUrl);
         return;
       }
