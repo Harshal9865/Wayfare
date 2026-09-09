@@ -413,8 +413,8 @@ export default function StaysListing() {
       <StayComparisonDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        items={comparisonList}
-        onRemove={(id) => setComparisonList(comparisonList.filter((i) => i.id !== id))}
+        selectedStays={comparisonList}
+        onRemoveStay={(id) => setComparisonList(comparisonList.filter((i) => i.id !== id))}
       />
     </div>
   );
