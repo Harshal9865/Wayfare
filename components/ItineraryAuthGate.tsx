@@ -50,32 +50,14 @@ export default function ItineraryAuthGate({
       const origin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || "");
       const targetRedirect = `${origin}${redirectUrl.startsWith("/") ? redirectUrl : `/${redirectUrl}`}`;
 
-      const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          skipBrowserRedirect: true,
           redirectTo: targetRedirect,
         },
       });
 
       if (oauthError) throw oauthError;
-
-      if (data?.url) {
-        // Probe whether provider is enabled in Supabase without navigating away
-        try {
-          const probe = await fetch(data.url, { method: "HEAD" });
-          if (probe.status === 400) {
-            setProviderNotice(
-              "Google Sign-In is not enabled yet in your Supabase project (vajjeedldbzcwxwqsmhs). Please enable Google in your Supabase Dashboard, or click below to proceed right away!"
-            );
-            setGoogleLoading(false);
-            return;
-          }
-        } catch {
-          // If probe fails due to CORS on redirect, it means Supabase redirected to Google OAuth successfully
-        }
-        window.location.href = data.url;
-      }
     } catch (err: any) {
       console.warn("Google login fallback:", err);
       setProviderNotice(

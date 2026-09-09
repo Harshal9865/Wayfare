@@ -20,29 +20,13 @@ export default function LoginPage() {
       setLoading(true);
       setErrorMsg(null);
       const redirectUrl = typeof window !== "undefined" ? window.location.origin : undefined;
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          skipBrowserRedirect: true,
           redirectTo: redirectUrl,
         },
       });
       if (error) throw error;
-      if (data?.url) {
-        try {
-          const probe = await fetch(data.url, { method: "HEAD" });
-          if (probe.status === 400) {
-            setErrorMsg(
-              "Google Sign-In is not enabled yet in your Supabase project (vajjeedldbzcwxwqsmhs). Please enable the Google provider in your Supabase Dashboard, or continue as guest below."
-            );
-            setLoading(false);
-            return;
-          }
-        } catch {
-          // Probe redirected to Google — provider is enabled and working
-        }
-        window.location.href = data.url;
-      }
     } catch (err: any) {
       setErrorMsg(err.message || "Google authentication failed");
       setLoading(false);

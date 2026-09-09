@@ -36,31 +36,14 @@ export default function LoginModal({
 
       const redirectUrl = typeof window !== "undefined" ? window.location.origin : undefined;
 
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          skipBrowserRedirect: true,
           redirectTo: redirectUrl,
         },
       });
 
       if (error) throw error;
-
-      if (data?.url) {
-        try {
-          const probe = await fetch(data.url, { method: "HEAD" });
-          if (probe.status === 400) {
-            setErrorMessage(
-              "Google Sign-In is not enabled yet in your Supabase project (vajjeedldbzcwxwqsmhs). Please enable Google in your Supabase Dashboard, or click 'One-Click Voyager Access' above to log in instantly!"
-            );
-            setIsSubmitting(false);
-            return;
-          }
-        } catch {
-          // Probe redirected or CORS blocked on Google domain — provider is working
-        }
-        window.location.href = data.url;
-      }
     } catch (err: any) {
       console.warn("Google Auth fallback to demo session:", err);
       setErrorMessage("Google authentication failed. Use 'One-Click Voyager Access' to continue.");

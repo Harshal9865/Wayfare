@@ -16,40 +16,50 @@ export default function AuthSessionSync() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const exchangeCode = async () => {
+    const url = new URL(window.location.href);
+    const hasOAuthParams = url.searchParams.has("code") || window.location.hash.includes("access_token");
+
+    const cleanUrlParams = () => {
       try {
-        const url = new URL(window.location.href);
-        const code = url.searchParams.get("code");
-
-        if (code) {
-          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-          if (error) {
-            console.warn("Supabase OAuth code exchange warning:", error.message);
-          } else if (data?.session?.user) {
-            const user = data.session.user;
-            const name =
-              user.user_metadata?.full_name ||
-              user.user_metadata?.name ||
-              user.email?.split("@")[0] ||
-              "Voyager";
-            setWelcomeToast({ name, email: user.email || "" });
-
-            // Auto-hide toast after 5s
-            setTimeout(() => setWelcomeToast(null), 5000);
-
-            // Clean up the URL query params without reloading the page
-            url.searchParams.delete("code");
-            url.searchParams.delete("state");
-            const cleanUrl = url.pathname + (url.search ? url.search : "") + url.hash;
-            window.history.replaceState({}, document.title, cleanUrl);
-          }
-        }
-      } catch (err) {
-        console.error("Unexpected error exchanging OAuth code:", err);
-      }
+        const clean = new URL(window.location.href);
+        clean.searchParams.delete("code");
+        clean.searchParams.delete("state");
+        clean.searchParams.delete("error");
+        clean.searchParams.delete("error_description");
+        const cleanHash = window.location.hash.includes("access_token") ? "" : clean.hash;
+        const cleanUrl = clean.pathname + (clean.search ? clean.search : "") + cleanHash;
+        window.history.replaceState({}, document.title, cleanUrl);
+      } catch (_) {}
     };
 
-    exchangeCode();
+    // 1. Listen for Supabase auth state change events
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
+        const user = session.user;
+        const name =
+          user.user_metadata?.full_name ||
+          user.user_metadata?.name ||
+          user.email?.split("@")[0] ||
+          "Voyager";
+
+        if (hasOAuthParams) {
+          setWelcomeToast({ name, email: user.email || "" });
+          cleanUrlParams();
+          setTimeout(() => setWelcomeToast(null), 5000);
+        }
+      }
+    });
+
+    // 2. Also check if a session is already present
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user && hasOAuthParams) {
+        cleanUrlParams();
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   if (!welcomeToast) return null;

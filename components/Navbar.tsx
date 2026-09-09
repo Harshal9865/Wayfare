@@ -97,24 +97,6 @@ export default function Navbar({ onOpenLogin }: { onOpenLogin?: () => void }) {
       }
     });
 
-    // 5. Handle direct OAuth redirect (?code=...) on page load
-    if (typeof window !== "undefined") {
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get("code");
-      if (code) {
-        supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
-          if (!error && data?.session?.user) {
-            const wUser = toWayfareUser(data.session.user);
-            setStoredUser(wUser);
-            setUser(wUser);
-            url.searchParams.delete("code");
-            url.searchParams.delete("state");
-            const cleanUrl = url.pathname + (url.search ? url.search : "") + url.hash;
-            window.history.replaceState({}, document.title, cleanUrl);
-          }
-        }).catch((err) => console.warn("Code exchange notice:", err));
-      }
-    }
 
     // 6. Listen for live Supabase Auth state changes
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
